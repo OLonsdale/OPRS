@@ -1,11 +1,25 @@
 # Opticians Patient Record System
 
-In this system staff can log in and manage records on patients
+This systems allows the staff of the opticians to log in and create patients, and record exams for that patient.
 
-It uses a MongoDB server to store the information, and is built with node, meaning JS is used for the full stack.
+Default credentials used are `admin` for both the username and password.
+
+It uses a MongoDB cloud server to store the information, and is built with node, meaning JS is used for the full stack.
 
 Tutorials from Traversy Media were followed, specifically:
-https://www.youtube.com/watch?v=fBNz5xF-Kx4&t=4262s
+
+Node crash course to gain familiarity with node: 
+
+https://www.youtube.com/watch?v=fBNz5xF-Kx4
+
+Express crash course for the same with express servers, routing etc:
+
 https://www.youtube.com/watch?v=L72fhGm1tfE
+
+For authenticating users:
+
 https://www.youtube.com/watch?v=6FOq4cUdH8k
+
+For working with mongoDB databases to a higher level than above:
+
 https://www.youtube.com/watch?v=SBvmnHTQIPY
