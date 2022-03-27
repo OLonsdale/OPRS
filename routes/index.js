@@ -6,7 +6,7 @@ const passport = require('passport');
 const User = require('../models/User');
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
-router.get('/', forwardAuthenticated, (req, res) => res.render('login'));
+router.get('/', forwardAuthenticated, (_req, res) => res.render('login'));
 
 // Dashboard
 router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboard', {
@@ -14,18 +14,15 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboar
 }));
 
 // Login Page
-router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
+router.get('/login', forwardAuthenticated, (_req, res) => res.render('login'));
 
 // Register Page
-router.get('/register', ensureAuthenticated, (req, res) => res.render('register'));
+router.get('/register', ensureAuthenticated, (_req, res) => res.render('register'));
 
 // Register
 router.post('/register', (req, res) => {
-  const { name } = req.body;
-  const { username } = req.body;
-  const optometrist = req.body.hasOwnProperty('optometrist');
-  const { password } = req.body;
-  const { password2 } = req.body;
+  const { name, username, password, password2 } = req.body;
+  const optometrist = 'optometrist' in req.body;
 
   // const { name, username, optometrist, password, password2 } = req.body;
   const errors = [];
@@ -53,6 +50,7 @@ router.post('/register', (req, res) => {
       username,
       password,
       password2,
+      optometrist,
     });
     return;
   }
@@ -81,7 +79,7 @@ router.post('/register', (req, res) => {
     });
 
     // hash and salt password, and push whole thing to the database
-    bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.genSalt(10, (_err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) throw err;
         // replaces clear password with hashed
@@ -89,7 +87,7 @@ router.post('/register', (req, res) => {
         // saves to db
         newUser.save()
         // then passes message and reloads page
-          .then((user) => {
+          .then(() => {
             req.flash('success_msg', 'User is now registered');
             res.redirect('/register');
           })

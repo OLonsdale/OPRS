@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.login-container {
+    width: 40em;
+    margin-top: 10em;
+    text-align: center;
+}
+
+:root {
+  font-family: "Montserrat";
+  background-color: beige;
+}
+
+nav{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+

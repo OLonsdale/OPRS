@@ -7,15 +7,15 @@ const OrderSchema = new mongoose.Schema({
     },
     "lensMaterial": {
         type:String, //Glass, polycarbonate, high-index 
-        required: True
+        required: true
     },
     "stockID": {
         type:String, //for frame
-        required: True
+        required: true
     },
     "patientID": {
         type:String, //for for perscription
-        required: True
+        required: true
     },
     "coatings": {
         type:String, //Photochromatic, scratch-resistant, anti-reflection, anti-fog, UV-Blocking

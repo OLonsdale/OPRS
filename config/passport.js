@@ -28,6 +28,7 @@ module.exports = function(passport) {
     })
   );
 
+  //used to store session in cookie to persist more effectivly
   passport.serializeUser(function(user, done) {
     done(null, user.id);
   });
