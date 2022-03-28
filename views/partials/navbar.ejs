@@ -1,7 +1,28 @@
 <header>
-  <nav>
-    <a href="/dashboard">Dashboard</a>
-    <a href="/register">Add new user</a>
-    <a href="/logout">Log out</a>
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 fixed-top">
+    <div class="container">
+      <a href="#" class="navbar-brand">Opticians Patient Record System</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navmenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a href="'/dashboard'" class="nav-link">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a href="/register" class="nav-link">Add Staff Member</a>
+          </li>
+          <li class="nav-item">
+            <a href="/create-patient" class="nav-link">Add Patient</a>
+          </li>
+          <li class="nav-item">
+            <a href="/logout" class="nav-link">Log out</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </nav>
 </header>

@@ -9,9 +9,10 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 router.get('/', forwardAuthenticated, (_req, res) => res.render('login'));
 
 // Dashboard
-router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboard', {
-  user: req.user,
-}));
+router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboard', { user: req.user, }));
+
+//create patient
+router.get('/create-patient', ensureAuthenticated, (req, res) => res.render('create-patient'));
 
 // Login Page
 router.get('/login', forwardAuthenticated, (_req, res) => res.render('login'));

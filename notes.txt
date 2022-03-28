@@ -1,0 +1,1 @@
+Sometimes logins fail, as if user gets redirected before authentication has fully gone through. 

@@ -1,0 +1,112 @@
+
+<div class="container card card-body" >
+<form action="/create-patient" method="POST">
+  <h1> Create Patient </h1>
+    <div class="formBlock">
+      <h2>Name:</h2>
+      <label for="inputFirstName">First Name:</label>
+      <input id="inputFirstName" type="text">
+
+      <br>
+
+      <label for="inputMiddleName">Middle Names:</label>
+      <input id="inputMiddleName" type="text">
+
+      <br>
+
+      <label for="inputLastName">Last Name:</label>
+      <input id="inputLastName" type="text">
+
+      <br>
+    </div>
+
+    <div class="formBlock">
+      <h2>Bio:</h2>
+      <label for="inputGender">Gender:</label>
+      <select name="inputGender" id="inputGender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+
+      <br>
+
+      <label for="inputGenderOther">If other, please specify:</label>
+      <input id="inputGenderOther" type="text">
+
+      <br>
+
+      <label for="inputDateOfBirth">Date of birth:</label>
+      <input id="inputDateOfBirth" type="date">
+    </div>
+
+    <div class="formBlock">
+      <h2>Contact:</h2>
+      <label for="inputLandline">Landline:</label>
+      <input id="inputLandline" type="text">
+
+      <br>
+
+      <label for="inputMobile">Mobile:</label>
+      <input id="inputMobile" type="text">
+
+      <br>
+
+      <label for="inputEmail">Email:</label>
+      <input id="inputEmail" type="email">
+    </div>
+
+    <div class="formBlock">
+      <h2>Address:</h2>
+      <label for="inputHouseNumber">House Number:</label>
+      <input id="inputHouseNumber" type="text">
+
+      <br>
+
+      <label for="inputAddressLineOne">Line 1:</label>
+      <input id="inputAddressLineOne" type="text">
+
+      <br>
+
+      <label for="inputAddressLineTwo">Line 2:</label>
+      <input id="inputAddressLineTwo" type="text">
+
+      <br>
+
+      <label for="inputAddressCity">City:</label>
+      <input id="inputAddressCity" type="text">
+
+      <br>
+
+      <label for="inputAddressPostCode">Post Code:</label>
+      <input id="inputAddressPostCode" type="text">
+    </div>
+
+    <div class="formBlock wideBlock">
+      <h2>Medical Details:</h2>
+      <label for="inputNHSNumber">NHS Number:</label>
+      <input id="inputNHSNumber" type="text">
+
+      <br>
+
+      <label for="inputPatientType">Patient Type:</label>
+      <select name="inputPatientType" id="inputPatientType">
+        <option value="private">Private</option>
+        <option value="NHS">NHS</option>
+      </select>
+
+      <br>
+
+      <label for="inputGPName">GP Name:</label>
+      <input id="inputGPName" type="text">
+
+      <br>
+
+      <label for="inputGPAddress">GP Address:</label>
+      <textarea name="inputGPAddress" id="inputGPAddress" rows="5"></textarea>
+    </div>
+  <button id="buttonSubmitPatient">Submit</button>
+
+</form>
+
+</div>

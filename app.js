@@ -11,9 +11,8 @@ const path = require("path");
 const app = express();
 
 // Logging when dev mode enabled
-if(process.env.NODE_ENV === "development"){
-  app.use(morgan("dev"))
-}
+app.use(morgan("dev"))
+
 
 // Passport Config
 require('./config/passport')(passport);
