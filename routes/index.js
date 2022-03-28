@@ -1,9 +1,9 @@
 const express = require('express');
-// eslint-disable-next-line new-cap
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const User = require('../models/User');
+const Patient = require('../models/Patient');
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
 router.get('/', forwardAuthenticated, (_req, res) => res.render('login'));
@@ -11,8 +11,6 @@ router.get('/', forwardAuthenticated, (_req, res) => res.render('login'));
 // Dashboard
 router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboard', { user: req.user, }));
 
-//create patient
-router.get('/create-patient', ensureAuthenticated, (req, res) => res.render('create-patient'));
 
 // Login Page
 router.get('/login', forwardAuthenticated, (_req, res) => res.render('login'));
@@ -24,10 +22,9 @@ router.get('/register', ensureAuthenticated, (_req, res) => res.render('register
 router.post('/register', (req, res) => {
   const { name, username, password, password2 } = req.body;
   const optometrist = 'optometrist' in req.body;
-
-  // const { name, username, optometrist, password, password2 } = req.body;
+  
   const errors = [];
-
+  
   // check all fields are filled. Might switch to client side
   if (!name || !username || !password || !password2) {
     errors.push({ msg: 'Please fill out all fields' });
@@ -37,7 +34,7 @@ router.post('/register', (req, res) => {
   if (password != password2) {
     errors.push({ msg: 'Passwords do not match' });
   }
-
+  
   // check password is at least 4 chars, (yes it's weak)
   if (password.length < 4) {
     errors.push({ msg: 'Password must be at least 4 characters' });
@@ -78,7 +75,7 @@ router.post('/register', (req, res) => {
       username,
       password,
     });
-
+    
     // hash and salt password, and push whole thing to the database
     bcrypt.genSalt(10, (_err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -88,12 +85,12 @@ router.post('/register', (req, res) => {
         // saves to db
         newUser.save()
         // then passes message and reloads page
-          .then(() => {
-            req.flash('success_msg', 'User is now registered');
-            res.redirect('/register');
-          })
+        .then(() => {
+          req.flash('success_msg', 'User is now registered');
+          res.redirect('/register');
+        })
           .catch((err) => console.log(err));
-      });
+        });
     });
   });
 });
@@ -113,5 +110,68 @@ router.get('/logout', (req, res) => {
   req.flash('success_msg', 'You are logged out');
   res.redirect('/login');
 });
+
+//create patient
+router.get('/add-patient', ensureAuthenticated, (req, res) => res.render('add-patient'));
+
+router.post('/add-patient', (req, res) => {
+  const{
+      firstName,
+      middleName,
+      lastName,
+      gender,
+      genderOther,
+      dateOfBirth,
+      landline,
+      mobile,
+      email,
+      addressHouseNumber,
+      addressLineOne,
+      addressLineTwo,
+      addressCity,
+      addressPostCode,
+      NHSNumber,
+      patientType,
+      GPName,
+      GPAddress,
+    } = req.body;
+
+    const newPatient = new Patient({
+      firstName,
+      middleName,
+      lastName,
+      gender,
+      genderOther,
+      dateOfBirth,
+      landline,
+      mobile,
+      email,
+      addressHouseNumber,
+      addressLineOne,
+      addressLineTwo,
+      addressCity,
+      addressPostCode,
+      NHSNumber,
+      patientType,
+      GPName,
+      GPAddress,
+    });
+
+    newPatient.save();
+
+  req.flash('success_msg', 'Patient has been added');
+  res.redirect('/add-patient');
+});
+
+router.get('/list-patients', ensureAuthenticated, async (req, res) => {
+  try{
+    const patients = await Patient.find().lean();
+    res.render('view-patients',{patients});
+  } catch (error){
+    res.render("errors/500");
+  }
+});
+
+
 
 module.exports = router;

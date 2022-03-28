@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const ExamSchema = new mongoose.Schema({
-    //background
     "visitReason": {
         type: String,
     },

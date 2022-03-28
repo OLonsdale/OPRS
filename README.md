@@ -8,12 +8,12 @@ It uses a MongoDB cloud server to store the information, and is built with node,
 
 Tutorials from Traversy Media were followed, specifically:
 
-[Node crash course to gain familiarity with node:](https://www.youtube.com/watch?v=fBNz5xF-Kx4)
+[Node crash course to gain familiarity with node.](https://www.youtube.com/watch?v=fBNz5xF-Kx4)
 
-[Express crash course for the same with express servers, routing etc:](https://www.youtube.com/watch?v=L72fhGm1tfE)
+[Express crash course for the same with express servers, routing etc.](https://www.youtube.com/watch?v=L72fhGm1tfE)
 
 [For authenticating users:](https://www.youtube.com/watch?v=6FOq4cUdH8k)
 
-[For working with mongoDB databases to a higher level than above:](https://www.youtube.com/watch?v=SBvmnHTQIPY)
+[For working with mongoDB databases to a higher level than above.](https://www.youtube.com/watch?v=SBvmnHTQIPY)
 
-[Bootstrap 5 for styling:](https://www.youtube.com/watch?v=4sosXZsdy-s)
+[Bootstrap 5 for styling.](https://www.youtube.com/watch?v=4sosXZsdy-s)
