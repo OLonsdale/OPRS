@@ -4,6 +4,7 @@
   "description": "Opticians Patient Record System",
   "main": "app.js",
   "scripts": {
+    "build":"npm install && node app.js",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
