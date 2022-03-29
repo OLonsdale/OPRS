@@ -1,0 +1,22 @@
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead class="thead-dark">
+      <tr class="table-dark">
+        <th>Name</th>
+        <th>Username</th>
+        <th>ID</th>
+        <th>Added Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.username %></td>
+          <td><%= user._id %></td>
+          <td><%= user.date.toLocaleDateString('en-GB') %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

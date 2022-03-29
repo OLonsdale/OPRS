@@ -6,20 +6,20 @@ const User = require('../models/User');
 const Patient = require('../models/Patient');
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
-router.get('/', forwardAuthenticated, (_req, res) => res.render('login'));
+router.get('/', forwardAuthenticated, (_req, res) => res.render('login', { layout: false }));
 
 // Dashboard
 router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboard', { user: req.user, }));
 
 
 // Login Page
-router.get('/login', forwardAuthenticated, (_req, res) => res.render('login'));
+router.get('/login', forwardAuthenticated, (_req, res) => res.render('login', { layout: false }));
 
 // Register Page
-router.get('/register', ensureAuthenticated, (_req, res) => res.render('register'));
+router.get('/add-staff', ensureAuthenticated, (_req, res) => res.render('add-staff'));
 
-// Register
-router.post('/register', (req, res) => {
+// add-staff
+router.post('/add-staff', (req, res) => {
   const { name, username, password, password2 } = req.body;
   const optometrist = 'optometrist' in req.body;
   
@@ -42,7 +42,7 @@ router.post('/register', (req, res) => {
 
   // display errors if there are any
   if (errors.length > 0) {
-    res.render('register', {
+    res.render('add-staff', {
       errors,
       name,
       username,
@@ -57,7 +57,7 @@ router.post('/register', (req, res) => {
   User.findOne({ username }).then((user) => {
     if (user) {
       errors.push({ msg: 'Username already in use' });
-      res.render('register', {
+      res.render('add-staff', {
         errors,
         name,
         username,
@@ -87,7 +87,7 @@ router.post('/register', (req, res) => {
         // then passes message and reloads page
         .then(() => {
           req.flash('success_msg', 'User is now registered');
-          res.redirect('/register');
+          res.redirect('/add-staff');
         })
           .catch((err) => console.log(err));
         });
@@ -166,12 +166,36 @@ router.post('/add-patient', (req, res) => {
 router.get('/list-patients', ensureAuthenticated, async (req, res) => {
   try{
     const patients = await Patient.find().lean();
-    res.render('view-patients',{patients});
+    res.render('list-patients',{patients});
   } catch (error){
     res.render("errors/500");
   }
 });
 
+router.get('/list-staff', ensureAuthenticated, async (req, res) => {
+  try{
+    const users = await User.find().lean();
+    res.render('list-staff',{users});
+  } catch (error){
+    res.render("errors/500");
+  }
+});
+
+router.get('/view-patient/:patientID', ensureAuthenticated, async (req, res) => {
+  const id = req.params.patientID
+  try {
+    const patients = await Patient.find({_id:id})
+    const patient = patients[0]
+    if(patient){
+      res.render('view-patient',{patient})
+      return
+    }
+    throw("not found")
+  } catch (error) {
+    res.render('errors/404')
+    return
+  }
+});
 
 
 module.exports = router;

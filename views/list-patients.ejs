@@ -6,15 +6,18 @@
         <th>Last Name</th>
         <th>ID</th>
         <th>Added Date</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <% patients.forEach(patient => { %>
+        
         <tr>
           <td><%= patient.firstName %></td>
           <td><%= patient.lastName %></td>
           <td><%= patient._id %></td>
           <td><%= patient.dateAdded.toLocaleDateString('en-GB') %></td>
+          <td> <a type="button" class="btn btn-secondary btn-sm" href="view-patient/<%= patient._id %>" > View </a> </td>
         </tr>
       <% }) %>
     </tbody>

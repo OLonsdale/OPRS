@@ -1,0 +1,51 @@
+<% if (patient) { %>
+
+<table class="table">
+  <tr>
+    <td>ID</td>
+    <td><%= patient._id %></td>
+  </tr>
+  <tr>
+    <td>First Name</td>
+    <td><%= patient.firstName %></td>
+  </tr>
+  <tr>
+    <td>Middle Name</td>
+    <td><%= patient.middleName %></td>
+  </tr>
+  <tr>
+    <td>Last Name</td>
+    <td><%= patient.lastName %></td>
+  </tr>
+  <tr>
+    <td>Gender</td>
+    <td><%= patient.gender %></td>
+  </tr>
+  <tr>
+    <td>Date of Birth</td>
+    <td><%= patient.dateOfBirth %></td>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td><%= patient.email %></td>
+  </tr>
+  <tr>
+    <td>NHS Number</td>
+    <td><%= patient.NHSNumber %></td>
+  </tr>
+  <tr>
+    <td>Patient Type</td>
+    <td><%= patient.patientType %></td>
+  </tr>
+  <tr>
+    <td>Date Added</td>
+    <td><%= patient.dateAdded.toLocaleDateString('en-GB') %></td>
+  </tr>
+</table>
+
+<% } else { %>
+
+    <h1>No patient selected</h1>
+
+<% } %>
+ 
