@@ -16,7 +16,8 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboar
 router.get('/login', forwardAuthenticated, (_req, res) => res.render('login', { layout: false }));
 
 // Register Page
-router.get('/add-staff', ensureAuthenticated, (_req, res) => res.render('add-staff'));
+router.get('/add-staff', ensureAuthenticated, (_req, res) => res.render('staff-add'));
+
 
 // add-staff
 router.post('/add-staff', (req, res) => {
@@ -42,7 +43,7 @@ router.post('/add-staff', (req, res) => {
 
   // display errors if there are any
   if (errors.length > 0) {
-    res.render('add-staff', {
+    res.render('staff-add', {
       errors,
       name,
       username,
@@ -57,7 +58,7 @@ router.post('/add-staff', (req, res) => {
   User.findOne({ username }).then((user) => {
     if (user) {
       errors.push({ msg: 'Username already in use' });
-      res.render('add-staff', {
+      res.render('staff-add', {
         errors,
         name,
         username,
@@ -112,8 +113,9 @@ router.get('/logout', (req, res) => {
 });
 
 //create patient
-router.get('/add-patient', ensureAuthenticated, (req, res) => res.render('add-patient'));
+router.get('/add-patient', ensureAuthenticated, (req, res) => res.render('patient-add'));
 
+//add patient
 router.post('/add-patient', (req, res) => {
   const{
       firstName,
@@ -136,12 +138,16 @@ router.post('/add-patient', (req, res) => {
       GPAddress,
     } = req.body;
 
+    let actualGender;
+    if(gender==="other"){
+      actualGender = genderOther
+    } else actualGender = gender
+
     const newPatient = new Patient({
       firstName,
       middleName,
       lastName,
-      gender,
-      genderOther,
+      gender: actualGender,
       dateOfBirth,
       landline,
       mobile,
@@ -166,7 +172,7 @@ router.post('/add-patient', (req, res) => {
 router.get('/list-patients', ensureAuthenticated, async (req, res) => {
   try{
     const patients = await Patient.find().lean();
-    res.render('list-patients',{patients});
+    res.render('patients-list',{patients});
   } catch (error){
     res.render("errors/500");
   }
@@ -175,7 +181,7 @@ router.get('/list-patients', ensureAuthenticated, async (req, res) => {
 router.get('/list-staff', ensureAuthenticated, async (req, res) => {
   try{
     const users = await User.find().lean();
-    res.render('list-staff',{users});
+    res.render('staff-list',{users});
   } catch (error){
     res.render("errors/500");
   }
@@ -183,11 +189,15 @@ router.get('/list-staff', ensureAuthenticated, async (req, res) => {
 
 router.get('/view-patient/:patientID', ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
+  if(!id){
+    res.render('errors/404');
+    return
+  }
   try {
     const patients = await Patient.find({_id:id})
     const patient = patients[0]
     if(patient){
-      res.render('view-patient',{patient})
+      res.render('patient-view',{patient})
       return
     }
     throw("not found")
@@ -196,6 +206,14 @@ router.get('/view-patient/:patientID', ensureAuthenticated, async (req, res) => 
     return
   }
 });
+
+router.get('/add-exam', ensureAuthenticated, (req, res) => res.render('exam-add'))
+
+router.post('/add-exam', ensureAuthenticated, (req, res) => {
+  console.log(req.body)
+  res.render('exam-add')
+});
+
 
 
 module.exports = router;

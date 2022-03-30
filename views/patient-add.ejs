@@ -5,11 +5,12 @@
         <i class="fas fa-user-plus"></i> Add Patient 
       </h1>
 
-      <% include ./partials/messages %>
+      <% include partials/messages %>
 
       <form action="/add-patient" method="POST">
         <h2>Name:</h2>
 
+        <div class="form-group">
         <div class="mb-3">
           <label for="inputFirstName" class="form-label">First Name:</label>
           <input id="inputFirstName" name="firstName" class="form-control" type="text">
@@ -39,6 +40,7 @@
           <input id="inputGenderOther" name="genderOther" class="form-control" type="text">
         </div>
 
+
         <div class="mb-3">
           <label for="inputDateOfBirth">Date of birth:</label>
           <input class="form-control" name="dateOfBirth" id="inputDateOfBirth" type="date">
@@ -55,10 +57,12 @@
           <input id="inputMobile" name="mobile" class="form-control" type="text">
         </div>
 
-        <div class="mb-3">
-          <label for="inputEmail" class="form-label">Email Address:</label>
-          <input id="inputEmail" name="email" class="form-control" type="email">
-        </div>
+
+          <div class="mb-3">
+            <label for="inputEmail" class="form-label">Email Address:</label>
+            <input id="inputEmail" name="email" class="form-control" type="email">
+          </div>
+
 
         <h2>Address:</h2>
 
@@ -111,6 +115,7 @@
           <textarea class="form-control" name="GPAddress" id="inputGPAddress" rows="5"></textarea>
         </div>
         <button id="buttonSubmitPatient" class="btn btn-primary btn-block">Submit</button>
+      </div>
       </form>
     </div>
   </div>

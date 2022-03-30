@@ -9,3 +9,5 @@ Sometimes logins fail, as if user gets redirected before authentication has full
 "GPAddress": "223\r\nmulti\r\nline\r\ncheck",
 "dateAdded": {
   "$date": "2022-03-28T21:39:25.504Z" -->
+
+  author of entry taken from current signed in user

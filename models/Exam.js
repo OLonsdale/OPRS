@@ -150,8 +150,8 @@ const ExamSchema = new mongoose.Schema({
         type: String, //(1, 2, 3.1, 3.2, 3.3, 4.1, 4.2, 5.1, 5.2, 5.3, 6) 
     },
     "attachments": {
-        data:Buffer,
-        type: String,
+        type: Array,
+        default: []
     },
 });
 
