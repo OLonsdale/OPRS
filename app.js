@@ -62,6 +62,9 @@ app.use(express.static(path.join(__dirname,"public")))
 
 // Routes
 app.use('/', require('./routes/index'));
+app.use('/patient', require('./routes/patient'));
+app.use('/exam', require('./routes/exam'));
+app.use('/staff', require('./routes/staff'));
 
 const PORT = process.env.PORT || 5500;
 

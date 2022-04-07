@@ -1,4 +1,10 @@
 Sometimes logins fail, as if user gets redirected before authentication has fully gone through. 
+Author of entry taken from current signed in user, but only takes name not ID. TODO
+Deleting staff may cause issues with references to that staff member? - flag inactive. don't allow new references but maintain old references.
+Patient Drives / Uses VDU not stored?
+
+
+
 
 
 <!-- "addressHouseNumber": "12",
@@ -10,13 +16,3 @@ Sometimes logins fail, as if user gets redirected before authentication has full
 "dateAdded": {
   "$date": "2022-03-28T21:39:25.504Z" -->
 
-  author of entry taken from current signed in user
-
- <% patient.exams.forEach(exam => { %>
-        <tr>
-          <td><%= exam.examDate %></td>
-          <td><%= exam.performingOptometrist %></td>
-          <td><%= exam.ID %></td>
-          <td> <a type="button" class="btn btn-secondary btn-sm" href="view-exam/<%= patient._id %>/<%= exam.ID %>" > View </a> </td>
-        </tr>
-      <% }) %>

@@ -1,0 +1,91 @@
+<% if (exam) { %>
+  <h1> Exam </h1>
+  <h2> Metadata </h2>
+  <table class="table">
+    <tr>
+      <td>Exam ID</td>
+      <td><%= exam._id %></td>
+    </tr>
+    <tr>
+      <td>Patient ID</td>
+      <td><%= exam.patientID %><span class="p-5"><a class="btn btn-sm btn-outline-secondary" href="/patient/view/<%=exam.patientID%>">View Patient</a></span></td>
+    </tr>
+    <tr>
+      <td>Performing Optometrist</td>
+      <td><%= optoms.find(optom => optom._id == exam.performingOptometrist).name %></td>
+    </tr>
+    <tr>
+      <td>Author of Exam</td>
+      <td><%= exam.author %></td>
+    </tr>
+    <tr>
+      <td>Date of Exam</td>
+      <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
+    </tr>
+    <tr>
+      <td>Date of Entry</td>
+      <td><%= exam.dateAdded.toLocaleDateString('en-GB') %></td>
+    </tr>
+  </table>
+  <h2> About </h2>
+  <table class="table">
+    <tr>
+      <td>Reason for visit</td>
+      <td><%= exam.visitReason %></td>
+    </tr>
+    <tr>
+      <td>Family history</td>
+      <td><%= exam.familyHistory %></td>
+    </tr>
+    <tr>
+      <td>General Health</td>
+      <td><%= exam.generalHealth %></td>
+    </tr>
+    <tr>
+      <td>Medication</td>
+      <td><%= exam.medication %></td>
+    </tr>
+    <tr>
+      <td>Patient Drives</td>
+     <% if (!exam.patientDrives) { %>
+      <td>No</td>
+     <% } else { %>
+      <td>Yes</td>
+      <% } %>
+    </tr>
+    <tr>
+      <td>Patient uses VDU</td>
+     <% if (!exam.patientUsesVDU) { %>
+      <td>No</td>
+     <% } else { %>
+      <td>Yes</td>
+      <% } %>
+    </tr>
+    <tr>
+      <td>Occupation</td>
+      <td><%= exam.occupation %></td>
+    </tr>
+    <tr>
+      <td>Ocular History</td>
+      <td><%= exam.ocularHistory %></td>
+    </tr>   
+  </table>
+
+  <h2>Exam</h2>
+  <table class="table">
+    <tr>
+      <td>Lens Opacity</td>
+      <td>Right: <%= exam.lensOpacityRight%> - Left: <%= exam.lensOpacityLeft%></td>
+    </tr>
+    <tr>
+      <td>Lens Comment</td>
+      <td><%= exam.lensComment%></td>
+    </tr>
+
+  </table>
+  
+  <% } else { %>
+
+    <h1>No exam</h1>
+
+<% } %>

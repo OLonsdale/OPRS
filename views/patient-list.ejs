@@ -17,7 +17,7 @@
           <td><%= patient.lastName %></td>
           <td><%= patient._id %></td>
           <td><%= patient.dateAdded.toLocaleDateString('en-GB') %></td>
-          <td> <a type="button" class="btn btn-secondary btn-sm" href="view-patient/<%= patient._id %>" > View </a> </td>
+          <td> <a type="button" class="btn btn-secondary btn-sm" href="/patient/view/<%= patient._id %>" > View </a> </td>
         </tr>
       <% }) %>
     </tbody>

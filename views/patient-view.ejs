@@ -44,7 +44,7 @@
 </table>
 
 
-<a href="/add-exam/<%= patient.id %>" class="btn btn-primary mb-3"> Add Exam</a>
+<a href="/exam/add/<%= patient.id %>" class="btn btn-primary mb-3"> Add Exam</a>
 
 <div class="table-responsive">
   <table class="table table-striped table-hover">
@@ -62,7 +62,7 @@
           <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
           <td><%= optoms.find(optom => optom._id == exam.performingOptometrist).name %></td>
           <td><%= exam.id %></td>
-          <td> <a type="button" class="btn btn-secondary btn-sm" href="/view-exam/<%= exam.id %>" > View </a> </td>
+          <td> <a type="button" class="btn btn-secondary btn-sm" href="/exam/view/<%= exam.id %>" > View </a> </td>
         </tr>
       <% }) %>
     </tbody>
