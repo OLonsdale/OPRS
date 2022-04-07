@@ -60,10 +60,7 @@ const PatientSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  exams:{
-    type: Array,
-    default: [],
-  }
+  
 });
 
 const Patient = mongoose.model("Patient", PatientSchema);

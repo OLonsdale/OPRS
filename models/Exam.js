@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const ExamSchema = new mongoose.Schema({
+    "patientID": {
+        type: String,
+    },
     "visitReason": {
         type: String,
     },

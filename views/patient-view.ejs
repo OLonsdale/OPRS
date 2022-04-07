@@ -43,6 +43,33 @@
   </tr>
 </table>
 
+
+<a href="/add-exam/<%= patient.id %>" class="btn btn-primary mb-3"> Add Exam</a>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead class="thead-dark">
+      <tr class="table-dark">
+        <th>Exam Date</th>
+        <th>Optometrist</th>
+        <th>Exam ID</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% exams.forEach(exam => { %>
+        <tr>
+          <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
+          <td><%= optoms.find(optom => optom._id == exam.performingOptometrist).name %></td>
+          <td><%= exam.id %></td>
+          <td> <a type="button" class="btn btn-secondary btn-sm" href="/view-exam/<%= exam.id %>" > View </a> </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+
 <% } else { %>
 
     <h1>No patient selected</h1>

@@ -11,3 +11,12 @@ Sometimes logins fail, as if user gets redirected before authentication has full
   "$date": "2022-03-28T21:39:25.504Z" -->
 
   author of entry taken from current signed in user
+
+ <% patient.exams.forEach(exam => { %>
+        <tr>
+          <td><%= exam.examDate %></td>
+          <td><%= exam.performingOptometrist %></td>
+          <td><%= exam.ID %></td>
+          <td> <a type="button" class="btn btn-secondary btn-sm" href="view-exam/<%= patient._id %>/<%= exam.ID %>" > View </a> </td>
+        </tr>
+      <% }) %>

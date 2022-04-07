@@ -13,6 +13,27 @@
         <div class="form-group">
 
           <div class="mb-3">
+            <label for="author" class="form-label">Author:</label>
+            <input class="form-control" type="text" name="author" id="author" rows="1" readonly="readonly" value="<%= user.name %>"
+              ></input>
+          </div>
+
+          <div class="mb-3">
+            <label for="patientID" class="form-label">Patient ID:</label>
+            <input class="form-control" type="text" name="patientID" id="patientID" rows="1" readonly="readonly" value="<%= patientID %>"
+              ></input>
+          </div>
+
+          <div class="mb-3">
+            <label for="optometrist" class="form-label">Performing Optometrist:</label>
+            <select class="form-control" name="optometrist" id="optometrist">
+             <% optometrists.forEach(optom => { %>
+              <option value="<%= optom.id %>"><%= optom.name  %></option>
+             <% }) %>
+            </select>
+          </div>
+
+          <div class="mb-3">
             <label for="visitReason" class="form-label">Visit Reason:</label>
             <textarea class="form-control" name="visitReason" id="visitReason" rows="1"></textarea>
           </div>
@@ -28,13 +49,18 @@
           </div>
 
           <div class="mb-3">
+            <label for="medication" class="form-label">Medication:</label>
+            <textarea class="form-control" name="medication" id="medication" rows="1"></textarea>
+          </div>
+
+          <div class="mb-3">
             <label for="patientDrives" class="form-label">Drives:</label>
-            <input type="checkbox" class="form-check-input" id="patientDrives" name="patientDrives" />
+            <input type="checkbox" class="form-check-input" id="patientDrives" name="patientDrives" value="drives" />
           </div>
 
           <div class="mb-3">
             <label for="patientUsesVDU" class="form-label">Uses VDU:</label>
-            <input type="checkbox" class="form-check-input" id="patientUsesVDU" name="patientUsesVDU" />
+            <input type="checkbox" class="form-check-input" id="patientUsesVDU" name="patientUsesVDU" value="vcu" />
           </div>
 
 
@@ -50,8 +76,11 @@
 
           <div class="mb-3">
             <label for="dateOfVisit" class="form-label">Date of Visit:</label>
-            <input type="date" class="form-control">
+            <input id="date" type="date" name="visitDate" class="form-control">
           </div>
+          <script>
+            document.getElementById("date").valueAsDate = new Date()
+          </script>
 
           <h2>Exam:</h2>
 
@@ -96,7 +125,7 @@
 
           <div class="mb-3">
             <label for="viterousComment" class="form-label">Viterous Comment:</label>
-            <textarea class="form-control" name="viterousComment" id="viterousComment" rows="5"></textarea>
+            <textarea class="form-control" name="viterousComment" id="viterousComment" rows="1"></textarea>
           </div>
 
           <div class="mb-3">
@@ -127,7 +156,7 @@
 
           <div class="mb-3">
             <label for="discComment" class="form-label">Disc Comment:</label>
-            <textarea class="form-control" name="discComment" id="discComment" rows="5"></textarea>
+            <textarea class="form-control" name="discComment" id="discComment" rows="1"></textarea>
           </div>
 
           <div class="mb-3">
@@ -186,13 +215,13 @@
             </select>
           </div>
           <div class="mb-3">
-            <label for="fundusRightOther" class="form-label">Other:</label>
-            <textarea class="form-control" name="fundusRightOther" id="fundusRightOther" rows="1"></textarea>
+            <label for="maculaRightOther" class="form-label">Other:</label>
+            <textarea class="form-control" name="maculaRightOther" id="maculaRightOther" rows="1"></textarea>
           </div>
 
           <div class="mb-3">
             <label for="pupils" class="form-label">Pupils:</label>
-            <select name="maculaRight" class="form-select">
+            <select id="pupils" name="pupils" class="form-select">
               <option value="normal">Normal and Reflective</option>
               <option value="r-rapd">R RAPD</option>
               <option value="l-rapd">L RAPD</option>
@@ -203,13 +232,13 @@
 
           <div class="mb-3">
             <label for="pupilsComment" class="form-label">Pupils Comment:</label>
-            <textarea class="form-control" name="pupilsComment" id="pupilsComment" rows="5"></textarea>
+            <textarea class="form-control" name="pupilsComment" id="pupilsComment" rows="1"></textarea>
           </div>
 
           <div class="mb-3">
             <label for="IOPLeft" class="form-label">IOP Left:</label>
             <select name="IOPLeft" id="IOPLeft" class="form-select">
-
+              <option value="not measured"> Not Measured </option>
               <% for( let index = 9; index < 51; index++ ) { %>
               <option value="0.<%= index %>"> <%= index %> mmHg </option>
               <% } %>
@@ -220,7 +249,7 @@
           <div class="mb-3">
             <label for="IOPRight" class="form-label">IOP Right:</label>
             <select name="IOPRight" id="IOPRight" class="form-select">
-
+              <option value="not measured"> Not Measured </option>
               <% for( let index = 9; index < 51; index++ ) { %>
               <option value="0.<%= index %>"> <%= index %> mmHg </option>
               <% } %>
@@ -230,7 +259,7 @@
 
           <div class="mb-3">
             <label for="IOPComment" class="form-label">IOP Comment:</label>
-            <textarea class="form-control" name="IOPComment" id="IOPComment" rows="5"></textarea>
+            <textarea class="form-control" name="IOPComment" id="IOPComment" rows="1"></textarea>
           </div>
 
           <div class="mb-3">
@@ -251,12 +280,12 @@
 
           <div class="mb-3">
             <label for="visualFieldComment" class="form-label">Visual Field Comment:</label>
-            <textarea class="form-control" name="visualFieldComment" id="visualFieldComment" rows="5"></textarea>
+            <textarea class="form-control" name="visualFieldComment" id="visualFieldComment" rows="1"></textarea>
           </div>
 
           <div class="mb-3">
             <label for="fixationDisparity" class="form-label">Fixation Disparity:</label>
-            <select name="visualFieldRight" class="form-select">
+            <select name="fixationDisparity" class="form-select">
               <option value="orthophoric">Orthophoric</option>
               <option value="xop">XOP</option>
               <option value="sop">SOP</option>
@@ -410,19 +439,19 @@
             <label for="prismBaseLeft" class="form-label">Prism Base Left:</label>
             <div class="form-check">
               <label class="form-check-label" for="left-left"> Left </label>
-              <input class="form-check-input" type="checkbox" id="left-left" value="left-left">
+              <input class="form-check-input" type="checkbox" id="left-left" name="prismLeft" value="left-left">
             </div>
             <div class="form-check">
               <label class="form-check-label" for="left-right"> Right </label>
-              <input class="form-check-input" type="checkbox" id="left-right" value="left-right">
+              <input class="form-check-input" type="checkbox" id="left-right" name="prismLeft" value="left-right">
             </div>
             <div class="form-check">
               <label class="form-check-label" for="left-up"> Up </label>
-              <input class="form-check-input" type="checkbox" id="left-up" value="left-up">
+              <input class="form-check-input" type="checkbox" id="left-up" name="prismLeft" value="left-up">
             </div>
             <div class="form-check">
               <label class="form-check-label" for="left-down"> Down </label>
-              <input class="form-check-input" type="checkbox" id="left-down" value="left-down">
+              <input class="form-check-input" type="checkbox" id="left-down" name="prismLeft" value="left-down">
             </div>
           </div>
 
@@ -430,19 +459,19 @@
             <label for="prismBaseRight" class="form-label">Prism Base Right:</label>
             <div class="form-check">
               <label class="form-check-label" for="right-left"> Left </label>
-              <input class="form-check-input" type="checkbox" id="right-left" value="right-left">
+              <input class="form-check-input" type="checkbox" id="right-left" name="prismRight" value="right-left">
             </div>
             <div class="form-check">
               <label class="form-check-label" for="right-right"> Right </label>
-              <input class="form-check-input" type="checkbox" id="right-right" value="right-right">
+              <input class="form-check-input" type="checkbox" id="right-right" name="prismRight" value="right-right">
             </div>
             <div class="form-check">
               <label class="form-check-label" for="right-up"> Up </label>
-              <input class="form-check-input" type="checkbox" id="right-up" value="right-up">
+              <input class="form-check-input" type="checkbox" id="right-up" name="prismRight" value="right-up">
             </div>
             <div class="form-check">
               <label class="form-check-label" for="right-down"> Down </label>
-              <input class="form-check-input" type="checkbox" id="right-down" value="right-down">
+              <input class="form-check-input" type="checkbox" id="right-down" name="prismRight" value="right-down">
             </div>
           </div>
 
@@ -464,6 +493,7 @@
           <div class="mb-3">
             <label for="recallCode" class="form-label">Recall Code:</label>
             <select name="recallCode" class="form-select">
+              <option value="0">0 - No Early Recall</option>
               <option value="1">1 - risk of frequent changes</option>
               <option value="2">2 - pathology likely to worsen</option>
               <option value="3.1">3.1 - referral to a medical practitioner</option>
