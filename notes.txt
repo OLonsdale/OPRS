@@ -1,18 +1,17 @@
 Sometimes logins fail, as if user gets redirected before authentication has fully gone through. 
-Author of entry taken from current signed in user, but only takes name not ID. TODO
-Deleting staff may cause issues with references to that staff member? - flag inactive. don't allow new references but maintain old references.
-Patient Drives / Uses VDU not stored?
+Author of entry taken from current signed in user, but only takes name not ID.
+Deleting staff may cause issues with references to that staff member? - remove active optom status
+edit name / create new password
+Import last history and symptoms
+attachments for exams
+check why only optoms can be selected in add exam, even before check it was true
 
-
-
-
-
-<!-- "addressHouseNumber": "12",
-"addressLineOne": "Line Road",
-"addressLineTwo": "Lincoln",
-"addressCity": "Lincolnshire",
-"GPName": "dr james",
-"GPAddress": "223\r\nmulti\r\nline\r\ncheck",
-"dateAdded": {
-  "$date": "2022-03-28T21:39:25.504Z" -->
+values need to show on view patient somewhere
+"addressHouseNumber"
+"addressLineOne"
+"addressLineTwo"
+"addressCity"
+"GPName"
+"GPAddress"
+"dateAdded"
 

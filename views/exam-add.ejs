@@ -28,8 +28,10 @@
             <label for="optometrist" class="form-label">Performing Optometrist:</label>
             <select class="form-control" name="optometrist" id="optometrist">
              <% optometrists.forEach(optom => { %>
-              <option value="<%= optom.id %>"><%= optom.name  %></option>
-             <% }) %>
+             <% if (optom.optometrist) { %>
+              <option value="<%= optom.id %>"><%= optom.name  %></option>              
+             <% }}) %>
+
             </select>
           </div>
 
@@ -55,12 +57,12 @@
 
           <div class="mb-3">
             <label for="patientDrives" class="form-label">Drives:</label>
-            <input type="checkbox" class="form-check-input" id="patientDrives" name="patientDrives" value="drives" />
+            <input type="checkbox" class="form-check-input" id="patientDrives" name="patientDrives" value="true" />
           </div>
 
           <div class="mb-3">
             <label for="patientUsesVDU" class="form-label">Uses VDU:</label>
-            <input type="checkbox" class="form-check-input" id="patientUsesVDU" name="patientUsesVDU" value="vcu" />
+            <input type="checkbox" class="form-check-input" id="patientUsesVDU" name="patientUsesVDU" value="true" />
           </div>
 
 

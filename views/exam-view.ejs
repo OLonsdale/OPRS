@@ -47,19 +47,11 @@
     </tr>
     <tr>
       <td>Patient Drives</td>
-     <% if (!exam.patientDrives) { %>
-      <td>No</td>
-     <% } else { %>
-      <td>Yes</td>
-      <% } %>
+      <td><%= exam.patientDrives %></td>
     </tr>
     <tr>
       <td>Patient uses VDU</td>
-     <% if (!exam.patientUsesVDU) { %>
-      <td>No</td>
-     <% } else { %>
-      <td>Yes</td>
-      <% } %>
+      <td><%= exam.patientUsesVDU %></td>
     </tr>
     <tr>
       <td>Occupation</td>
@@ -81,7 +73,102 @@
       <td>Lens Comment</td>
       <td><%= exam.lensComment%></td>
     </tr>
+    <tr>
+      <td>Viterous</td>
+      <td>Right: <%= exam.vitreousRight%> - Left: <%= exam.vitreousLeft%></td>
+    </tr>
+    <tr>
+      <td>Viterous Comment</td>
+      <td><%= exam.viterousComment%></td>
+    </tr>
+    <tr>
+      <td>Disc Shape</td>
+      <td>Right: <%= exam.discRight%> - Left: <%= exam.discLeft%></td>
+    </tr>
+    <tr>
+      <td>Disc Comment</td>
+      <td><%= exam.discComment %></td>
+    </tr>
+    <tr>
+      <td>Fundus</td>
+      <td>Right: <%= exam.fundusRight%> - Left: <%= exam.fundusLeft%></td>
+    </tr>
+    <tr>
+      <td>Macula</td>
+      <td>Right: <%= exam.maculaRight%> - Left: <%= exam.maculaLeft%></td>
+    </tr>
+    <tr>
+      <td>Pupils</td>
+      <td><%= exam.pupils%></td>
+    </tr>
+    <tr>
+      <td>Pupils Comment</td>
+      <td><%= exam.pupilsComment%></td>
+    </tr>
+    <tr>
+      <td>IOP</td>
+      <td>Right: <%= exam.IOPRight%> - Left: <%= exam.IOPLeft%></td>
+    </tr>
+    <tr>
+      <td>IOP Comment</td>
+      <td><%= exam.IOPComment%></td>
+    </tr>
 
+    <tr>
+      <td>Visual Field</td>
+      <td>Right: <%= exam.visualFieldRight%> - Left: <%= exam.visualFieldLeft%></td>
+    </tr>
+    <tr>
+      <td>Visual Field Comment</td>
+      <td><%= exam.visualFieldComment%></td>
+    </tr>
+    <tr>
+      <td>Fixation Disparity</td>
+      <td><%= exam.fixationDisparity%></td>
+    </tr>
+    <tr>
+      <td>Motility</td>
+      <td><%= exam.motility%></td>
+    </tr>
+    <tr>
+      <td>Convergence</td>
+      <td><%= exam.convergence%></td>
+    </tr>
+    <tr>
+      <td>Stereopsis</td>
+      <td><%= exam.stereopsis%></td>
+    </tr>
+    <tr>
+      <td>Visual Acuity</td>
+      <td><%= exam.visualAcuity%></td>
+    </tr>
+  </table>
+  <h2>Perscription</h2>
+  <table class="table">
+    <tr>
+      <td>Sphere</td>
+      <td><%= exam.sphereRight %> | <%=  exam.sphereLeft %></td>
+    </tr>
+    <tr>
+      <td>Cylinder</td>
+      <td><%= exam.cylinderRight %> | <%= exam.cylinderLeft %></td>
+    </tr>
+    <tr>
+      <td>Axis</td>
+      <td><%= exam.axisRight %> | <%= exam.axisLeft %></td>
+    </tr>
+    <tr>
+      <td>Prism/Base</td>
+      <td><%= exam.prismBaseRight %> | <%= exam.prismBaseLeft %></td>
+    </tr>
+    <tr>
+      <td>Advice Given</td>
+      <td><%= exam.adviceGiven %></td>
+    </tr>
+    <tr>
+      <td>Recall Code</td>
+      <td><%= exam.recallCode %></td>
+    </tr>
   </table>
   
   <% } else { %>
