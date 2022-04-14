@@ -1,10 +1,16 @@
-Sometimes logins fail, as if user gets redirected before authentication has fully gone through. 
+Sometimes logins fail, as if user gets redirected before authentication has fully gone through. - resolved?
 Author of entry taken from current signed in user, but only takes name not ID.
 Deleting staff may cause issues with references to that staff member? - remove active optom status
 edit name / create new password
 Import last history and symptoms
 attachments for exams
 check why only optoms can be selected in add exam, even before check it was true
+
+change password, change optom status, archive patient and associated exams, edit everything, sort and filter
+
+
+MERN Stack - nah
+
 
 values need to show on view patient somewhere
 "addressHouseNumber"
@@ -14,4 +20,3 @@ values need to show on view patient somewhere
 "GPName"
 "GPAddress"
 "dateAdded"
-

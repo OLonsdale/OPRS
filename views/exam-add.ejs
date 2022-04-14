@@ -522,3 +522,29 @@
   </div>
 </div>
 </div>
+
+
+<script>
+
+  buttonSubmitPatient.addEventListener('click', ev => {
+      ev.preventDefault()
+      submit()
+
+
+
+    });
+
+
+  async function submit(){
+    let exam = {}
+    const response = await fetch("",{
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify("")
+    })
+
+    console.log(response)
+  }  
+
+
+</script>
