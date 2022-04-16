@@ -608,11 +608,14 @@
     exam.rightPrism = rightPrism.join(", ")
     
     submit(exam)
+
+    //should be redirected to patient page
+    location.reload();
+
   })
 
 
   async function submit(exam) {
-    console.log(exam)
     const response = await fetch("/exam/add/", {
       method: 'POST',
       headers: {
@@ -620,7 +623,5 @@
       },
       body: JSON.stringify(exam)
     })
-
-    console.log(response)
   }
 </script>
