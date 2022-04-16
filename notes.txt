@@ -3,11 +3,12 @@ Author of entry taken from current signed in user, but only takes name not ID.
 Deleting staff may cause issues with references to that staff member? - remove active optom status
 edit name / create new password
 Import last history and symptoms
-attachments for exams
 check why only optoms can be selected in add exam, even before check it was true
 
 change password, change optom status, archive patient and associated exams, edit everything, sort and filter
+attachments for exams
 
+auditing? dates edited, edit by, fields changed, add old to archive?
 
 MERN Stack - nah
 

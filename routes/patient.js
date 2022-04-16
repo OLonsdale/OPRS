@@ -1,18 +1,18 @@
 /* eslint-disable no-unused-vars */
-const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcryptjs');
-const passport = require('passport');
-const User = require('../models/User');
-const Patient = require('../models/Patient');
-const Exam = require('../models/Exam');
+const express = require('express')
+const router = express.Router()
+const bcrypt = require('bcryptjs')
+const passport = require('passport')
+const User = require('../models/User')
+const Patient = require('../models/Patient')
+const Exam = require('../models/Exam')
 const {
   ensureAuthenticated,
   forwardAuthenticated
-} = require('../config/auth');
+} = require('../config/auth')
 
 //create patient
-router.get('/add', ensureAuthenticated, (req, res) => res.render('patient-add'));
+router.get('/add', ensureAuthenticated, (req, res) => res.render('patient-add'))
 
 //add patient
 router.post('/add', (req, res) => {
@@ -35,9 +35,9 @@ router.post('/add', (req, res) => {
     patientType,
     GPName,
     GPAddress,
-  } = req.body;
+  } = req.body
 
-  let actualGender;
+  let actualGender
   if (gender === "other") {
     actualGender = genderOther
   } else actualGender = gender
@@ -60,29 +60,29 @@ router.post('/add', (req, res) => {
     patientType,
     GPName,
     GPAddress,
-  });
+  })
 
-  newPatient.save();
+  newPatient.save()
 
-  req.flash('success_msg', 'Patient has been added');
-  res.redirect('/add-patient');
-});
+  req.flash('success_msg', 'Patient has been added')
+  res.redirect('/add-patient')
+})
 
 router.get('/list', ensureAuthenticated, async (req, res) => {
   try {
-    const patients = await Patient.find().lean();
+    const patients = await Patient.find().lean()
     res.render('patient-list', {
       patients
-    });
+    })
   } catch (error) {
-    res.render("errors/500");
+    res.render("errors/500")
   }
-});
+})
 
 router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
   if (!id) {
-    res.render('errors/404');
+    res.render('errors/404')
     return
   }
   try {
@@ -98,10 +98,10 @@ router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
     res.render('errors/404')
     return
   }
-});
+})
 
 router.get('/view', ensureAuthenticated, async (req, res) => {
-  res.render('errors/404');
-});
+  res.render('errors/404')
+})
 
-module.exports = router;
+module.exports = router

@@ -1,25 +1,25 @@
-const express = require('express');
-const router = express.Router();
-const passport = require('passport');
+const express = require('express')
+const router = express.Router()
+const passport = require('passport')
 const {
   ensureAuthenticated,
   forwardAuthenticated
-} = require('../config/auth');
+} = require('../config/auth')
 
 router.get('/', forwardAuthenticated, (_req, res) => res.render('login', {
   layout: false
-}));
+}))
 
 // Dashboard
 router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboard', {
   user: req.user,
-}));
+}))
 
 
 // Login Page
 router.get('/login', forwardAuthenticated, (_req, res) => res.render('login', {
   layout: false
-}));
+}))
 
 // Login
 router.post('/login', (req, res, next) => {
@@ -27,14 +27,14 @@ router.post('/login', (req, res, next) => {
     successRedirect: '/dashboard',
     failureRedirect: '/login',
     failureFlash: true,
-  })(req, res, next);
-});
+  })(req, res, next)
+})
 
 // Logout
 router.get('/logout', (req, res) => {
-  req.logout();
-  req.flash('success_msg', 'You are logged out');
-  res.redirect('/login');
-});
+  req.logout()
+  req.flash('success_msg', 'You are logged out')
+  res.redirect('/login')
+})
 
-module.exports = router;
+module.exports = router
