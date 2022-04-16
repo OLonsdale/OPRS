@@ -64,6 +64,9 @@ app.use('/', require('./routes/index'))
 app.use('/patient', require('./routes/patient'))
 app.use('/exam', require('./routes/exam'))
 app.use('/staff', require('./routes/staff'))
+app.use((req, res) => {
+  res.status(404).render("errors/404")
+});
 
 const PORT = process.env.PORT || 5500
 
