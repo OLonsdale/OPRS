@@ -1,0 +1,52 @@
+<% if (staff) { %>
+
+  <div >
+  <p>ID: <%= staff._id %></p>
+  </div>
+
+  <div >
+  <p>Name: <%= staff.name %></p>
+  </div>
+
+  <div >
+  <p>Active Optometrist: <%= staff.optometrist %></p>
+  </div>
+
+  <a href="/staff/edit/<%= staff.id %>" class="btn btn-primary mb-3">Edit Staff Member</a>
+
+  <% if (exams.length > 0) { %>
+
+  <h2>Exams by optometrist</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+        <tr class="table-dark">
+          <th>Exam Date</th>
+          <th>Patient ID</th>
+          <th>Exam ID</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% exams.forEach(exam => { %>
+        <tr>
+          <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
+          <td><%= exam.patientID %></td>
+          <td><%= exam.id %></td>
+          <td>
+            <a
+              type="button"
+              class="btn btn-secondary btn-sm"
+              href="/exam/view/<%= exam.id %>"
+            >
+              View
+            </a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <% } %> 
+<% } %>

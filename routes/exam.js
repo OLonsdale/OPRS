@@ -69,8 +69,6 @@ router.post('/add', ensureAuthenticated, async (req, res) => {
   
     newExam.save()
   
-    console.log("Saved exam: \n", newExam, "\n\n")
-  
     res.redirect(`/patient/view/${req.body.patientID}`)
   } catch (error) {
     res.render(`errors/500`)

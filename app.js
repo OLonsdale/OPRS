@@ -1,24 +1,24 @@
-const express = require('express')
-const expressLayouts = require('express-ejs-layouts')
-const mongoose = require('mongoose')
-const passport = require('passport')
-const flash = require('connect-flash')
-const session = require('express-session')
-const MongoStore = require('connect-mongo')
-const morgan = require('morgan')
-const path = require("path")
+const express = require('express') //server
+const expressLayouts = require('express-ejs-layouts') //ejs layouts
+const mongoose = require('mongoose') //db connecton
+const MongoStore = require('connect-mongo') //db connection
+const passport = require('passport') //authentication
+const flash = require('connect-flash') //messages
+const session = require('express-session') //sessions
+const morgan = require('morgan') //logging
+const path = require("path") //platform independent path tools
 
 const app = express()
+//set static folder
 app.use(express.static(path.join(__dirname,"public")));
 
-// Logging when dev mode enabled
+// Logging requests to console with responses.
 app.use(morgan("dev"))
-
 
 // Passport Config
 require('./config/passport')(passport)
 
-// DB Config
+// Get mongo connection string
 const db = require('./config/keys').mongoURI
 
 // Connect to MongoDB
@@ -26,12 +26,13 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, )
   .then(() => console.log(`MongoDB connected`))
   .catch((err) => console.log(err))
 
-// EJS
+// EJS for templating html with js
 app.use(expressLayouts)
 app.set('view engine', 'ejs')
 
 // Express body parser
-app.use(express.json())
+app.use(express.urlencoded({ extended: true })) // form posts etc
+app.use(express.json()) // json posts
 
 // Express session
 app.use(
@@ -68,6 +69,8 @@ app.use((req, res) => {
   res.status(404).render("errors/404")
 });
 
+//port if defined externally, or default to 5500
 const PORT = process.env.PORT || 5500
 
+//open server and log
 app.listen(PORT, console.log(`Server running on ${PORT}`))

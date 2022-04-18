@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const ExamSchema = new mongoose.Schema({
     "patientID": {
@@ -156,8 +156,8 @@ const ExamSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
-});
+})
 
-const Exam = mongoose.model("Exam", ExamSchema);
+const Exam = mongoose.model("Exam", ExamSchema)
 
-module.exports = Exam;
+module.exports = Exam

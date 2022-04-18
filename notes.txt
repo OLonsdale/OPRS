@@ -7,6 +7,7 @@ check why only optoms can be selected in add exam, even before check it was true
 
 change password, change optom status, archive patient and associated exams, edit everything, sort and filter
 attachments for exams
+no redirect on submit new exam
 
 auditing? dates edited, edit by, fields changed, add old to archive?
 

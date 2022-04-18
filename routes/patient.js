@@ -68,6 +68,7 @@ router.post('/add', (req, res) => {
   res.redirect('/add-patient')
 })
 
+//list patients
 router.get('/list', ensureAuthenticated, async (req, res) => {
   try {
     const patients = await Patient.find().lean()
@@ -79,12 +80,10 @@ router.get('/list', ensureAuthenticated, async (req, res) => {
   }
 })
 
+// view patient
 router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
-  if (!id) {
-    res.render('errors/404')
-    return
-  }
+
   try {
     const patient = await Patient.findOne({ _id: id })
     const exams = await Exam.find({ patientID:id })
@@ -98,10 +97,6 @@ router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
     res.render('errors/404')
     return
   }
-})
-
-router.get('/view', ensureAuthenticated, async (req, res) => {
-  res.render('errors/404')
 })
 
 module.exports = router

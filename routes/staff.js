@@ -38,10 +38,10 @@ router.post('/add', (req, res) => {
     })
   }
 
-  // check password is at least 4 chars, (yes it's weak)
-  if (password.length < 4) {
+  // check password is at least 8 chars, (fairly weak requirements, yes)
+  if (password.length < 8) {
     errors.push({
-      msg: 'Password must be at least 4 characters'
+      msg: 'Password must be at least 8 characters'
     })
   }
 
@@ -93,7 +93,7 @@ router.post('/add', (req, res) => {
           // then passes message and reloads page
           .then(() => {
             req.flash('success_msg', 'User is now registered')
-            res.redirect('/add-staff')
+            res.redirect('/list/staff')
           })
           .catch((err) => console.log(err))
       })
@@ -110,6 +110,103 @@ router.get('/list', ensureAuthenticated, async (req, res) => {
   } catch (error) {
     res.render("errors/500")
   }
+})
+
+router.get('/view/:staffID', ensureAuthenticated, async (req, res) => {
+
+  const id = req.params.staffID
+
+  try {
+    const staff = await User.findOne({ _id: id })
+    const exams = await Exam.find({ performingOptometrist: id })
+    if (staff) { 
+      res.render('staff-view', { staff, exams })
+      return
+    }
+    throw ("not found")
+  } catch (error) {
+    res.render('errors/404')
+  }
+})
+
+router.get('/edit/:staffID', ensureAuthenticated, async (req, res) => {
+
+  const id = req.params.staffID
+
+  try {
+    const staff = await User.findOne({ _id: id })
+    if (staff) { 
+      res.render('staff-edit', { staff })
+      return
+    }
+    throw ("not found")
+  } catch (error) {
+    res.render('errors/404')
+  }
+})
+
+router.post('/edit/:staffID', ensureAuthenticated, async (req, res) => {
+  const id = req.params.staffID
+  let staff
+
+  try { staff = await User.findOne({ _id: id }) }
+  catch (error) { res.render('errors/500'); return }
+
+  const {
+    name,
+    password,
+    password2
+  } = req.body
+  const optometrist = 'optometrist' in req.body
+
+  if(staff.name !== name){ staff.name = name }
+
+  if(staff.optometrist !== optometrist) { staff.optometrist = optometrist}
+
+  if(password){
+    const errors = []
+    // check passwords match
+    if (password != password2) {
+      errors.push({
+        msg: 'Passwords do not match'
+      })
+    }
+
+    // check password is at least 8 chars
+    if (password.length < 8) {
+      errors.push({
+        msg: 'Password must be at least 4 characters'
+      })
+    }
+
+    if (errors.length > 0) {
+      res.render('staff-add', {
+        errors,
+      })
+      return
+    }
+
+    bcrypt.genSalt(10, (_err, salt) => {
+      bcrypt.hash(password, salt, (err, hash) => {
+        if (err) throw err
+        // replaces clear password with hashed
+        staff.password = hash
+        // saves to db
+        staff.save()
+          // then passes message and reloads page
+          .then(() => {
+            res.redirect('/list/staff')
+          })
+          .catch((err) => console.log(err))
+      })
+    })
+  }
+  
+ 
+  else staff.save()
+
+
+  res.redirect(`/staff/view/${id}`)
 })
 
 module.exports = router
