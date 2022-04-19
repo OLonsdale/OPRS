@@ -65,11 +65,12 @@ router.get('/add', ensureAuthenticated, (req, res) => {
 router.post('/add', ensureAuthenticated, async (req, res) => {
 
   try {
+    //save exam and add ID to patient exams list
     const newExam = new Exam(req.body)
-  
+    const patient = await Patient.findOne({_id: req.body.patientID})
     newExam.save()
-  
-    res.redirect(`/patient/view/${req.body.patientID}`)
+    patient.exams.push(newExam._id)
+    patient.save()
   } catch (error) {
     res.render(`errors/500`)
   }

@@ -64,6 +64,13 @@ const PatientSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  archived: {
+      type: Boolean,
+      default: false
+  },
+  archiveReason: {
+      type: String,
+  },
 });
 
 const Patient = mongoose.model("Patient", PatientSchema);
