@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
@@ -6,7 +6,7 @@ const Patient = require('../models/Patient');
 const Exam = require('../models/Exam');
 const {
   ensureAuthenticated,
-  forwardAuthenticated
+  
 } = require('../config/auth');
 
 router.get('/view/:examID', ensureAuthenticated, async (req, res) => {
@@ -43,7 +43,6 @@ router.get('/add/:patientID', ensureAuthenticated, async (req, res) => {
   try {
     const patient = await Patient.findOne({ _id: id })
     const optometrists = await User.find({ optometrist: true })
-    const author = req.user
     if (patient) {
       res.render('exam-add', {
         user: req.user,

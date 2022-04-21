@@ -13,11 +13,9 @@ const PatientSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    required: true,
   },
   dateOfBirth: {
     type: String,
-    required: true,
   },
   phoneLandline: {
     type: String,
@@ -48,7 +46,6 @@ const PatientSchema = new mongoose.Schema({
   },
   patientType: {
     type: String,
-    required: true,
   },
   GPName: {
     type: String,
@@ -64,13 +61,10 @@ const PatientSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  archived: {
-      type: Boolean,
-      default: false
+  notes: {
+    type: String,
   },
-  archiveReason: {
-      type: String,
-  },
+
 });
 
 const Patient = mongoose.model("Patient", PatientSchema);

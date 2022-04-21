@@ -1,13 +1,13 @@
-/* eslint-disable no-unused-vars */
+
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
 const User = require('../models/User')
-const Patient = require('../models/Patient')
+
 const Exam = require('../models/Exam')
 const {
   ensureAuthenticated,
-  forwardAuthenticated
+
 } = require('../config/auth')
 
 

@@ -1,0 +1,168 @@
+<div class="row mt-5">
+  <div class="row-col-auto m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mb-3">
+        <i class="fas fa-user-edit"></i> Edit Patient
+      </h1>
+
+      <% include partials/messages %>
+
+      <form method="POST">
+        <div class="mb-3">
+          <label for="editReason" class="form-label">Reason for edit:</label>
+          <input id="editReason" name="editReason" class="form-control" type="text"
+            placeholder="outdated, incorrect, etc" />
+        </div>
+
+        <h2>Name:</h2>
+
+        <div class="form-group">
+          <div class="mb-3">
+            <label for="inputFirstName" class="form-label">First Name:</label>
+            <input id="inputFirstName" name="firstName" class="form-control" type="text"
+              value="<%= typeof patient.firstName != 'undefined' ? patient.firstName : '' %>" />
+          </div>
+
+          <div class="mb-3">
+            <label for="inputMiddleName" class="form-label">Middle Names:</label>
+            <input id="inputMiddleName" name="middleName" class="form-control" type="text"
+              value="<%= typeof patient.middleName != 'undefined' ? patient.middleName : '' %>" />
+          </div>
+
+          <div class="mb-3">
+            <label for="inputLastName" class="form-label">Last Name:</label>
+            <input id="inputLastName" name="lastName" class="form-control" type="text"
+              value="<%= typeof patient.lastName != 'undefined' ? patient.lastName : '' %>" />
+          </div>
+
+          <h2>Bio:</h2>
+
+          <label for="inputGender">Gender:</label>
+          <select class="form-select" name="gender" id="inputGender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+
+          <div class="mb-3">
+            <label for="inputGenderOther" class="form-label">If other, please specify:</label>
+            <input id="inputGenderOther" name="genderOther" class="form-control" type="text" />
+          </div>
+
+          <script>
+            const genderVal = "<%= patient.gender %>";
+            if (genderVal == "male") {
+              inputGender.value = "male";
+            } else if (genderVal == "female") {
+              inputGender.value = "female";
+            } else {
+              inputGender.value = "other";
+              inputGenderOther.value = "<%= patient.gender %>";
+            }
+          </script>
+
+          <div class="mb-3">
+            <label for="inputDateOfBirth">Date of birth:</label>
+            <input class="form-control" name="dateOfBirth" id="inputDateOfBirth" type="date" 
+            value="<%= typeof patient.dateOfBirth != 'undefined' ? patient.dateOfBirth : '' %>"/>
+          </div>
+
+          <h2>Contact:</h2>
+          <div class="mb-3">
+            <label for="inputLandline" class="form-label">Landline number:</label>
+            <input id="inputLandline" name="landline" class="form-control" type="text"
+              value="<%= typeof patient.phoneLandline != 'undefined' ? patient.phoneLandline : '' %>" />
+          </div>
+
+          <div class="mb-3">
+            <label for="inputMobile" class="form-label">Mobile number:</label>
+            <input id="inputMobile" name="mobile" class="form-control" type="text"
+              value="<%= typeof patient.phoneMobile != 'undefined' ? patient.phoneMobile : '' %>" />
+          </div>
+
+          <div class="mb-3">
+            <label for="inputEmail" class="form-label">Email Address:</label>
+            <input id="inputEmail" name="email" class="form-control" type="text"
+              value="<%= typeof patient.email != 'undefined' ? patient.email : '' %>" />
+          </div>
+
+          <h2>Address:</h2>
+
+          <div class="mb-3">
+            <label for="inputHouseNumber" class="form-label">House Number:</label>
+            <input id="inputHouseNumber" name="addressHouseNumber" class="form-control" type="text"
+              value="<%= typeof patient.addressHouseNumber != 'undefined' ? patient.addressHouseNumber : '' %>" />
+          </div>
+
+          <div class="mb-3">
+            <label for="inputAddressLineOne">Line 1:</label>
+            <input id="inputAddressLineOne" name="addressLineOne" class="form-control" type=" text"
+              value="<%= typeof patient.addressLineOne != 'undefined' ? patient.addressLineOne : '' %>" />
+          </div>
+
+          <div class="mb-3">
+            <label for="inputAddressLineTwo">Line 2:</label>
+            <input id="inputAddressLineTwo" name="addressLineTwo" class="form-control" type=" text"
+              value="<%= typeof patient.addressLineTwo != 'undefined' ? patient.addressLineTwo : '' %>" />
+          </div>
+
+          <div class="mb-3">
+            <label for="inputAddressCity">City:</label>
+            <input id="inputAddressCity" name="addressCity" class="form-control" type=" text"
+              value="<%= typeof patient.addressCity != 'undefined' ? patient.addressCity : '' %>" />
+          </div>
+
+          <div class="mb-3">
+            <label for="inputAddressPostCode">Post Code:</label>
+            <input id="inputAddressPostCode" name="addressPostCode" class="form-control" type="text"
+              value="<%= typeof patient.addressPostcode != 'undefined' ? patient.addressPostcode : '' %>" />
+          </div>
+
+          <div class="mb-3">
+            <h2>Medical Details:</h2>
+            <label for="inputNHSNumber">NHS Number:</label>
+            <input id="inputNHSNumber" name="NHSNumber" class="form-control" type="text"
+              value="<%= typeof patient.NHSNumber != 'undefined' ? patient.NHSNumber : '' %>" />
+          </div>
+
+          <div class="mb-3">
+            <label for="inputPatientType">Patient Type:</label>
+            <select class="form-select" name="patientType" id="inputPatientType">
+              <option value="private">Private</option>
+              <option value="NHS">NHS</option>
+            </select>
+          </div>
+
+          <script>
+            const patientTypeValue = "<%= patient.patientType %>";
+            if (patientTypeValue == "private" || patientTypeValue == "NHS")
+              inputPatientType.value = patientTypeValue;
+          </script>
+
+          <div class="mb-3">
+            <label for="inputGPName">GP Name:</label>
+            <input class="form-control" id="inputGPName" name="GPName" type="text"
+              value="<%= typeof patient.GPName != 'undefined' ? patient.GPName : '' %>" />
+          </div>
+
+          <div class="mb-3">
+            <label for="inputGPAddress">GP Address:</label>
+            <textarea class="form-control" name="GPAddress" id="inputGPAddress" rows="5"
+            ><%= typeof patient.GPAddress != 'undefined' ? patient.GPAddress : '' %></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="notes">Important Notes:</label>
+            <textarea class="form-control" name="notes" id="notes" rows="5"
+              placeholder="prefered contact, accessability, safeguarding etc."
+              ><%= typeof patient.notes != 'undefined' ? patient.notes : '' %></textarea>
+          </div>
+
+          <button id="buttonSubmitPatient" class="btn btn-primary btn-block">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -156,13 +156,6 @@ const ExamSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
-    archived: {
-        type: Boolean,
-        default: false
-    },
-    archiveReason: {
-        type: String,
-    },
 })
 
 const Exam = mongoose.model("Exam", ExamSchema)

@@ -1,24 +1,20 @@
-Sometimes logins fail, as if user gets redirected before authentication has fully gone through. - resolved?
-Author of entry taken from current signed in user, but only takes name not ID.
-Deleting staff may cause issues with references to that staff member? - remove active optom status
-edit name / create new password
 Import last history and symptoms
-check why only optoms can be selected in add exam, even before check it was true
 
-change password, change optom status, archive patient and associated exams, edit everything, sort and filter
+archive patient and associated exams, edit everything, sort and filter
+
 attachments for exams
-no redirect on submit new exam
 
-auditing? dates edited, edit by, fields changed, add old to archive?
+auditing? date edited, edit by, fields changed, add old to archive?
 
-MERN Stack - nah
+Log logins - IP, timestamp, failed or passed. Log all requests?
 
+What level of validation?
 
-values need to show on view patient somewhere
-"addressHouseNumber"
-"addressLineOne"
-"addressLineTwo"
-"addressCity"
-"GPName"
-"GPAddress"
-"dateAdded"
+patient edit dob, redirect
+
+archive reason deletion edit
+
+12 space in GPAddress edit?
+gender other edit
+
+redirect on add patient

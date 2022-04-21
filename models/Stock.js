@@ -43,7 +43,7 @@ const StaffSchema = new mongoose.Schema({
   type: {
     type: String, //rimless, semi-rimless, full
   },
-});
+}, {collection: "stock"});
 
 const Staff = mongoose.model("Staff", StaffSchema);
 
