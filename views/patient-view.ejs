@@ -79,7 +79,7 @@
             </tr>
             <tr>
               <td>GP Address</td>
-              <td><textarea aria-readonly="true" rows="5" style="resize: none;" class="form-control"><%= patient.GPAddress %></textarea></td>
+              <td><textarea disabled rows="5" style="resize: none;" class="form-control"><%= patient.GPAddress %></textarea></td>
             </tr>
           </table>
         </div>
@@ -121,12 +121,12 @@
   </div>
 
   <label for="patientNotes">Important Notes:</label>
-  <textarea id="patientNotes" aria-readonly="true" rows="5" style="resize: none;" class="form-control"><%= patient.notes %></textarea>
+  <textarea id="patientNotes" disabled rows="5" style="resize: none;" class="form-control"><%= patient.notes %></textarea>
 
 
 
 
-<a href="/exam/add/<%= patient.id %>" class="btn btn-primary mt-3 mb-1"> Add Exam</a>
+<a href="/exam/add/<%= patient.id %>" class="btn btn-primary mt-3 mb-1">Add Exam</a>
 
 <div class="table-responsive">
   <table class="table table-striped table-hover">

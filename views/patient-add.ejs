@@ -13,7 +13,7 @@
         <div class="form-group">
           <div class="mb-3">
             <label for="inputFirstName" class="form-label">First Name:</label>
-            <input id="inputFirstName" name="firstName" class="form-control" type="text">
+            <input id="inputFirstName" required name="firstName" class="form-control" type="text">
           </div>
 
           <div class="mb-3">
@@ -28,14 +28,17 @@
 
           <h2>Bio:</h2>
 
-          <label for="inputGender">Gender:</label>
-          <select class="form-select" name="gender" id="inputGender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-
           <div class="mb-3">
+            <label for="inputGender">Gender:</label>
+            <select class="form-select" name="gender" id="inputGender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="">Other</option>
+            </select>
+            </div>
+          </div>
+
+          <div id="inputGenderOtherDiv" class="mb-3 d-none">
             <label for="inputGenderOther" class="form-label">If other, please specify:</label>
             <input id="inputGenderOther" name="genderOther" class="form-control" type="text">
           </div>
@@ -126,3 +129,13 @@
     </div>
   </div>
 </div>
+
+<script>
+  inputGender.addEventListener("change", _=> {
+    if(!inputGender.value){
+      inputGenderOtherDiv.classList.remove("d-none")
+    } else {
+      inputGenderOtherDiv.classList.add("d-none")
+    }
+  })
+</script>

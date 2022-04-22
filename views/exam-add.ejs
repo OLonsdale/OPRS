@@ -7,7 +7,7 @@
 
       <% include partials/messages %>
 
-      <form action="/exam/add" method="POST">
+      <form action="" method="POST">
         <h2>History and Symptoms:</h2>
 
         <div class="form-group">
@@ -171,7 +171,8 @@
               <option value="">Other</option>
             </select>
           </div>
-          <div class="mb-3">
+
+          <div id="fundusLeftOtherDiv" class="mb-3 d-none">
             <label for="fundusLeftOther" class="form-label">Other:</label>
             <textarea class="form-control" name="fundusLeftOther" id="fundusLeftOther" rows="1"></textarea>
           </div>
@@ -186,7 +187,7 @@
               <option value="">Other</option>
             </select>
           </div>
-          <div class="mb-3">
+          <div id="fundusRightOtherDiv" class="mb-3 d-none">
             <label for="fundusRightOther" class="form-label">Other:</label>
             <textarea class="form-control" name="fundusRightOther" id="fundusRightOther" rows="1"></textarea>
           </div>
@@ -201,7 +202,7 @@
               <option value="">Other</option>
             </select>
           </div>
-          <div class="mb-3">
+          <div id="maculaLeftOtherDiv" class="mb-3 d-none">
             <label for="maculaLeftOther" class="form-label">Other:</label>
             <textarea class="form-control" name="maculaLeftOther" id="maculaLeftOther" rows="1"></textarea>
           </div>
@@ -216,7 +217,7 @@
               <option value="">Other</option>
             </select>
           </div>
-          <div class="mb-3">
+          <div id="maculaRightOtherDiv" class="mb-3 d-none">
             <label for="maculaRightOther" class="form-label">Other:</label>
             <textarea class="form-control" name="maculaRightOther" id="maculaRightOther" rows="1"></textarea>
           </div>
@@ -306,7 +307,7 @@
             </select>
           </div>
 
-          <div class="mb-3">
+          <div id="motilityOtherDiv" class="mb-3 d-none">
             <label for="motilityOther" class="form-label">Other:</label>
             <textarea class="form-control" name="motilityOther" id="motilityOther" rows="1"></textarea>
           </div>
@@ -521,107 +522,45 @@
     </form>
   </div>
 </div>
-</div>
-
 
 <script>
-  buttonSubmitPatient.addEventListener('click', ev => {
-    ev.preventDefault()
-    const exam = {
-      patientID: patientID.value,
-      visitReason: visitReason.value,
-      familyHistory: familyHistory.value,
-      generalHealth: generalHealth.value,
-      medication: medication.value,
-      patientDrives: patientDrives.checked,
-      patientUsesVDU: patientUsesVDU.checked,
-      occupation: occupation.value,
-      ocularHistory: ocularHistory.value,
-      dateOfVisit: dateOfVisit.value,
-      performingOptometrist: performingOptometrist.value,
-      author: "<%= user._id %>",
-      lensOpacityLeft: lensOpacityLeft.value,
-      lensOpacityRight: lensOpacityRight.value,
-      lensComment: lensComment.value,
-      vitreousLeft: vitreousLeft.value,
-      vitreousRight: vitreousRight.value,
-      viterousComment: viterousComment.value,
-      discLeft: discLeft.value,
-      discRight: discRight.value,
-      discComment: discComment.value,
-      fundusLeft: fundusLeft.value || fundusLeftOther.value,
-      fundusRight: fundusRight.value || fundusRightOther.value,
-      maculaLeft: maculaLeft.value || maculaLeftOther.value,
-      maculaRight: maculaRight.value || maculaRightOther.value,
-      pupils: pupils.value,
-      pupilsComment: pupilsComment.value,
-      IOPLeft: IOPLeft.value,
-      IOPRight: IOPRight.value,
-      IOPComment: IOPComment.value,
-      visualFieldLeft: visualFieldLeft.value,
-      visualFieldRight: visualFieldRight.value,
-      visualFieldComment: visualFieldComment.value,
-      fixationDisparity: fixationDisparity.value,
-      motility: motility.value || motilityOther.value,
-      convergence: convergence.value,
-      stereopsis: stereopsis.value,
-      //va
-      //sphere
-      cylinderLeft: cylinderLeft.value,
-      cylinderRight: cylinderRight.value,
-      axisLeft: axisLeft.value,
-      axisRight: axisRight.value,
-      //prism
-      recallCode: recallCode.value,
+  fundusLeft.addEventListener("change", _=> {
+    if(!fundusLeft.value){
+      fundusLeftOtherDiv.classList.remove("d-none")
+    } else {
+      fundusLeftOtherDiv.classList.add("d-none")
     }
-
-
-    if (adviceSpecifics.value) {
-      exam.adviceGiven = `${adviceGiven.value} - ${adviceSpecifics.value}`
-    } else exam.adviceGiven = adviceGiven.value
-
-    if (visualAcuityMod.value == 0) {
-      exam.visualAcuity = visualAcuity.value
-    } else exam.visualAcuity = `${visualAcuity.value} ${visualAcuityMod.value}`
-
-    if (sphereLeft.value != "plano") {
-      exam.sphereLeft = `${sphereLeftSign.value}${sphereLeft.value}`
-    } else exam.sphereLeft = `${sphereLeft.value}`
-
-    if (sphereRight.value != "plano") {
-      exam.sphereRight = `${sphereRightSign.value}${sphereRight.value}`
-    } else exam.sphereRight = `${sphereRight.value}`
-
-    let leftPrism = []
-    if(leftLeft.checked) leftPrism.push("Left")
-    if(leftRight.checked) leftPrism.push("Right")
-    if(leftUp.checked) leftPrism.push("Up")
-    if(leftDown.checked) leftPrism.push("Down")
-
-    let rightPrism = []
-    if(rightLeft.checked) rightPrism.push("Left")
-    if(rightRight.checked) rightPrism.push("Right")
-    if(rightUp.checked) rightPrism.push("Up")
-    if(rightDown.checked) rightPrism.push("Down")
-
-    exam.leftPrism = leftPrism.join(", ")
-    exam.rightPrism = rightPrism.join(", ")
-    
-    submit(exam)
-
-    //should be redirected to patient page
-    window.location.href = `/patient/view/${patientID.value}`
-
   })
 
+  fundusRight.addEventListener("change", _=> {
+    if(!fundusRight.value){
+      fundusRightOtherDiv.classList.remove("d-none")
+    } else {
+      fundusRightOtherDiv.classList.add("d-none")
+    }
+  })
 
-  async function submit(exam) {
-    const response = await fetch("/exam/add/", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(exam)
-    })
-  }
+  maculaLeft.addEventListener("change", _=> {
+    if(!maculaLeft.value){
+      maculaLeftOtherDiv.classList.remove("d-none")
+    } else {
+      maculaLeftOtherDiv.classList.add("d-none")
+    }
+  })
+
+  maculaRight.addEventListener("change", _=> {
+    if(!maculaRight.value){
+      maculaRightOtherDiv.classList.remove("d-none")
+    } else {
+      maculaRightOtherDiv.classList.add("d-none")
+    }
+  })
+
+  motility.addEventListener("change", _=> {
+    if(!motility.value){
+      motilityOtherDiv.classList.remove("d-none")
+    } else {
+      motilityOtherDiv.classList.add("d-none")
+    }
+  })
 </script>

@@ -15,7 +15,6 @@ router.post('/add', ensureAuthenticated, (req, res) => {
     firstName,
     middleName,
     lastName,
-    gender,
     genderOther,
     dateOfBirth,
     landline,
@@ -33,17 +32,16 @@ router.post('/add', ensureAuthenticated, (req, res) => {
     notes
   } = req.body
 
-
-  let actualGender
+  let gender = req.body.gender
   if (gender === "other") {
-    actualGender = genderOther
-  } else actualGender = gender
+    gender = genderOther
+  } 
 
   const newPatient = new Patient({
     firstName,
     middleName,
     lastName,
-    gender: actualGender,
+    gender,
     dateOfBirth,
     phoneLandline:landline,
     phoneMobile:mobile,
@@ -83,15 +81,10 @@ router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
 
   try {
-    const patient = await Patient.findOne({
-      _id: id
-    })
-    const exams = await Exam.find({
-      patientID: id
-    })
-    const optoms = await User.find({
-      optometrist: true
-    })
+    const patient = await Patient.findOne({ _id: id })
+    const exams = await Exam.find({ patientID: id })
+    console.log(exams)
+    const optoms = await User.find({ })
     if (patient) {
       res.render('patient-view', {
         patient,

@@ -14,7 +14,4 @@ patient edit dob, redirect
 
 archive reason deletion edit
 
-12 space in GPAddress edit?
-gender other edit
-
 redirect on add patient

@@ -37,29 +37,19 @@
 
           <h2>Bio:</h2>
 
-          <label for="inputGender">Gender:</label>
-          <select class="form-select" name="gender" id="inputGender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-
           <div class="mb-3">
+            <label for="inputGender">Gender:</label>
+            <select class="form-select" name="gender" id="inputGender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="">Other</option>
+            </select>
+          </div>
+
+          <div id="inputGenderOtherDiv" class="mb-3 d-none">
             <label for="inputGenderOther" class="form-label">If other, please specify:</label>
             <input id="inputGenderOther" name="genderOther" class="form-control" type="text" />
           </div>
-
-          <script>
-            const genderVal = "<%= patient.gender %>";
-            if (genderVal == "male") {
-              inputGender.value = "male";
-            } else if (genderVal == "female") {
-              inputGender.value = "female";
-            } else {
-              inputGender.value = "other";
-              inputGenderOther.value = "<%= patient.gender %>";
-            }
-          </script>
 
           <div class="mb-3">
             <label for="inputDateOfBirth">Date of birth:</label>
@@ -166,3 +156,26 @@
     </div>
   </div>
 </div>
+
+<script>
+
+  const genderVal = "<%= patient.gender %>"
+
+  if (genderVal == "male") {
+    inputGender.value = "male"
+  } else if (genderVal == "female") {
+    inputGender.value = "female"
+  } else {
+    inputGender.value = ""
+    inputGenderOther.value = "<%= patient.gender %>"
+    inputGenderOtherDiv.classList.remove("d-none")
+  }
+
+  inputGender.addEventListener("change", _=> {
+    if(!inputGender.value){
+      inputGenderOtherDiv.classList.remove("d-none")
+    } else {
+      inputGenderOtherDiv.classList.add("d-none")
+    }
+  })
+</script>
