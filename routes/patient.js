@@ -7,7 +7,7 @@ const Archive = require('../models/Archive')
 const {ensureAuthenticated,} = require('../config/auth')
 
 //create patient
-router.get('/add', ensureAuthenticated, (req, res) => res.render('patient-add'))
+router.get('/add', ensureAuthenticated, (req, res) => res.render('patient-add',{title:"Add Patient"}))
 
 //add patient
 router.post('/add', ensureAuthenticated, (req, res) => {
@@ -69,7 +69,8 @@ router.get('/list', ensureAuthenticated, async (req, res) => {
   try {
     const patients = await Patient.find().lean()
     res.render('patient-list', {
-      patients
+      patients,
+      title:"List Patients"
     })
   } catch (error) {
     res.render("errors/500")
@@ -89,7 +90,8 @@ router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
       res.render('patient-view', {
         patient,
         exams,
-        optoms
+        optoms,
+        title:`View ${patient.firstName} ${patient.lastName}`
       })
       return
     }
@@ -110,7 +112,8 @@ router.get('/edit/:patientID', ensureAuthenticated, async (req, res) => {
     })
     if (patient) {
       res.render('patient-edit', {
-        patient
+        patient,
+        title:`Edit ${patient.firstName} ${patient.lastName}`
       })
       return
     }

@@ -11,7 +11,7 @@ const {
 } = require('../config/auth')
 
 
-router.get('/add', ensureAuthenticated, (_req, res) => res.render('staff-add'))
+router.get('/add', ensureAuthenticated, (_req, res) => res.render('staff-add',{title:"Add Staff"}))
 
 router.post('/add', (req, res) => {
   const {
@@ -48,6 +48,7 @@ router.post('/add', (req, res) => {
   // display errors if there are any
   if (errors.length > 0) {
     res.render('staff-add', {
+      title:"Add Staff",
       errors,
       name,
       username,
@@ -64,6 +65,7 @@ router.post('/add', (req, res) => {
     if (user) {
       errors.push({ msg: 'Username already in use' })
       res.render('staff-add', {
+        title:"Add Staff",
         errors,
         name,
         username,
@@ -105,6 +107,7 @@ router.get('/list', ensureAuthenticated, async (req, res) => {
   try {
     const users = await User.find()
     res.render('staff-list', {
+      title:"List Staff",
       users
     })
   } catch (error) {
@@ -120,7 +123,7 @@ router.get('/view/:staffID', ensureAuthenticated, async (req, res) => {
     const staff = await User.findOne({ _id: id })
     const exams = await Exam.find({ performingOptometrist: id })
     if (staff) { 
-      res.render('staff-view', { staff, exams })
+      res.render('staff-view', { staff, exams, title:`View ${staff.username}` })
       return
     }
     throw ("not found")
@@ -136,7 +139,7 @@ router.get('/edit/:staffID', ensureAuthenticated, async (req, res) => {
   try {
     const staff = await User.findOne({ _id: id })
     if (staff) { 
-      res.render('staff-edit', { staff })
+      res.render('staff-edit', { staff, title:`Edit ${staff.username}`,})
       return
     }
     throw ("not found")
@@ -180,8 +183,9 @@ router.post('/edit/:staffID', ensureAuthenticated, async (req, res) => {
     }
 
     if (errors.length > 0) {
-      res.render('staff-add', {
+      res.render('staff-edit', {
         errors,
+        title:`Edit ${staff.username}`
       })
       return
     }

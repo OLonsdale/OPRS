@@ -13,6 +13,7 @@ router.get('/', forwardAuthenticated, (_req, res) => res.render('login', {
 // Dashboard
 router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboard', {
   user: req.user,
+  title:"Dashboard"
 }))
 
 

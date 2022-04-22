@@ -17,7 +17,8 @@ router.get('/view/:examID', ensureAuthenticated, async (req, res) => {
     if (exam) {
       res.render('exam-view', {
         exam,
-        optoms
+        optoms,
+        title:"View Exam"
       })
       return
     }
@@ -38,7 +39,8 @@ router.get('/add/:patientID', ensureAuthenticated, async (req, res) => {
       res.render('exam-add', {
         user: req.user,
         patientID: id,
-        optometrists
+        optometrists,
+        title:"New Exam"
       })
       return
     }
