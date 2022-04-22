@@ -1,5 +1,6 @@
 const express = require('express') //server
 const expressLayouts = require('express-ejs-layouts') //ejs layouts
+const expressFileUpload = require('express-fileupload');
 const mongoose = require('mongoose') //db connecton
 const MongoStore = require('connect-mongo') //db connection
 const passport = require('passport') //authentication
@@ -30,9 +31,10 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, )
 app.use(expressLayouts)
 app.set('view engine', 'ejs')
 
-// Express body parser
+// Express body parser & file upload validation
 app.use(express.urlencoded({ extended: true })) // form posts etc
 app.use(express.json()) // json posts
+app.use(expressFileUpload({createParentPath: true}))
 
 // Express session
 app.use(

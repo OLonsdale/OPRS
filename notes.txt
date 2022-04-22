@@ -2,7 +2,7 @@ Import last history and symptoms
 
 archive patient and associated exams, edit everything, sort and filter
 
-attachments for exams
+attachments for exams - nightmare
 
 auditing? date edited, edit by, fields changed, add old to archive?
 

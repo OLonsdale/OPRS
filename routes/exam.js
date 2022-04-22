@@ -58,8 +58,8 @@ router.post('/add/:patientID', ensureAuthenticated, async (req, res) => {
     familyHistory: req.body.familyHistory,
     generalHealth: req.body.generalHealth,
     medication: req.body.medication,
-    //drives
-    //vdu
+    patientDrives: Boolean(req.body.patientDrives) || false,
+    patientUsesVDU: Boolean(req.body.patientUsesVDU) || false,
     occupation: req.body.occupation,
     ocularHistory: req.body.ocularHistory,
     dateOfVisit: req.body.dateOfVisit,
@@ -99,19 +99,10 @@ router.post('/add/:patientID', ensureAuthenticated, async (req, res) => {
     axisRight: req.body.axisRight,
     //prism
     recallCode: req.body.recallCode,
+    adviceGiven: req.body.adviceGiven
   }
 
-  exam.adviceGiven = req.body.adviceGiven
-
   if (req.body.adviceSpecifics) exam.adviceGiven = `${req.body.adviceGiven} - ${req.body.adviceSpecifics}`
-
-  if (req.body.patientDrives) {
-    exam.patientDrives = true
-  } else exam.patientDrives = false
-
-  if (req.body.patientUsesVDU) {
-    exam.patientUsesVDU = true
-  } else exam.patientUsesVDU = false
 
   if (req.body.visualAcuityMod == 0) {
     exam.visualAcuity = req.body.visualAcuity
@@ -127,11 +118,13 @@ router.post('/add/:patientID', ensureAuthenticated, async (req, res) => {
 
   if (req.body.sphereLeft != "plano") {
     exam.sphereLeft = `${req.body.sphereLeftSign}${req.body.sphereLeft}`
-  } else exam.sphereLeft = `${req.body.sphereLeft}`
+  } else exam.sphereLeft = req.body.sphereLeft
 
   if (req.body.sphereRight != "plano") {
     exam.sphereRight = `${req.body.sphereRightSign}${req.body.sphereRight}`
-  } else exam.sphereRight = `${req.body.sphereRight}`
+  } else exam.sphereRight = req.body.sphereRight
+
+  console.log(req.body)
 
   const newExam = new Exam(exam)
 

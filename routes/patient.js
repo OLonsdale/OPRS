@@ -84,7 +84,6 @@ router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
   try {
     const patient = await Patient.findOne({ _id: id })
     const exams = await Exam.find({ patientID: id })
-    console.log(exams)
     const optoms = await User.find({ })
     if (patient) {
       res.render('patient-view', {
