@@ -155,7 +155,7 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
     const patient = await Patient.findOne({ _id: id })
     if (patient) {
       const archivePatient = new Archive({ 
-        archiveType: "Edit",
+        archiveType: "Edit Patient",
         archiveReason: `${editReason}`,
         archivedBy: req.user._id,
         patientDocument: patient, //make sure shit isn't changing here

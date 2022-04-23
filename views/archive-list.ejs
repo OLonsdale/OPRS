@@ -1,0 +1,24 @@
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead class="thead-dark">
+      <tr class="table-dark">
+        <th>Archive Type</th>
+        <th>Archiver</th>
+        <th>ID</th>
+        <th>Archived</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% elements.forEach(element => { %>
+        <tr>
+          <td><%= element.archiveType %></td>
+          <td><%= optoms.find(optom => optom._id == element.archivedBy).name %></td>
+          <td><%= element._id %></td>
+          <td><%= element.dateArchived.toLocaleDateString('en-GB') %></td>
+          <td> <a type="button" class="btn btn-secondary btn-sm" href="/archive/view/<%= element._id %>" > View </a> </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

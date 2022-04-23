@@ -67,6 +67,7 @@ app.use('/', require('./routes/index'))
 app.use('/patient', require('./routes/patient'))
 app.use('/exam', require('./routes/exam'))
 app.use('/staff', require('./routes/staff'))
+app.use('/admin', require('./routes/admin'))
 app.use((req, res) => {
   res.status(404).render("errors/404")
 });

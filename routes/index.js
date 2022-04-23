@@ -16,7 +16,6 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboar
   title:"Dashboard"
 }))
 
-
 // Login Page
 router.get('/login', forwardAuthenticated, (_req, res) => res.render('login', {
   layout: false
