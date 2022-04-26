@@ -1,0 +1,588 @@
+<h1>Archived <%= element.archiveType %></h1>
+<h2>Metadata</h2>
+<table class="table">
+  <tr>
+    <td>Archive ID</td>
+    <td><%= element._id %></td>
+  </tr>
+  <tr>
+    <td>Archive Reason</td>
+    <td><%= element.archiveReason %></td>
+  </tr>
+  <tr>
+    <td>Date Archived</td>
+    <td><%= element.dateArchived.toLocaleDateString('en-GB') %></td>
+  </tr>
+  <tr>
+    <td>Fields Changed</td>
+    <td><%= element.fieldsChanged %></td>
+  </tr>
+  <tr>
+    <td>Archive Type</td>
+    <td><%= element.archiveType %></td>
+  </tr>
+</table>
+<h2>Document</h2>
+
+<% if (element.examDocument) { %>
+
+<h2>Exam</h2>
+<h2>Metadata</h2>
+<table class="table">
+  <tr>
+    <td>Exam ID</td>
+    <td><%= element.examDocument._id %></td>
+  </tr>
+  <tr>
+    <td>Patient ID</td>
+    <td>
+      <%= element.examDocument.patientID %><span class="p-5"><a class="btn btn-sm btn-outline-secondary"
+          href="/patient/view/<%=element.examDocument.patientID%>">View Patient</a></span>
+    </td>
+  </tr>
+  <tr>
+    <td>Performing Optometrist</td>
+    <td>
+      <%= optoms.find(optom => optom._id ==
+      element.examDocument.performingOptometrist).name %>
+    </td>
+  </tr>
+  <tr>
+    <td>Author of exam</td>
+    <td><%= element.examDocument.author %></td>
+  </tr>
+  <tr>
+    <td>Date of exam</td>
+    <td><%= element.examDocument.dateOfVisit.toLocaleDateString('en-GB') %></td>
+  </tr>
+  <tr>
+    <td>Date of Entry</td>
+    <td><%= element.examDocument.dateAdded.toLocaleDateString('en-GB') %></td>
+  </tr>
+</table>
+<h2>About</h2>
+<table class="table">
+  <tr>
+    <td>Reason for visit</td>
+    <td><%= element.examDocument.visitReason %></td>
+  </tr>
+  <tr>
+    <td>Family history</td>
+    <td><%= element.examDocument.familyHistory %></td>
+  </tr>
+  <tr>
+    <td>General Health</td>
+    <td><%= element.examDocument.generalHealth %></td>
+  </tr>
+  <tr>
+    <td>Medication</td>
+    <td><%= element.examDocument.medication %></td>
+  </tr>
+  <tr>
+    <td>Patient Drives</td>
+    <td><%= element.examDocument.patientDrives %></td>
+  </tr>
+  <tr>
+    <td>Patient uses VDU</td>
+    <td><%= element.examDocument.patientUsesVDU %></td>
+  </tr>
+  <tr>
+    <td>Occupation</td>
+    <td><%= element.examDocument.occupation %></td>
+  </tr>
+  <tr>
+    <td>Ocular History</td>
+    <td><%= element.examDocument.ocularHistory %></td>
+  </tr>
+</table>
+
+<h2>Exam</h2>
+<table class="table">
+  <tr>
+    <td>Lens Opacity</td>
+    <td>
+      Right: <%= element.examDocument.lensOpacityRight%> - Left: <%=
+      element.examDocument.lensOpacityLeft%>
+    </td>
+  </tr>
+  <tr>
+    <td>Lens Comment</td>
+    <td><%= element.examDocument.lensComment%></td>
+  </tr>
+  <tr>
+    <td>Viterous</td>
+    <td>
+      Right: <%= element.examDocument.vitreousRight%> - Left: <%=
+      element.examDocument.vitreousLeft%>
+    </td>
+  </tr>
+  <tr>
+    <td>Viterous Comment</td>
+    <td><%= element.examDocument.viterousComment%></td>
+  </tr>
+  <tr>
+    <td>Disc Shape</td>
+    <td>
+      Right: <%= element.examDocument.discRight%> - Left: <%=
+      element.examDocument.discLeft%>
+    </td>
+  </tr>
+  <tr>
+    <td>Disc Comment</td>
+    <td><%= element.examDocument.discComment %></td>
+  </tr>
+  <tr>
+    <td>Fundus</td>
+    <td>
+      Right: <%= element.examDocument.fundusRight%> - Left: <%=
+      element.examDocument.fundusLeft%>
+    </td>
+  </tr>
+  <tr>
+    <td>Macula</td>
+    <td>
+      Right: <%= element.examDocument.maculaRight%> - Left: <%=
+      element.examDocument.maculaLeft%>
+    </td>
+  </tr>
+  <tr>
+    <td>Pupils</td>
+    <td><%= element.examDocument.pupils%></td>
+  </tr>
+  <tr>
+    <td>Pupils Comment</td>
+    <td><%= element.examDocument.pupilsComment%></td>
+  </tr>
+  <tr>
+    <td>IOP</td>
+    <td>
+      Right: <%= element.examDocument.IOPRight%> - Left: <%=
+      element.examDocument.IOPLeft%>
+    </td>
+  </tr>
+  <tr>
+    <td>IOP Comment</td>
+    <td><%= element.examDocument.IOPComment%></td>
+  </tr>
+
+  <tr>
+    <td>Visual Field</td>
+    <td>
+      Right: <%= element.examDocument.visualFieldRight%> - Left: <%=
+      element.examDocument.visualFieldLeft%>
+    </td>
+  </tr>
+  <tr>
+    <td>Visual Field Comment</td>
+    <td><%= element.examDocument.visualFieldComment%></td>
+  </tr>
+  <tr>
+    <td>Fixation Disparity</td>
+    <td><%= element.examDocument.fixationDisparity%></td>
+  </tr>
+  <tr>
+    <td>Motility</td>
+    <td><%= element.examDocument.motility%></td>
+  </tr>
+  <tr>
+    <td>Convergence</td>
+    <td><%= element.examDocument.convergence%></td>
+  </tr>
+  <tr>
+    <td>Stereopsis</td>
+    <td><%= element.examDocument.stereopsis%></td>
+  </tr>
+  <tr>
+    <td>Visual Acuity</td>
+    <td><%= element.examDocument.visualAcuity%></td>
+  </tr>
+</table>
+<h2>Perscription</h2>
+<table class="table">
+  <tr>
+    <td>Sphere</td>
+    <td>
+      <%= element.examDocument.sphereRight %> | <%=
+      element.examDocument.sphereLeft %>
+    </td>
+  </tr>
+  <tr>
+    <td>Cylinder</td>
+    <td>
+      <%= element.examDocument.cylinderRight %> | <%=
+      element.examDocument.cylinderLeft %>
+    </td>
+  </tr>
+  <tr>
+    <td>Axis</td>
+    <td>
+      <%= element.examDocument.axisRight %> | <%= element.examDocument.axisLeft
+      %>
+    </td>
+  </tr>
+  <tr>
+    <td>Prism/Base</td>
+    <td>
+      <%= element.examDocument.prismBaseRight %> | <%=
+      element.examDocument.prismBaseLeft %>
+    </td>
+  </tr>
+  <tr>
+    <td>Advice Given</td>
+    <td><%= element.examDocument.adviceGiven %></td>
+  </tr>
+  <tr>
+    <td>Recall Code</td>
+    <td><%= element.examDocument.recallCode %></td>
+  </tr>
+</table>
+
+<% } %> <% if (element.patientDocument) { %>
+
+<div class="accordion" id="details">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+        aria-expanded="true" aria-controls="collapseOne">
+        General
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#details">
+      <div class="accordion-body">
+        <table class="table">
+          <tr>
+            <td>ID</td>
+            <td><%= element.patientDocument._id %></td>
+          </tr>
+          <tr>
+            <td>First Name</td>
+            <td><%= element.patientDocument.firstName %></td>
+          </tr>
+          <tr>
+            <td>Middle Name</td>
+            <td><%= element.patientDocument.middleName %></td>
+          </tr>
+          <tr>
+            <td>Last Name</td>
+            <td><%= element.patientDocument.lastName %></td>
+          </tr>
+          <tr>
+            <td>Gender</td>
+            <td><%= element.patientDocument.gender %></td>
+          </tr>
+          <tr>
+            <td>Date of Birth</td>
+            <td><%= element.patientDocument.dateOfBirth %></td>
+          </tr>
+          <tr>
+            <td>NHS Number</td>
+            <td><%= element.patientDocument.NHSNumber %></td>
+          </tr>
+          <tr>
+            <td>Patient Type</td>
+            <td><%= element.patientDocument.patientType %></td>
+          </tr>
+          <tr>
+            <td>Date Added</td>
+            <td>
+              <%= element.patientDocument.dateAdded.toLocaleDateString('en-GB')
+              %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+        aria-expanded="false" aria-controls="collapseTwo">
+        Contact Details
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#details">
+      <div class="accordion-body">
+        <table class="table">
+          <tr>
+            <td>Email</td>
+            <td><%= element.patientDocument.email %></td>
+          </tr>
+          <tr>
+            <td>Landline</td>
+            <td><%= element.patientDocument.phoneLandline %></td>
+          </tr>
+          <tr>
+            <td>Mobile</td>
+            <td><%= element.patientDocument.phoneMobile %></td>
+          </tr>
+          <tr>
+            <td>GP Name</td>
+            <td><%= element.patientDocument.GPName %></td>
+          </tr>
+          <tr>
+            <td>GP Address</td>
+            <td>
+              <textarea disabled rows="5" style="resize: none" class="form-control">
+<%= element.patientDocument.GPAddress %></textarea>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+        aria-expanded="false" aria-controls="collapseThree">
+        Address
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+      data-bs-parent="#details">
+      <div class="accordion-body">
+        <table class="table">
+          <tr>
+            <td>Number</td>
+            <td><%= element.patientDocument.addressHouseNumber %></td>
+          </tr>
+          <tr>
+            <td>Line 1</td>
+            <td><%= element.patientDocument.addressLineOne %></td>
+          </tr>
+          <tr>
+            <td>Line 2</td>
+            <td><%= element.patientDocument.addressLineTwo %></td>
+          </tr>
+          <tr>
+            <td>City</td>
+            <td><%= element.patientDocument.addressCity %></td>
+          </tr>
+          <tr>
+            <td>Post Code</td>
+            <td><%= element.patientDocument.addressPostcode %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<label for="patientNotes">Important Notes:</label>
+<%# Value added programatically so that the linter adding a linebreak after the
+end of the opening textarea tag doesn't break stuff %>
+<textarea id="patientNotes" disabled rows="5" style="resize: none" class="form-control"></textarea>
+<script>
+  patientNotes.value = "<%= element.patientDocument.notes %>";
+</script>
+
+<div class="mt-2">
+  <h2>Exams</h2>
+  <div class="accordion" id="exams">
+    <% element.exams.forEach(exam => { %>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading<%= exam._id %>">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse<%= exam._id %>" aria-expanded="true" aria-controls="collapse<%= exam._id %>">
+          Exam <%= exam._id %> from <%=
+          exam.dateOfVisit.toLocaleDateString('en-GB') %>
+        </button>
+      </h2>
+      <div id="collapse<%= exam._id %>" class="accordion-collapse collapse" aria-labelledby="heading<%= exam._id %>"
+        data-bs-parent="#details">
+        <div class="accordion-body">
+          <table class="table">
+            <tr>
+              <td>Exam ID</td>
+              <td><%= exam._id %></td>
+            </tr>
+            <tr>
+              <td>Patient ID</td>
+              <td>
+                <%= exam.patientID %><span class="p-5"><a class="btn btn-sm btn-outline-secondary"
+                    href="/patient/view/<%=exam.patientID%>">View Patient</a></span>
+              </td>
+            </tr>
+            <tr>
+              <td>Performing Optometrist</td>
+              <td>
+                <%= optoms.find(optom => optom._id ==
+                exam.performingOptometrist).name %>
+              </td>
+            </tr>
+            <tr>
+              <td>Author of exam</td>
+              <td><%= exam.author %></td>
+            </tr>
+            <tr>
+              <td>Date of exam</td>
+              <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
+            </tr>
+            <tr>
+              <td>Date of Entry</td>
+              <td><%= exam.dateAdded.toLocaleDateString('en-GB') %></td>
+            </tr>
+          </table>
+          <h2>About</h2>
+          <table class="table">
+            <tr>
+              <td>Reason for visit</td>
+              <td><%= exam.visitReason %></td>
+            </tr>
+            <tr>
+              <td>Family history</td>
+              <td><%= exam.familyHistory %></td>
+            </tr>
+            <tr>
+              <td>General Health</td>
+              <td><%= exam.generalHealth %></td>
+            </tr>
+            <tr>
+              <td>Medication</td>
+              <td><%= exam.medication %></td>
+            </tr>
+            <tr>
+              <td>Patient Drives</td>
+              <td><%= exam.patientDrives %></td>
+            </tr>
+            <tr>
+              <td>Patient uses VDU</td>
+              <td><%= exam.patientUsesVDU %></td>
+            </tr>
+            <tr>
+              <td>Occupation</td>
+              <td><%= exam.occupation %></td>
+            </tr>
+            <tr>
+              <td>Ocular History</td>
+              <td><%= exam.ocularHistory %></td>
+            </tr>
+          </table>
+
+          <h2>Exam</h2>
+          <table class="table">
+            <tr>
+              <td>Lens Opacity</td>
+              <td>
+                Right: <%= exam.lensOpacityRight%> - Left: <%=
+                exam.lensOpacityLeft%>
+              </td>
+            </tr>
+            <tr>
+              <td>Lens Comment</td>
+              <td><%= exam.lensComment%></td>
+            </tr>
+            <tr>
+              <td>Viterous</td>
+              <td>
+                Right: <%= exam.vitreousRight%> - Left: <%= exam.vitreousLeft%>
+              </td>
+            </tr>
+            <tr>
+              <td>Viterous Comment</td>
+              <td><%= exam.viterousComment%></td>
+            </tr>
+            <tr>
+              <td>Disc Shape</td>
+              <td>Right: <%= exam.discRight%> - Left: <%= exam.discLeft%></td>
+            </tr>
+            <tr>
+              <td>Disc Comment</td>
+              <td><%= exam.discComment %></td>
+            </tr>
+            <tr>
+              <td>Fundus</td>
+              <td>
+                Right: <%= exam.fundusRight%> - Left: <%= exam.fundusLeft%>
+              </td>
+            </tr>
+            <tr>
+              <td>Macula</td>
+              <td>
+                Right: <%= exam.maculaRight%> - Left: <%= exam.maculaLeft%>
+              </td>
+            </tr>
+            <tr>
+              <td>Pupils</td>
+              <td><%= exam.pupils%></td>
+            </tr>
+            <tr>
+              <td>Pupils Comment</td>
+              <td><%= exam.pupilsComment%></td>
+            </tr>
+            <tr>
+              <td>IOP</td>
+              <td>Right: <%= exam.IOPRight%> - Left: <%= exam.IOPLeft%></td>
+            </tr>
+            <tr>
+              <td>IOP Comment</td>
+              <td><%= exam.IOPComment%></td>
+            </tr>
+
+            <tr>
+              <td>Visual Field</td>
+              <td>
+                Right: <%= exam.visualFieldRight%> - Left: <%=
+                exam.visualFieldLeft%>
+              </td>
+            </tr>
+            <tr>
+              <td>Visual Field Comment</td>
+              <td><%= exam.visualFieldComment%></td>
+            </tr>
+            <tr>
+              <td>Fixation Disparity</td>
+              <td><%= exam.fixationDisparity%></td>
+            </tr>
+            <tr>
+              <td>Motility</td>
+              <td><%= exam.motility%></td>
+            </tr>
+            <tr>
+              <td>Convergence</td>
+              <td><%= exam.convergence%></td>
+            </tr>
+            <tr>
+              <td>Stereopsis</td>
+              <td><%= exam.stereopsis%></td>
+            </tr>
+            <tr>
+              <td>Visual Acuity</td>
+              <td><%= exam.visualAcuity%></td>
+            </tr>
+          </table>
+          <h2>Perscription</h2>
+          <table class="table">
+            <tr>
+              <td>Sphere</td>
+              <td><%= exam.sphereRight %> | <%= exam.sphereLeft %></td>
+            </tr>
+            <tr>
+              <td>Cylinder</td>
+              <td><%= exam.cylinderRight %> | <%= exam.cylinderLeft %></td>
+            </tr>
+            <tr>
+              <td>Axis</td>
+              <td><%= exam.axisRight %> | <%= exam.axisLeft %></td>
+            </tr>
+            <tr>
+              <td>Prism/Base</td>
+              <td><%= exam.prismBaseRight %> | <%= exam.prismBaseLeft %></td>
+            </tr>
+            <tr>
+              <td>Advice Given</td>
+              <td><%= exam.adviceGiven %></td>
+            </tr>
+            <tr>
+              <td>Recall Code</td>
+              <td><%= exam.recallCode %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <% }) %>
+  </div>
+</div>
+
+<% } %>

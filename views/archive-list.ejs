@@ -16,7 +16,7 @@
           <td><%= optoms.find(optom => optom._id == element.archivedBy).name %></td>
           <td><%= element._id %></td>
           <td><%= element.dateArchived.toLocaleDateString('en-GB') %></td>
-          <td> <a type="button" class="btn btn-secondary btn-sm" href="/archive/view/<%= element._id %>" > View </a> </td>
+          <td> <a type="button" class="btn btn-secondary btn-sm" href="/admin/archive/view/<%= element._id %>" > View </a> </td>
         </tr>
       <% }) %>
     </tbody>

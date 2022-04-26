@@ -106,9 +106,7 @@ router.get('/edit/:patientID', ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
 
   try {
-    const patient = await Patient.findOne({
-      _id: id
-    })
+    const patient = await Patient.findOne({ _id: id })
     if (patient) {
       res.render('patient-edit', {
         patient,
@@ -134,8 +132,8 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
     gender,
     genderOther,
     dateOfBirth,
-    landline,
-    mobile,
+    phoneLandline,
+    phoneMobile,
     email,
     addressHouseNumber,
     addressLineOne,
@@ -158,7 +156,7 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
         archiveType: "Edit Patient",
         archiveReason: `${editReason}`,
         archivedBy: req.user._id,
-        patientDocument: patient, //make sure shit isn't changing here
+        patientDocument: patient,
       }) 
 
       let changes = []
@@ -186,12 +184,12 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
         patient.dateOfBirth = dateOfBirth
         changes.push("date of birth")
       }
-      if (patient.landline != landline) {
-        patient.landline = landline
+      if (patient.phoneLandline != phoneLandline) {
+        patient.phoneLandline = phoneLandline
         changes.push("landline")
       }
-      if (patient.mobile != mobile) {
-        patient.mobile = mobile
+      if (patient.phoneMobile != phoneMobile) {
+        patient.phoneMobile = phoneMobile
         changes.push("mobile")
       }
       if (patient.email != email) {

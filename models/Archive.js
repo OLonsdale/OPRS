@@ -25,6 +25,9 @@ const ArchiveSchema = new mongoose.Schema({
   examDocument: {
     type: Exam,
   },
+  exams:{
+    type: [Exam]
+  }
 
 }, {collection: "archive"});
 

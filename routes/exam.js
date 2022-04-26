@@ -124,11 +124,17 @@ router.post('/add/:patientID', ensureAuthenticated, async (req, res) => {
     exam.sphereRight = `${req.body.sphereRightSign}${req.body.sphereRight}`
   } else exam.sphereRight = req.body.sphereRight
 
-  console.log(req.body)
 
-  const newExam = new Exam(exam)
-
-  newExam.save()
+  try {
+    const newExam = new Exam(exam)
+    const patient = await Patient.findOne({_id: req.body.patientID})
+    newExam.save()
+    patient.exams.push(newExam._id)
+    patient.save()
+  } catch (error) {
+    res.render(`errors/500`)
+    return
+  }
 
   res.redirect(`/patient/view/${req.body.patientID}`)
 })

@@ -1,0 +1,36 @@
+<div class="row mt-5">
+  <div class="row-col-auto m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mb-3">
+        <i class="fas fa-archive"></i> Archive <%= type %>
+      </h1>
+
+    <% if (type == "patient") { %>
+      <p>
+        Archiving patient: 
+        <%= element.firstName %> <%= element.lastName %>
+        <br> This will archive the patient, and all exams associated with that patient.
+      </p>
+    <% } %>
+
+    <% if (type == "exam") { %>
+      <p>
+        Archiving exam:
+        <%= element._id %> for patient: <%= element.patientID %>
+      </p>
+    <% } %>
+
+      <form action="" method="POST">
+        <div class="form-group">
+          <div class="mb-3">
+            <label for="archiveReason" class="form-label">Archive Reason:</label>
+            <input required id="archiveReason" name="archiveReason" class="form-control" type="text" placeholder="no longer required, incorrect etc">
+          </div>
+        </div>
+        <input class="btn btn-danger" type="submit" value="Confirm">
+      </form>
+
+    </div>
+  </div>
+</div>
+      

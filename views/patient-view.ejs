@@ -1,7 +1,5 @@
-<% if (patient) { %>
-
   <a href="/patient/edit/<%= patient.id %>" class="btn btn-primary mt-3 mb-1">Edit Patient</a>
-  <a href="/patient/archive/<%= patient.id %>" class="btn btn-outline-danger mt-3 mb-1">Archive Patient</a>
+  <a href="/admin/archive/add/patient/<%= patient.id %>" class="btn btn-outline-danger mt-3 mb-1">Archive Patient</a>
   <div class="accordion" id="details">
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
@@ -145,7 +143,7 @@
           <td><%= optoms.find(optom => optom._id == exam.performingOptometrist).name %></td>
           <td><%= exam.id %></td>
           <td>
-            <a class="btn btn-outline-danger btn-sm" href="/patient/archive/<%= exam.id %>">Archive</a>
+            <a class="btn btn-outline-danger btn-sm" href="/admin/archive/add/exam/<%= exam.id %>">Archive</a>
             <a class="btn btn-secondary btn-sm" href="/exam/view/<%= exam.id %>"> View </a>
           </td>
         </tr>
@@ -153,11 +151,3 @@
     </tbody>
   </table>
 </div>
-
-
-<% } else { %>
-
-    <h1>No patient selected</h1>
-
-<% } %>
- 

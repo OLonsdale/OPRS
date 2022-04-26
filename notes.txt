@@ -1,6 +1,6 @@
 Import last history and symptoms
 
-archive patient and associated exams, edit everything, sort and filter
+sort and filter
 
 attachments for exams - nightmare
 
@@ -10,8 +10,6 @@ Log logins - IP, timestamp, failed or passed. Log all requests?
 
 What level of validation?
 
-patient edit dob, redirect
-
-archive reason deletion edit
-
 redirect on add patient
+
+edit patient doesn't bring in dob, postcode? landline? mobile? spaces back in gp address "            " ???
