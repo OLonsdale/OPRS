@@ -65,9 +65,32 @@ router.post('/add', ensureAuthenticated, (req, res) => {
 })
 
 //list patients
-router.get('/list', ensureAuthenticated, async (req, res) => {
+router.get('/list/', ensureAuthenticated, async (req, res) => {
   try {
-    const patients = await Patient.find().lean()
+    const patients = await Patient.find().lean().limit(100)
+    res.render('patient-list', {
+      patients,
+      title:"List Patients"
+    })
+  } catch (error) {
+    res.render("errors/500")
+  }
+})
+
+//list patients
+router.get('/list/:sort/:filter', ensureAuthenticated, async (req, res) => {
+  const sortBy = req.params.sort
+  //const filterBy = req.params.filter
+
+  try {
+    let patients
+    if(sortBy == "firstname"){
+      patients = await Patient.find({}).sort({firstName: -1})
+    }
+
+
+
+    if(!patients) throw("invalid")
     res.render('patient-list', {
       patients,
       title:"List Patients"

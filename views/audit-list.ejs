@@ -1,0 +1,22 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr class="table-dark">
+        <th>Event</th>
+        <th>User</th>
+        <th>IP Address</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% elements.forEach(element => { %>
+        <tr>
+          <td><%= element.event %></td>
+          <td><%= optoms.find(optom => optom._id == element.user).username %></td>
+          <td><%= element.IP.replace("::ffff:","") %></td>
+          <td><%= element.timestamp.toISOString().replace("T"," ").replace("Z","") %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

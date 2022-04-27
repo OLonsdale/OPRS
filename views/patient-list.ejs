@@ -1,4 +1,39 @@
-<a href="/patient/add/" class="btn btn-primary mt-3 mb-1 float-right">New Patient</a>
+<div class="container mb-2">
+  <div class="row">
+    <form class="container">
+      <div class="row">
+        <div class="col">
+          <select class="form-select" name="filterFor" id="filterFor">
+            <option value="firstName">First Name</option>
+            <option value="lastName">Last Name</option>
+            <option value="dateAdded">Added Date</option>
+          </select>
+        </div>
+        <div class="col">
+          <input class="form-control" type="search" name="filterBy" id="filterBy" placeholder="Filter on field"
+          aria-label="Filter patients" />
+        </div>
+        <div class="col">
+          <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="col">
+          <a href="/patient/add/" class="btn btn-primary">New Patient</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="col d-flex justify-content-center align-middle gap-2 mb-2">
+  <p>Sort:</p>
+  <div class="btn-group" role="group">
+    <button class="btn btn-outline-primary btn-sm">First Name</button>
+    <button class="btn btn-outline-primary btn-sm">Last Name</button>
+    <button class="btn btn-outline-primary btn-sm">Date Added</button>
+  </div>  
+</div>
+
+
 
 <div class="table-responsive">
   <table class="table table-striped table-hover">
@@ -6,21 +41,29 @@
       <tr class="table-dark">
         <th>First Name</th>
         <th>Last Name</th>
-        <th>ID</th>
         <th>Added Date</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <% patients.forEach(patient => { %>
-        
-        <tr>
-          <td><%= patient.firstName %></td>
-          <td><%= patient.lastName %></td>
-          <td><%= patient._id %></td>
-          <td><%= patient.dateAdded.toLocaleDateString('en-GB') %></td>
-          <td> <a type="button" class="btn btn-secondary btn-sm" href="/patient/view/<%= patient._id %>" > View </a> </td>
-        </tr>
+      <% patients.forEach(patient=> { %>
+
+      <tr>
+        <td>
+          <%= patient.firstName %>
+        </td>
+        <td>
+          <%= patient.lastName %>
+        </td>
+        <td>
+          <%= patient.dateAdded.toLocaleDateString('en-GB') %>
+        </td>
+        <td>
+          <a type="button" class="btn btn-secondary btn-sm" href="/patient/view/<%= patient._id %>">
+            View
+          </a>
+        </td>
+      </tr>
       <% }) %>
     </tbody>
   </table>

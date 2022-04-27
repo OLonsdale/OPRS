@@ -1,15 +1,9 @@
 Import last history and symptoms
 
-sort and filter
+sort and filter, limit 100 for now?
 
 attachments for exams - nightmare
 
-auditing? date edited, edit by, fields changed, add old to archive?
-
-Log logins - IP, timestamp, failed or passed. Log all requests?
-
 What level of validation?
 
-redirect on add patient
-
-edit patient doesn't bring in dob, postcode? landline? mobile? spaces back in gp address "            " ???
+audit filter between timestamps, and involving a certain user / ip, and/or accessing a particular record

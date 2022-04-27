@@ -4,6 +4,7 @@ const User = require('../models/User')
 const Patient = require('../models/Patient')
 const Exam = require('../models/Exam')
 const Archive = require('../models/Archive')
+const Audit = require('../models/Audit')
 const {ensureAuthenticated,} = require('../config/auth')
 
 
@@ -179,7 +180,19 @@ router.post('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
 
 //logs
 
-
+router.get('/audit/list', ensureAuthenticated, async (req, res) => {
+  try {
+    const audit = await Audit.find().sort({timestamp:-1}).limit(200) //returns 200 most recent for now...
+    const optoms = await User.find().lean()
+    res.render('audit-list', {
+      elements: audit,
+      title:"Audit Logs",
+      optoms
+    })
+  } catch (error) {
+    res.render("errors/500")
+  }
+})
 
 
 

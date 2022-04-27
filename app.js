@@ -34,9 +34,9 @@ app.set('view engine', 'ejs')
 // Express body parser & file upload validation
 app.use(express.urlencoded({ extended: true })) // form posts etc
 app.use(express.json()) // json posts
-app.use(expressFileUpload({createParentPath: true}))
+app.use(expressFileUpload({createParentPath: true})) // files in forms
 
-// Express session
+// Express session - persists logins
 app.use(
   session({
     secret: 'secret',

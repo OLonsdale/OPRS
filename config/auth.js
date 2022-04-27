@@ -1,7 +1,15 @@
+const Audit = require('../models/Audit')
+
 module.exports = {
   //only allows access for authenticated users
   ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
+      const auditEvent = new Audit({
+        event:`Page Accessed: ${req.originalUrl}`,
+        user:req.user._id,
+        IP:req.ip
+      })
+      auditEvent.save()
       return next();
     }
     req.flash('error_msg', 'Please log in to view that resource');
