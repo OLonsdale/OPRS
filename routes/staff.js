@@ -5,11 +5,7 @@ const bcrypt = require('bcryptjs')
 const User = require('../models/User')
 
 const Exam = require('../models/Exam')
-const {
-  ensureAuthenticated,
-
-} = require('../config/auth')
-
+const { ensureAuthenticated, } = require('../config/auth')
 
 router.get('/add', ensureAuthenticated, (_req, res) => res.render('staff-add',{title:"Add Staff"}))
 
@@ -18,7 +14,11 @@ router.post('/add', (req, res) => {
     name,
     username,
     password,
-    password2
+    password2,
+    phonePrimary,
+    phoneSecondary,
+    email,
+    address,
   } = req.body
   const optometrist = 'optometrist' in req.body
 
@@ -82,6 +82,10 @@ router.post('/add', (req, res) => {
       optometrist,
       username,
       password,
+      phonePrimary,
+      phoneSecondary,
+      email,
+      address,
     })
 
     // hash and salt password, and push whole thing to the database
@@ -104,11 +108,24 @@ router.post('/add', (req, res) => {
 })
 
 router.get('/list', ensureAuthenticated, async (req, res) => {
+
+  //number of elements to show per page
+  const RESULTS_PER_PAGE = 25
+  //cleans search queries
+  const query = Object.entries(req.query).reduce((obj,[key,value]) => (value ? (obj[key]=value, obj) : obj), {})
+
+  //limit how many documents skipped for search, (goes up in 50's)
+  //default 0 if not specified in url
+  const skip = Number(query.page) || 0
+  
   try {
-    const users = await User.find()
+    const users = await User.find().skip(skip).limit(RESULTS_PER_PAGE)
+    const pages = Math.ceil( await User.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
+
     res.render('staff-list', {
       title:"List Staff",
-      users
+      users,
+      pages
     })
   } catch (error) {
     res.render("errors/500")
@@ -158,13 +175,26 @@ router.post('/edit/:staffID', ensureAuthenticated, async (req, res) => {
   const {
     name,
     password,
-    password2
+    password2,
+    phonePrimary,
+    phoneSecondary,
+    email,
+    address,
   } = req.body
   const optometrist = 'optometrist' in req.body
 
   if(staff.name !== name){ staff.name = name }
 
   if(staff.optometrist !== optometrist) { staff.optometrist = optometrist}
+
+  if(staff.phonePrimary !== phonePrimary) { staff.phonePrimary = phonePrimary}
+
+  if(staff.phoneSecondary !== phoneSecondary) { staff.phoneSecondary = phoneSecondary}
+
+  if(staff.address !== address) { staff.address = address}
+
+  if(staff.email !== email) { staff.email = email}
+
 
   if(password){
     const errors = []
@@ -205,8 +235,7 @@ router.post('/edit/:staffID', ensureAuthenticated, async (req, res) => {
       })
     })
   }
-  
- 
+
   else staff.save()
 
 

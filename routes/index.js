@@ -22,7 +22,7 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboar
 }))
 
 router.get('/find', ensureAuthenticated, (req, res) => res.render('search-all', {
-  title:"Magic Search"
+  title:"Magic Search", failed:false
 }))
 
 router.post('/find', ensureAuthenticated, async (req, res) => {

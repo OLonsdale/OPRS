@@ -17,6 +17,18 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  phonePrimary: {
+    type: String,
+  },
+  phoneSecondary: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
   date: {
     type: Date,
     default: Date.now

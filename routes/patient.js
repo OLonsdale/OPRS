@@ -33,7 +33,7 @@ router.post('/add', ensureAuthenticated, (req, res) => {
   } = req.body
 
   let gender = req.body.gender
-  if (gender === "other") {
+  if (gender === "") {
     gender = genderOther
   } 
 
@@ -66,39 +66,34 @@ router.post('/add', ensureAuthenticated, (req, res) => {
 
 //list patients
 router.get('/list/', ensureAuthenticated, async (req, res) => {
+
+  //number of elements to show per page
+  const RESULTS_PER_PAGE = 25
+  //cleans search queries
+  const query = Object.entries(req.query).reduce((obj,[key,value]) => (value ? (obj[key]=value, obj) : obj), {})
+
+  //limit how many documents skipped for search, (goes up in 50's)
+  //default 0 if not specified in url
+  const skip = Number(query.page) || 0
+  //sort order. Default sort by last name A-Z, then first name A-Z
+  let sort = {"lastName":1,"firstName":1}
+
+  if(query.sort){ sort = {[query.sort]:1} }
+
+  
   try {
-    const patients = await Patient.find().lean().limit(100)
+    const patients = await Patient.find().sort(sort).skip(skip).limit(RESULTS_PER_PAGE)
+    const pages = Math.ceil( await Patient.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
     res.render('patient-list', {
       patients,
-      title:"List Patients"
+      title:"List Patients",
+      pages
     })
   } catch (error) {
     res.render("errors/500")
   }
 })
 
-//list patients
-router.get('/list/:sort/:filter', ensureAuthenticated, async (req, res) => {
-  const sortBy = req.params.sort
-  //const filterBy = req.params.filter
-
-  try {
-    let patients
-    if(sortBy == "firstname"){
-      patients = await Patient.find({}).sort({firstName: -1})
-    }
-
-
-
-    if(!patients) throw("invalid")
-    res.render('patient-list', {
-      patients,
-      title:"List Patients"
-    })
-  } catch (error) {
-    res.render("errors/500")
-  }
-})
 
 // view patient
 router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
@@ -196,8 +191,8 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
         patient.lastName = lastName
         changes.push("last name")
       }
-      if (patient.gender != gender) {
-        if(gender ==  "other"){
+      if (patient.gender != gender || genderOther) {
+        if(gender == ""){
           patient.gender = genderOther
         }
         else patient.gender = gender
@@ -280,5 +275,24 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
     return
   }
 })
+
+// search patient page
+router.get("/search/", ensureAuthenticated, async (req, res) => {
+
+  // mess removes empty params as obtained from URL e.g /patient/search?firstName=oliver&lastName=&dateOfBirth= -> { firstName: 'oliver' }
+  const query = Object.entries(req.query).reduce((obj,[key,value]) => (value ? (obj[key]=value, obj) : obj), {})
+  let patients = []
+  if(Object.keys(query).length !== 0){
+    patients = await Patient.find(query).collation({locale: 'en', strength: 1}).sort({"lastName": 1, "firstName": 1}).limit(30)
+  }
+
+  res.render("patient-search", {
+    last: query,
+    patients,
+    title:`Search Patients`,
+  })
+ 
+})
+
 
 module.exports = router

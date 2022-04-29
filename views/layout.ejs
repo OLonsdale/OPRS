@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
-    crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" crossorigin="anonymous" />
-  <link rel="stylesheet" type="text/css" href="/css/main.css" />
-  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
-  <title><%= typeof title != 'undefined' ? title : 'ORPS' %></title>
-</head>
+    <%# Bootstrap for the CSS, fontawesome for icons %> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" crossorigin="anonymous" />
 
-<body>
-  <div class="container pb-5"><% include partials/navbar %></div>
+    <%# My favicon for the tab bar, and my styles %> 
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
 
-  <div class="container pt-10 p-5"><%- body %></div>
+    <%# Sets the title to whatever is passed, or defaults to OPRS %> 
+    <title><%= typeof title != 'undefined' ? title : 'ORPS' %></title>
+  </head>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-  </script>
-</body>
+  <body>
+
+    <%# Uses my navbar on each page, then inserts the body, the other ejs files. %> 
+    <div class="container pb-5"><% include partials/navbar %></div>
+
+    <div class="container pt-10 p-5"><%- body %></div>
+
+    <%# Bootstap Script for interactive elements, e.g accordians %> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  </body>
 
 </html>
 

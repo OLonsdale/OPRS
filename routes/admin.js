@@ -17,12 +17,17 @@ router.get('/', ensureAuthenticated, (_req, res) => res.render('admin', {
 
 router.get('/archive/list', ensureAuthenticated, async (req, res) => {
   try {
-    const archive = await Archive.find().lean()
+    const RESULTS_PER_PAGE = 25
+    const query = Object.entries(req.query).reduce((obj,[key,value]) => (value ? (obj[key]=value, obj) : obj), {})
+    const skip = Number(query.page) || 0
+    const pages = Math.ceil( await Archive.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
+    const archive = await Archive.find().skip(skip).limit(RESULTS_PER_PAGE)
     const optoms = await User.find().lean()
     res.render('archive-list', {
       elements: archive,
       title:"Archive",
-      optoms
+      optoms,
+      pages
     })
   } catch (error) {
     res.render("errors/500")
@@ -182,12 +187,17 @@ router.post('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
 
 router.get('/audit/list', ensureAuthenticated, async (req, res) => {
   try {
-    const audit = await Audit.find().sort({timestamp:-1}).limit(200) //returns 200 most recent for now...
+    const RESULTS_PER_PAGE = 25
+    const query = Object.entries(req.query).reduce((obj,[key,value]) => (value ? (obj[key]=value, obj) : obj), {})
+    const skip = Number(query.page) || 0
+    const pages = Math.ceil( await Audit.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
+    const audit = await Audit.find().sort({timestamp:-1}).skip(skip).limit(RESULTS_PER_PAGE)
     const optoms = await User.find().lean()
     res.render('audit-list', {
       elements: audit,
       title:"Audit Logs",
-      optoms
+      optoms,
+      pages
     })
   } catch (error) {
     res.render("errors/500")

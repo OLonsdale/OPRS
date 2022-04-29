@@ -1,0 +1,70 @@
+<form class="form-group container mb-5">
+  <div class="d-flex gap-2 justify-content-center">
+
+    <div>
+      <label for="firstNameSearch">First Name</label>
+      <input type="text" name="firstName" id="firstNameSearch" class="form-control" placeholder="first name" 
+      value="<%= typeof last.firstName != 'undefined' ? last.firstName : '' %>">
+    </div>
+
+    <div>
+      <label for="lastNameSearch">Last Name</label>
+      <input type="text" name="lastName" id="lastNameSearch" class="form-control" placeholder="last name"
+      value="<%= typeof last.lastName != 'undefined' ? last.lastName : '' %>">
+    </div>
+    <div>
+      <label for="dobSearch">Date of Birth</label>
+      <input type="date" name="dateOfBirth" class="form-control" id="dobSearch" 
+      value="<%= typeof last.dateOfBirth != 'undefined' ? last.dateOfBirth : '' %>">
+    </div>
+    <div class="d-flex ">
+      <button class="h-50 w-100 align-bottom btn btn-primary btn-sm form-control"><i class="fas fa-search"></i></button>
+    </div>
+  </div>
+
+</form>
+
+<% if (patients.length > 0) { %>
+
+  <% if (patients.length == 1) { %>
+    <p class="lead"> Showing only result </p>
+  <% } else if (patients.length < 30) { %>
+    <p class="lead"> Showing <%= patients.length %> results </p>
+   <% } else { %>
+    <p class="lead"> Showing first 30 results, please be more specific </p>
+   <% } %>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead class="thead-dark">
+      <tr class="table-dark">
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Date of Birth</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% patients.forEach(patient=> { %>
+
+      <tr>
+        <td>
+          <%= patient.firstName %>
+        </td>
+        <td>
+          <%= patient.lastName %>
+        </td>
+        <td>
+          <%= patient.dateOfBirth %>
+        </td>
+        <td>
+          <a type="button" class="btn btn-secondary btn-sm" href="/patient/view/<%= patient._id %>">
+            View
+          </a>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% } %>

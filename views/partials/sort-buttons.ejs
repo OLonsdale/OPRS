@@ -1,0 +1,19 @@
+<div class="col d-flex justify-content-start gap-2 mb-2">
+  <label for="sortButtonGroup">Sort:</label>
+  <div name="sort" id="sortButtonGroup" class="btn-group" role="group">
+    <% for (const [key, value] of Object.entries(properties)) { %>
+
+    <a name="<%- key %>" id="<%- key %>" class="btn btn-outline-primary btn-sm" href="#" role="button"><%- value %></a>
+
+    <script>
+      document.getElementById("<%- key %>").addEventListener("click", ev=>{
+        if ('URLSearchParams' in window) {
+          searchParams.set("sort", "<%- key %>")
+          window.location.search = searchParams.toString()
+        }
+      })
+    </script>
+
+    <% } %>
+  </div>
+</div>
