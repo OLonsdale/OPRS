@@ -9,12 +9,20 @@ paginate EVERYTHING, sort and filter where required
 
 search button patient/search alignment
 
+Perscription -> Perscription
+
+need multiple Prescription
+
+no patients found message needed
+
+staff view needs a lot of work
 
 ///
 Discussion Points
 ///
 
-Created case insensitive index over patients collection for user searching simplification. 
+Created case insensitive index over patients collection for user searching simplification.
+More efficient than regex
 E.g McCullough Mccullough mccullough should all return same record
 db.patients.createIndex({"firstName":1},{collation:{locale:"en", strength: 1}})
 db.patients.createIndex({"lastName":1},{collation:{locale:"en", strength: 1}})
@@ -23,33 +31,3 @@ Then specify .collation({locale: 'en', strength: 1}) after queries
 EJS Vulnerablility disclosed near the end of the project
 https://nvd.nist.gov/vuln/detail/CVE-2022-29078
 
-
-
-/// old code snippit ///
-
-
-<div class="container mb-2">
-  <div class="row">
-    <form class="container">
-      <div class="row">
-        <div class="col">
-          <select class="form-select" name="filterFor" id="filterFor">
-            <option value="firstName">First Name</option>
-            <option value="lastName">Last Name</option>
-            <option value="dateAdded">Added Date</option>
-          </select>
-        </div>
-        <div class="col">
-          <input class="form-control" type="search" name="filterBy" id="filterBy" placeholder="Filter on field"
-          aria-label="Filter patients" />
-        </div>
-        <div class="col">
-          <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
-        </div>
-        <div class="col">
-          <a href="/patient/add/" class="btn btn-primary">New Patient</a>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>

@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
@@ -15,7 +14,7 @@ router.get('/view/:examID', ensureAuthenticated, async (req, res) => {
     const exam = await Exam.findOne({ _id: id })
     const optoms = await User.find()
     if (exam) {
-      res.render('exam-view', {
+      res.render('pages/exam/exam-view', {
         exam,
         optoms,
         title:"View Exam"
@@ -36,7 +35,7 @@ router.get('/add/:patientID', ensureAuthenticated, async (req, res) => {
     const patient = await Patient.findOne({ _id: id })
     const optometrists = await User.find({ optometrist: true })
     if (patient) {
-      res.render('exam-add', {
+      res.render('pages/exams/exam-add', {
         user: req.user,
         patientID: id,
         optometrists,
@@ -124,7 +123,10 @@ router.post('/add/:patientID', ensureAuthenticated, async (req, res) => {
     exam.sphereRight = `${req.body.sphereRightSign}${req.body.sphereRight}`
   } else exam.sphereRight = req.body.sphereRight
 
-
+  // if(req.body.attachments){
+  //   exam.attachments = exam.attachments.push(req.body.attachments)
+  // }
+    
   try {
     const newExam = new Exam(exam)
     const patient = await Patient.findOne({_id: req.body.patientID})

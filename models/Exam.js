@@ -121,7 +121,7 @@ const ExamSchema = new mongoose.Schema({
         type: String,
         //Can detect hand movement? Can count fingers? 6/60, 6/36, 6/24, 6/18, 6/12, 6/9, 6/7.5, 6/6, 6/5, 6/4. With option to +/- 1 or 2
     },
-    //perscription
+    //prescription
     sphereLeft: {
         type: String, //Plano, or +/- 0.25 to 25.00 in 0.25 steps
     },

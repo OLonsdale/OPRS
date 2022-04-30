@@ -21,7 +21,7 @@
   <body>
 
     <%# Uses my navbar on each page, then inserts the body, the other ejs files. %> 
-    <div class="container pb-5"><% include partials/navbar %></div>
+    <div class="container pb-5"><%- include("partials/navbar") %></div>
 
     <div class="container pt-10 p-5"><%- body %></div>
 
@@ -31,4 +31,3 @@
   </body>
 
 </html>
-

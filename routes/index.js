@@ -11,17 +11,17 @@ const {
   forwardAuthenticated
 } = require('../config/auth')
 
-router.get('/', forwardAuthenticated, (_req, res) => res.render('login', {
+router.get('/', forwardAuthenticated, (_req, res) => res.render('pages/index/login', {
   layout: false
 }))
 
 // Dashboard
-router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboard', {
+router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('pages/index/dashboard', {
   user: req.user,
   title:"Dashboard"
 }))
 
-router.get('/find', ensureAuthenticated, (req, res) => res.render('search-all', {
+router.get('/find', ensureAuthenticated, (req, res) => res.render('pages/index/search-all', {
   title:"Magic Search", failed:false
 }))
 
@@ -35,13 +35,13 @@ router.post('/find', ensureAuthenticated, async (req, res) => {
     if(await Archive.findOne({_id})){res.redirect(`/admin/archive/view/${_id}`); return}
     if(await Audit.findOne({_id})){res.redirect(`/admin/audit/list`); return}
   } catch(err){
-    res.render("search-all",{failed:true})
+    res.render("pages/index/search-all",{failed:true})
   }
 
 })
 
 // Login Page
-router.get('/login', forwardAuthenticated, (_req, res) => res.render('login', {
+router.get('/login', forwardAuthenticated, (_req, res) => res.render('pages/index/login', {
   layout: false
 }))
 

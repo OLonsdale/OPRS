@@ -9,9 +9,7 @@ const {ensureAuthenticated,} = require('../config/auth')
 
 
 // Admin Dash
-router.get('/', ensureAuthenticated, (_req, res) => res.render('admin', {
-  title:"Admin System"
-}))
+router.get('/', ensureAuthenticated, (_req, res) => res.render('pages/admin/admin'))
 
 //archive
 
@@ -23,7 +21,7 @@ router.get('/archive/list', ensureAuthenticated, async (req, res) => {
     const pages = Math.ceil( await Archive.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
     const archive = await Archive.find().skip(skip).limit(RESULTS_PER_PAGE)
     const optoms = await User.find().lean()
-    res.render('archive-list', {
+    res.render('pages/admin/archive-list', {
       elements: archive,
       title:"Archive",
       optoms,
@@ -41,7 +39,7 @@ router.get('/archive/view/:archiveID', ensureAuthenticated, async (req, res) => 
     const element = await Archive.findOne({ _id })
     const optoms = await User.find({ })
     if (element) {
-      res.render('archive-view', {
+      res.render('pages/admin/archive-view', {
         element,
         optoms,
         title:`Archived Document`
@@ -77,7 +75,7 @@ router.get('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
   try {
     const optoms = await User.find({ })
     if (element) {
-      res.render('archive-add', {
+      res.render('pages/admin/archive-add', {
         element,
         optoms,
         type,
@@ -117,7 +115,7 @@ router.get('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
   try {
     const optoms = await User.find({ })
     if (element) {
-      res.render('archive-add', {
+      res.render('pages/admin/archive-add', {
         element,
         optoms,
         type,
@@ -193,7 +191,7 @@ router.get('/audit/list', ensureAuthenticated, async (req, res) => {
     const pages = Math.ceil( await Audit.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
     const audit = await Audit.find().sort({timestamp:-1}).skip(skip).limit(RESULTS_PER_PAGE)
     const optoms = await User.find().lean()
-    res.render('audit-list', {
+    res.render('pages/admin/audit-list', {
       elements: audit,
       title:"Audit Logs",
       optoms,

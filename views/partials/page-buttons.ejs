@@ -11,17 +11,16 @@
 </div>
 
 <script>
-
   let searchParams = new URLSearchParams(window.location.search)
   let currentPage = searchParams.get("page")
   let displayPage = Number(currentPage) + 1 //"fixes" zero indexing for end user display
   let maxPages = Number("<%= pages %>")
-  pageNumber.innerHTML = "Page " + ( displayPage || 1 ) + " / " + maxPages
+  pageNumber.innerHTML = "Page " + ( displayPage || 1 ) + " / " + Number(maxPages+1)
 
   forwards.addEventListener("click", ev=>{
     if ('URLSearchParams' in window) {
       if(searchParams.has("page")){
-        if(searchParams.page.get() == maxPages) return
+        if(currentPage == maxPages) return
         searchParams.set("page", Number(currentPage)+1)
       } else searchParams.set("page", 1)
       window.location.search = searchParams.toString()

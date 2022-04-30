@@ -7,7 +7,7 @@ const Archive = require('../models/Archive')
 const {ensureAuthenticated,} = require('../config/auth')
 
 //create patient
-router.get('/add', ensureAuthenticated, (req, res) => res.render('patient-add',{title:"Add Patient"}))
+router.get('/add', ensureAuthenticated, (req, res) => res.render('pages/patient/patient-add',{title:"Add Patient"}))
 
 //add patient
 router.post('/add', ensureAuthenticated, (req, res) => {
@@ -84,7 +84,7 @@ router.get('/list/', ensureAuthenticated, async (req, res) => {
   try {
     const patients = await Patient.find().sort(sort).skip(skip).limit(RESULTS_PER_PAGE)
     const pages = Math.ceil( await Patient.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
-    res.render('patient-list', {
+    res.render('pages/patient/patient-list', {
       patients,
       title:"List Patients",
       pages
@@ -104,7 +104,7 @@ router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
     const exams = await Exam.find({ patientID: id })
     const optoms = await User.find({ })
     if (patient) {
-      res.render('patient-view', {
+      res.render('pages/patient/patient-view', {
         patient,
         exams,
         optoms,
@@ -126,7 +126,7 @@ router.get('/edit/:patientID', ensureAuthenticated, async (req, res) => {
   try {
     const patient = await Patient.findOne({ _id: id })
     if (patient) {
-      res.render('patient-edit', {
+      res.render('pages/patient/patient-edit', {
         patient,
         title:`Edit ${patient.firstName} ${patient.lastName}`
       })
@@ -286,7 +286,7 @@ router.get("/search/", ensureAuthenticated, async (req, res) => {
     patients = await Patient.find(query).collation({locale: 'en', strength: 1}).sort({"lastName": 1, "firstName": 1}).limit(30)
   }
 
-  res.render("patient-search", {
+  res.render("pages/patient/patient-search", {
     last: query,
     patients,
     title:`Search Patients`,

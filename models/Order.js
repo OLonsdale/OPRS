@@ -14,7 +14,7 @@ const OrderSchema = new mongoose.Schema({
         required: true
     },
     patientID: {
-        type:String, //for for perscription
+        type:String, //for for prescription
         required: true
     },
     coatings: {

@@ -7,7 +7,7 @@ const User = require('../models/User')
 const Exam = require('../models/Exam')
 const { ensureAuthenticated, } = require('../config/auth')
 
-router.get('/add', ensureAuthenticated, (_req, res) => res.render('staff-add',{title:"Add Staff"}))
+router.get('/add', ensureAuthenticated, (_req, res) => res.render('pages/staff/staff-add',{title:"Add Staff"}))
 
 router.post('/add', (req, res) => {
   const {
@@ -47,7 +47,7 @@ router.post('/add', (req, res) => {
 
   // display errors if there are any
   if (errors.length > 0) {
-    res.render('staff-add', {
+    res.render('pages/staff/staff-add', {
       title:"Add Staff",
       errors,
       name,
@@ -64,7 +64,7 @@ router.post('/add', (req, res) => {
   .then((user) => {
     if (user) {
       errors.push({ msg: 'Username already in use' })
-      res.render('staff-add', {
+      res.render('pages/staff/staff-add', {
         title:"Add Staff",
         errors,
         name,
@@ -122,7 +122,7 @@ router.get('/list', ensureAuthenticated, async (req, res) => {
     const users = await User.find().skip(skip).limit(RESULTS_PER_PAGE)
     const pages = Math.ceil( await User.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
 
-    res.render('staff-list', {
+    res.render('pages/staff/staff-list', {
       title:"List Staff",
       users,
       pages
@@ -140,7 +140,7 @@ router.get('/view/:staffID', ensureAuthenticated, async (req, res) => {
     const staff = await User.findOne({ _id: id })
     const exams = await Exam.find({ performingOptometrist: id })
     if (staff) { 
-      res.render('staff-view', { staff, exams, title:`View ${staff.username}` })
+      res.render('pages/staff/staff-view', { staff, exams, title:`View ${staff.username}` })
       return
     }
     throw ("not found")
@@ -156,7 +156,7 @@ router.get('/edit/:staffID', ensureAuthenticated, async (req, res) => {
   try {
     const staff = await User.findOne({ _id: id })
     if (staff) { 
-      res.render('staff-edit', { staff, title:`Edit ${staff.username}`,})
+      res.render('pages/staff/staff-edit', { staff, title:`Edit ${staff.username}`,})
       return
     }
     throw ("not found")
@@ -213,7 +213,7 @@ router.post('/edit/:staffID', ensureAuthenticated, async (req, res) => {
     }
 
     if (errors.length > 0) {
-      res.render('staff-edit', {
+      res.render('pages/staff/staff-edit', {
         errors,
         title:`Edit ${staff.username}`
       })
