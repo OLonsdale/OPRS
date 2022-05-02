@@ -1,55 +1,56 @@
-<div class="d-flex gap-2 justify-content-between" role="navigation" aria-label="Page forward and back">
+<div
+  class="d-flex gap-2 justify-content-between"
+  role="navigation"
+  aria-label="Page forward and back"
+>
   <div>
-    <button class="btn btn-outline-secondary btn-sm" href="#" id="backwards">Previous Page</button>
-    <button class="btn btn-outline-secondary btn-sm" href="#" id="first">First Page</button>
+    <button class="btn btn-outline-secondary btn-sm" href="#" id="backwards">
+      Previous Page
+    </button>
+    <button class="btn btn-outline-secondary btn-sm" href="#" id="first">
+      First Page
+    </button>
   </div>
-    <p class="d-block" id="pageNumber"> Page 1 </p>
-    <div>
-      <button class="btn btn-outline-secondary btn-sm" href="#" id="last">Last Page</button>
-      <button class="btn btn-outline-secondary btn-sm" href="#" id="forwards">Next Page</button>
-    </div>
+  <p class="d-block" id="pageNumber">Page 1</p>
+  <div>
+    <button class="btn btn-outline-secondary btn-sm" href="#" id="last">
+      Last Page
+    </button>
+    <button class="btn btn-outline-secondary btn-sm" href="#" id="forwards">
+      Next Page
+    </button>
+  </div>
 </div>
 
 <script>
   let searchParams = new URLSearchParams(window.location.search)
-  let currentPage = searchParams.get("page")
+  let currentPage = searchParams.get("page") || 0 //defaults to zero
   let displayPage = Number(currentPage) + 1 //"fixes" zero indexing for end user display
-  let maxPages = Number("<%= pages %>")
+  let maxPages = Number("<%= totalPages %>") - 1 //"fixes" off-by-one
+
   pageNumber.innerHTML = "Page " + ( displayPage || 1 ) + " / " + Number(maxPages+1)
 
   forwards.addEventListener("click", ev=>{
-    if ('URLSearchParams' in window) {
-      if(searchParams.has("page")){
-        if(currentPage == maxPages) return
-        searchParams.set("page", Number(currentPage)+1)
-      } else searchParams.set("page", 1)
-      window.location.search = searchParams.toString()
-    }
+    if(currentPage >= maxPages) return
+    searchParams.set("page", Number(currentPage) + 1)
+    window.location.search = searchParams.toString()
   })
 
   last.addEventListener("click", ev=>{
-    if ('URLSearchParams' in window) {
-      searchParams.set("page", maxPages-1)
-      window.location.search = searchParams.toString()
-    }
+    if(currentPage == maxPages) return
+    searchParams.set("page", maxPages)
+    window.location.search = searchParams.toString()
   })
-
 
   backwards.addEventListener("click", ev=>{
     if(currentPage == 0) return
-    if ('URLSearchParams' in window) {
-      let searchParams = new URLSearchParams(window.location.search)
-      if(searchParams.has("page")){
-        searchParams.set("page", Number(currentPage)-1)
-      } 
-      window.location.search = searchParams.toString()
-    }
+    searchParams.set("page", Number(currentPage)-1)
+    window.location.search = searchParams.toString()
   })
 
   first.addEventListener("click", ev=>{
-    if ('URLSearchParams' in window) {
-      searchParams.set("page", 0)
-      window.location.search = searchParams.toString()
-    }
+    if(currentPage == 0) return
+    searchParams.set("page", 0)
+    window.location.search = searchParams.toString()
   })
 </script>

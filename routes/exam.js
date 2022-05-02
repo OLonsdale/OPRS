@@ -1,20 +1,18 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const User = require('../models/User');
-const Patient = require('../models/Patient');
-const Exam = require('../models/Exam');
-const {
-  ensureAuthenticated,
-  
-} = require('../config/auth');
+const User = require("../models/User");
+const Patient = require("../models/Patient");
+const Exam = require("../models/Exam");
+const {ensureAuthenticated,} = require("../config/auth");
 
-router.get('/view/:examID', ensureAuthenticated, async (req, res) => {
+//View an exam
+router.get("/view/:examID", ensureAuthenticated, async (req, res) => {
   const id = req.params.examID
   try {
-    const exam = await Exam.findOne({ _id: id })
+    const exam = await Exam.findById(id)
     const optoms = await User.find()
     if (exam) {
-      res.render('pages/exam/exam-view', {
+      res.render("pages/exam/exam-view", {
         exam,
         optoms,
         title:"View Exam"
@@ -23,34 +21,37 @@ router.get('/view/:examID', ensureAuthenticated, async (req, res) => {
     }
     throw ("not found")
   } catch (error) {
-    res.render('errors/404')
+    res.render("errors/404")
     return
   }
 });
 
-
-router.get('/add/:patientID', ensureAuthenticated, async (req, res) => {
+//Page to add exam to patient specified in URL
+router.get("/add/:patientID", ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
   try {
-    const patient = await Patient.findOne({ _id: id })
+    const patient = await Patient.findById(id)
     const optometrists = await User.find({ optometrist: true })
+    const lastExam = await Exam.findOne({patientID:id}).sort({"dateOfVisit": -1}).limit(1)
     if (patient) {
-      res.render('pages/exams/exam-add', {
+      res.render("pages/exam/exam-add", {
         user: req.user,
         patientID: id,
         optometrists,
+        lastExam,
         title:"New Exam"
       })
       return
     }
     throw ("not found")
   } catch (error) {
-    res.render('errors/404')
+    res.render("errors/404")
   }
 })
 
-
-router.post('/add/:patientID', ensureAuthenticated, async (req, res) => {
+//Add exam
+router.post("/add/:patientID", ensureAuthenticated, async (req, res) => {
+  //most fileds can be directly taken, those that are missing have a comment line
   let exam = {
     patientID: req.body.patientID,
     visitReason: req.body.visitReason,

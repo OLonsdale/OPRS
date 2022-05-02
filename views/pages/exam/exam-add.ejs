@@ -1,5 +1,4 @@
 <div class="row mt-5">
-
     <div class="card card-body">
       <h1 class="text-center mb-3">
         <i class="fas fa-notes-medical"></i> Add Exam
@@ -49,26 +48,29 @@
           <%# Family History %>
           <div class="row mb-3">
             <label for="familyHistory" class="form-label">Family History:</label>
-            <textarea class="form-control" name="familyHistory" id="familyHistory" rows="1"></textarea>
+            <textarea class="form-control" name="familyHistory" id="familyHistory" rows="1"><%= lastExam.familyHistory %></textarea>
           </div>
 
           <%# General Health %>
           <div class="row mb-3">
             <label for="generalHealth" class="form-label">General Health:</label>
-            <textarea class="form-control" name="generalHealth" id="generalHealth" rows="1"></textarea>
+            <textarea class="form-control" name="generalHealth" id="generalHealth" rows="1"><%= lastExam.generalHealth %></textarea>
           </div>
-
+          
           <%# Medication %>
           <div class="row mb-3">
             <label for="medication" class="form-label">Medication:</label>
-            <textarea class="form-control" name="medication" id="medication" rows="1"></textarea>
+            <textarea class="form-control" name="medication" id="medication" rows="1"><%= lastExam.medication %></textarea>
           </div>
 
           <%# Patient Drives %>
           <div class="row mb-3">
             <div class="container">
               <label for="patientDrives" class="form-label">Patient Drives:</label>
-              <input type="checkbox" class="form-check-input" id="patientDrives" name="patientDrives" value="true" />
+              <input type="checkbox" class="form-check-input" id="patientDrives" name="patientDrives" value="true"
+              <% if (lastExam.patientDrives) { %>
+              checked
+             <% } %> />
             </div>
           </div>
 
@@ -76,20 +78,23 @@
           <div class="row mb-3">
             <div class="container">
               <label for="patientUsesVDU" class="form-label">Patient Uses VDU:</label>
-              <input type="checkbox" class="form-check-input" id="patientUsesVDU" name="patientUsesVDU" value="true" />
+              <input type="checkbox" class="form-check-input" id="patientUsesVDU" name="patientUsesVDU" value="true"
+               <% if (lastExam.patientUsesVDU) { %>
+               checked
+              <% } %> />
             </div>
           </div>
 
           <%# Occupation %>
           <div class="row mb-3">
             <label for="occupation" class="form-label">Occupation:</label>
-            <textarea class="form-control" name="occupation" id="occupation" rows="1"></textarea>
+            <textarea class="form-control" name="occupation" id="occupation" rows="1"><%= lastExam.occupation %></textarea>
           </div>
 
           <%# Ocular History %>
           <div class="row mb-3">
             <label for="ocularHistory" class="form-label">Ocular History:</label>
-            <textarea class="form-control" name="ocularHistory" id="ocularHistory" rows="1"></textarea>
+            <textarea class="form-control" name="ocularHistory" id="ocularHistory" rows="1"><%= lastExam.ocularHistory %></textarea>
           </div>
 
           <%# Date of Visit %>
@@ -106,7 +111,7 @@
           <h2>Exam:</h2>
 
           <%# Lens Opacity %>
-          <div class="row mb-3 gap-2">
+          <div class="row mb-1 gap-2">
             <div class="col">
               <div class="mb-3">
                 <label for="lensOpacityRight" class="form-label">Lens Opacity Right:</label>
@@ -160,7 +165,7 @@
           </div>
 
           <%# Disc %>
-          <div class="row mb-3 gap-2">
+          <div class="row mb-1 gap-2">
             <div class="col">
               <div class="row mb-3">
                 <label for="discRight" class="form-label">Disc Right:</label>
@@ -521,13 +526,6 @@
           <%# Axis %>
           <div class="row mb-3 gap-2">
             <div class="col">
-              <label for="axisLeft" class="form-label">Axis Left:</label>
-              <div class="input-group">
-                <input type="text" class="form-control" id="axisLeft" name="axisLeft">
-                <span class="input-group-text">degrees</span>
-              </div>
-            </div>
-            <div class="col">
               <label for="axisRight" class="form-label">Axis Right:</label>
               <div class="input-group ">
                 <input type="text" class="form-control" id="axisRight" name="axisRight">
@@ -535,6 +533,13 @@
               </div>
             </div>
           </div>
+            <div class="col">
+              <label for="axisLeft" class="form-label">Axis Left:</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="axisLeft" name="axisLeft">
+                <span class="input-group-text">degrees</span>
+              </div>
+            </div>
 
           <%# Prism/Base %>
           <div class="row mb-3">

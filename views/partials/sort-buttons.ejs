@@ -1,19 +1,24 @@
-<div class="col d-flex justify-content-start gap-2 mb-2">
-  <label for="sortButtonGroup">Sort:</label>
-  <div name="sort" id="sortButtonGroup" class="btn-group" role="group">
-    <% for (const [key, value] of Object.entries(properties)) { %>
+<label for="sortButtonGroup">Sort:</label> 
 
-    <a name="<%- key %>" id="<%- key %>" class="btn btn-outline-primary btn-sm" href="#" role="button"><%- value %></a>
+<div id="sortButtonGroup" class="btn-group" role="group">
+  <% for (const [key, value] of Object.entries(properties)) { %>
 
-    <script>
-      document.getElementById("<%- key %>").addEventListener("click", ev=>{
-        if ('URLSearchParams' in window) {
+  <a id="<%- key %>" class="btn btn-primary btn-sm rounded-0" role="button"><%- value %></a>
+
+  <script>
+    document.getElementById("<%- key %>").addEventListener("click", ev=>{
+      if ('URLSearchParams' in window) {
+        if(searchParams.get("sort") == "<%- key %>"){
+          if(searchParams.get("order") == "az") searchParams.set("order", "za")
+          else searchParams.set("order", "az")
+        } else {
           searchParams.set("sort", "<%- key %>")
-          window.location.search = searchParams.toString()
+          searchParams.set("order", "az")
         }
-      })
-    </script>
+        window.location.search = searchParams.toString()
+      }
+    })
+  </script>
 
-    <% } %>
-  </div>
+  <% } %>
 </div>

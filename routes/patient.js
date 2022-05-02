@@ -6,59 +6,38 @@ const Exam = require('../models/Exam')
 const Archive = require('../models/Archive')
 const {ensureAuthenticated,} = require('../config/auth')
 
-//create patient
+//create patient page
 router.get('/add', ensureAuthenticated, (req, res) => res.render('pages/patient/patient-add',{title:"Add Patient"}))
 
-//add patient
-router.post('/add', ensureAuthenticated, (req, res) => {
-  const {
-    firstName,
-    middleName,
-    lastName,
-    genderOther,
-    dateOfBirth,
-    landline,
-    mobile,
-    email,
-    addressHouseNumber,
-    addressLineOne,
-    addressLineTwo,
-    addressCity,
-    addressPostcode,
-    NHSNumber,
-    patientType,
-    GPName,
-    GPAddress,
-    notes
-  } = req.body
+//add patient to db
+router.post('/add', ensureAuthenticated, async (req, res) => {
+  let patient = {
+    firstName: req.body.firstName,
+    middleName: req.body.middleName,
+    lastName: req.body.lastName,
+    gender: req.body.genderOther || req.body.gender,
+    dateOfBirth: req.body.dateOfBirth,
+    phoneLandline: req.body.landline,
+    phoneMobile: req.body.mobile,
+    email: req.body.email,
+    addressHouseNumber: req.body.addressHouseNumber,
+    addressLineOne: req.body.addressLineOne,
+    addressLineTwo: req.body.addressLineTwo,
+    addressCity: req.body.addressCity,
+    addressPostcode: req.body.addressPostcode,
+    NHSNumber: req.body.NHSNumber,
+    patientType: req.body.patientType,
+    GPName: req.body.GPName,
+    GPAddress: req.body.GPAddress,
+    notes: req.body.notes,
+  }
 
-  let gender = req.body.gender
-  if (gender === "") {
-    gender = genderOther
-  } 
-
-  const newPatient = new Patient({
-    firstName,
-    middleName,
-    lastName,
-    gender,
-    dateOfBirth,
-    phoneLandline:landline,
-    phoneMobile:mobile,
-    email,
-    addressHouseNumber,
-    addressLineOne,
-    addressLineTwo,
-    addressCity,
-    addressPostcode,
-    NHSNumber,
-    patientType,
-    GPName,
-    GPAddress,
-    notes
-  })
-
-  newPatient.save()
+  try{
+    const newPatient = await new Patient(patient)
+    newPatient.save()
+  } catch{
+    res.render("errors/404")
+  }
 
   req.flash('success_msg', 'Patient has been added')
   res.redirect('/patient/list')
@@ -74,20 +53,24 @@ router.get('/list/', ensureAuthenticated, async (req, res) => {
 
   //limit how many documents skipped for search, (goes up in 50's)
   //default 0 if not specified in url
-  const skip = Number(query.page) || 0
+  const skip = (Number(query.page) || 0) * RESULTS_PER_PAGE
   //sort order. Default sort by last name A-Z, then first name A-Z
   let sort = {"lastName":1,"firstName":1}
 
-  if(query.sort){ sort = {[query.sort]:1} }
+  if(query.sort){ 
+    let order = 1
+    if(query.order == "za") order = -1
+    sort = {[query.sort]:[order]} 
+  }
 
   
   try {
     const patients = await Patient.find().sort(sort).skip(skip).limit(RESULTS_PER_PAGE)
-    const pages = Math.ceil( await Patient.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
+    const totalPages = Math.ceil( await Patient.estimatedDocumentCount() / RESULTS_PER_PAGE )
     res.render('pages/patient/patient-list', {
       patients,
       title:"List Patients",
-      pages
+      totalPages
     })
   } catch (error) {
     res.render("errors/500")
@@ -100,7 +83,7 @@ router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
 
   try {
-    const patient = await Patient.findOne({ _id: id })
+    const patient = await Patient.findById(id)
     const exams = await Exam.find({ patientID: id })
     const optoms = await User.find({ })
     if (patient) {
@@ -124,7 +107,7 @@ router.get('/edit/:patientID', ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
 
   try {
-    const patient = await Patient.findOne({ _id: id })
+    const patient = await Patient.findById(id)
     if (patient) {
       res.render('pages/patient/patient-edit', {
         patient,
@@ -143,123 +126,67 @@ router.get('/edit/:patientID', ensureAuthenticated, async (req, res) => {
 router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
 
-  const {
-    firstName,
-    middleName,
-    lastName,
-    gender,
-    genderOther,
-    dateOfBirth,
-    phoneLandline,
-    phoneMobile,
-    email,
-    addressHouseNumber,
-    addressLineOne,
-    addressLineTwo,
-    addressCity,
-    addressPostCode,
-    NHSNumber,
-    patientType,
-    GPName,
-    GPAddress,
-    editReason,
-    notes
-  } = req.body
-
-
+  const newInfo = {
+    firstName: req.body.firstName,
+    middleName: req.body.middleName,
+    lastName: req.body.lastName,
+    gender: req.body.gender,
+    genderOther: req.body.genderOther,
+    dateOfBirth: req.body.dateOfBirth,
+    phoneLandline: req.body.phoneLandline,
+    phoneMobile: req.body.phoneMobile,
+    email: req.body.email,
+    addressHouseNumber: req.body.addressHouseNumber,
+    addressLineOne: req.body.addressLineOne,
+    addressLineTwo: req.body.addressLineTwo,
+    addressCity: req.body.addressCity,
+    addressPostcode: req.body.addressPostcode,
+    NHSNumber: req.body.NHSNumber,
+    patientType: req.body.patientType,
+    GPName: req.body.GPName,
+    GPAddress: req.body.GPAddress,
+    editReason: req.body.editReason,
+    notes: req.body.notes,
+  }
+  
   try {
-    const patient = await Patient.findOne({ _id: id })
+    const patient = await Patient.findById(id)
+
     if (patient) {
+
       const archivePatient = new Archive({ 
-        archiveType: "Edit Patient",
-        archiveReason: `${editReason}`,
+        archiveType: "Patient Edited by User",
+        archiveReason: `${req.body.editReason}`,
         archivedBy: req.user._id,
         patientDocument: patient,
       }) 
 
       let changes = []
-      //filthy code. check each value, if changed, update and add to changes list
-      if (patient.firstName != firstName) {
-        patient.firstName = firstName
-        changes.push("first name")
-      }
-      if (patient.middleName != middleName) {
-        patient.middleName = middleName
-        changes.push("middle name")
-      }
-      if (patient.lastName != lastName) {
-        patient.lastName = lastName
-        changes.push("last name")
-      }
-      if (patient.gender != gender || genderOther) {
-        if(gender == ""){
-          patient.gender = genderOther
+
+      for (const [key, value] of Object.entries(newInfo)) {
+        if(patient[key] != value && key != "editReason" && key != "genderOther"){
+          patient[key] = value
+          changes.push(key)
         }
-        else patient.gender = gender
-        changes.push("gender")
       }
-      if (patient.dateOfBirth != dateOfBirth) {
-        patient.dateOfBirth = dateOfBirth
-        changes.push("date of birth")
+
+      console.log(changes)
+
+      if(changes.includes("gender")){
+        if(patient.gender == newInfo.genderOther){
+          changes.splice(changes.indexOf("gender"), 1)
+          changes.splice(changes.indexOf("genderOther"), 1)
+        }
       }
-      if (patient.phoneLandline != phoneLandline) {
-        patient.phoneLandline = phoneLandline
-        changes.push("landline")
-      }
-      if (patient.phoneMobile != phoneMobile) {
-        patient.phoneMobile = phoneMobile
-        changes.push("mobile")
-      }
-      if (patient.email != email) {
-        patient.email = email
-        changes.push("email")
-      }
-      if (patient.addressHouseNumber != addressHouseNumber) {
-        patient.addressHouseNumber = addressHouseNumber
-        changes.push("house number")
-      }
-      if (patient.addressLineOne != addressLineOne) {
-        patient.addressLineOne = addressLineOne
-        changes.push("address line one")
-      }
-      if (patient.addressLineTwo != addressLineTwo) {
-        patient.addressLineTwo = addressLineTwo
-        changes.push("address line two")
-      }
-      if (patient.addressCity != addressCity) {
-        patient.addressCity = addressCity
-        changes.push("city")
-      }
-      if (patient.addressPostCode != addressPostCode) {
-        patient.addressPostCode = addressPostCode
-        changes.push("postcode")
-      }
-      if (patient.NHSNumber != NHSNumber) {
-        patient.NHSNumber = NHSNumber
-        changes.push("NHS Number")
-      }
-      if (patient.patientType != patientType) {
-        patient.patientType = patientType
-        changes.push("patient type")
-      }
-      if (patient.GPName != GPName) {
-        patient.GPName = GPName
-        changes.push("GP name")
-      }
-      if (patient.GPAddress != GPAddress) {
-        patient.GPAddress = GPAddress
-        changes.push("GP address")
-      }
-      if (patient.notes != notes) {
-        patient.notes = notes
-        changes.push("notes")
-      }
+
+      // changes.splice(changes.indexOf("editReason"), 1)
 
       //turn into list, capitalise first letter
-      changes = changes.join(", ")
-      changes = changes.charAt(0).toUpperCase() + changes.slice(1)
-
-      if(changes){
+      
+      if(changes.length > 0){
+        changes = changes.join(", ")
+        changes = changes.replace( /([A-Z])/g, " $1" )
+        changes = changes.charAt(0).toUpperCase() + changes.slice(1)
         patient.save()
         archivePatient.fieldsChanged = changes
         archivePatient.save()
@@ -271,7 +198,8 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
     }
     throw ("not found")
   } catch (error) {
-    res.render('errors/404')
+    console.log(error)
+    res.redirect(`/errors/500`)
     return
   }
 })

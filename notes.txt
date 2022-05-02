@@ -1,21 +1,15 @@
-Import last history and symptoms - easy but unimportant
-
 attachments for exams - nightmare
 
 audit filter between timestamps, and involving
 a certain user / ip, and/or accessing a particular record
 
-paginate EVERYTHING, sort and filter where required
+staff view needs a lot of work, as does exam view
 
-search button patient/search alignment
+pagination needed for exam list in staff page and patient page
 
-Perscription -> Perscription
+exam disc shape left
 
-need multiple Prescription
-
-no patients found message needed
-
-staff view needs a lot of work
+janky login
 
 ///
 Discussion Points
@@ -31,3 +25,6 @@ Then specify .collation({locale: 'en', strength: 1}) after queries
 EJS Vulnerablility disclosed near the end of the project
 https://nvd.nist.gov/vuln/detail/CVE-2022-29078
 
+mongoose .lean
+
+mongodb mongoose

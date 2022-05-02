@@ -23,13 +23,6 @@ const OrderSchema = new mongoose.Schema({
     cost: {
         type:Number //in £
     },
-    archived: {
-        type: Boolean,
-        default: false
-    },
-    archiveReason: {
-        type: String,
-    },
 });
 
 const Order = mongoose.model("Order", OrderSchema);

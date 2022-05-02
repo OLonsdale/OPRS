@@ -1,5 +1,8 @@
 <% if (staff) { %>
 
+  
+  <a href="/staff/edit/<%= staff.id %>" class="btn btn-primary mt-2 mb-5">Edit Staff Member</a>
+
   <div class="accordion" id="staffMember">
     <div class="accordion-item">
       <h2 class="accordion-header" id="metadata">
@@ -39,9 +42,6 @@
     </div>
     
   </div>
-
-
-  <a href="/staff/edit/<%= staff.id %>" class="btn btn-primary mt-2 mb-5">Edit Staff Member</a>
 
   <% if (exams.length > 0) { %>
 

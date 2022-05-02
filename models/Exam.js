@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const ExamSchema = new mongoose.Schema({
     patientID: {
         type: String,
+        required: true
     },
     visitReason: {
         type: String,
@@ -30,12 +31,15 @@ const ExamSchema = new mongoose.Schema({
     },
     dateOfVisit: {
         type: Date,
+        required: true
     },
     performingOptometrist: {
         type: String,
+        required: true
     },
     author: {
         type: String, //person writing up the exam
+        required: true
     },
     dateAdded: {
         type: Date,

@@ -1,4 +1,38 @@
-<%- include("./partials/page-buttons") %> 
+<form class="container d-flex mb-3 gap-2 noGutter">
+  <div>
+    <label class="form-label" for="filterDateFrom">From:</label>
+    <input name="filterDateFrom" class="form-control" id="filterDateFrom" type="datetime-local" value="<%- lastQuery.filterDateFrom %>">
+  </div>
+  <div>
+    <label class="form-label" for="filterDateTo">To:</label>
+    <input name="filterDateTo" class="form-control" id="filterDateTo" type="datetime-local" value="<%- lastQuery.filterDateTo %>">
+  </div>
+  <div>
+    <label class="form-label" for="filterByUser">By:</label>
+    <select name="filterByUser" class="form-select" id="filterByUser" value="<%- lastQuery.filterByUser %>">
+      <option value="">None</option>
+      <% optoms.forEach(optom => { %>
+       <option value="<%- optom._id %>" 
+        <% if (lastQuery.filterByUser == optom._id) { %>
+        selected
+        <% } %>
+       >
+       <%- optom.name %>
+      </option>
+      <% }) %>
+    </select>
+  </div>
+  <div>
+    <label class="form-label" for="filterButton">Go!</label>
+    <button type="submit" id="filterButton" class="btn btn-primary form-control" role="button">Filter</button>
+  </div>
+  <div>
+    <label class="form-label" for="clearButton">Reset</label>
+    <a href="/admin/audit/list/" id="clearButton" class="btn btn-outline-danger form-control" role="button">Clear</a>
+  </div>
+</form>
+
+<%- include("../../partials/page-buttons") %> 
 <div class="table-responsive">
   <table class="table table-striped">
     <thead class="thead-dark">
@@ -21,3 +55,4 @@
     </tbody>
   </table>
 </div>
+

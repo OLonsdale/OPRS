@@ -52,7 +52,10 @@
         <td><%= patient.firstName %></td>
         <td><%= patient.lastName %></td>
         <td><%= patient.dateOfBirth %></td>
-        <td><a type="button" class="btn btn-secondary btn-sm" href="/patient/view/<%= patient._id %>">View</a></td>
+        <td>
+          <a type="button" class="btn btn-secondary btn-sm" href="/exam/add/<%= patient.id %>" >Add Exam</a>
+          <a type="button" class="btn btn-secondary btn-sm" href="/patient/view/<%= patient._id %>">View</a>
+        </td>
       </tr>
       <% }) %>
     </tbody>

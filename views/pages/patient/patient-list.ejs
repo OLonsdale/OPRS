@@ -1,4 +1,11 @@
-<%- include("../../partials/sort-buttons", {properties:{"firstName":"First Name","lastName":"Last Name","dateOfBirth":"Date of Birth"}}) %> 
+<%- include("../../partials/messages") %> 
+
+<div class="container p-0 d-flex justify-content-between">
+  <div>
+    <%- include("../../partials/sort-buttons", {properties:{"firstName":"First Name","lastName":"Last Name","dateOfBirth":"Date of Birth"}}) %>
+  </div>
+  <a class="btn btn-primary mb-2" href="/patient/add" role="button">Add Patient</a>
+</div>
 <%- include("../../partials/page-buttons") %> 
 
 
@@ -26,9 +33,8 @@
           <%= patient.dateOfBirth %>
         </td>
         <td>
-          <a type="button" class="btn btn-secondary btn-sm" href="/patient/view/<%= patient._id %>">
-            View
-          </a>
+          <a type="button" class="btn btn-secondary btn-sm" href="/exam/add/<%= patient._id %>" >Add Exam</a>
+          <a type="button" class="btn btn-secondary btn-sm" href="/patient/view/<%= patient._id %>"> View </a>
         </td>
       </tr>
       <% }) %>

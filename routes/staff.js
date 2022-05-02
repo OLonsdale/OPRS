@@ -116,16 +116,16 @@ router.get('/list', ensureAuthenticated, async (req, res) => {
 
   //limit how many documents skipped for search, (goes up in 50's)
   //default 0 if not specified in url
-  const skip = Number(query.page) || 0
+  const skip = (Number(query.page) || 0) * RESULTS_PER_PAGE
   
   try {
     const users = await User.find().skip(skip).limit(RESULTS_PER_PAGE)
-    const pages = Math.ceil( await User.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
+    const totalPages = Math.ceil( await User.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
 
     res.render('pages/staff/staff-list', {
       title:"List Staff",
       users,
-      pages
+      totalPages
     })
   } catch (error) {
     res.render("errors/500")
@@ -137,7 +137,7 @@ router.get('/view/:staffID', ensureAuthenticated, async (req, res) => {
   const id = req.params.staffID
 
   try {
-    const staff = await User.findOne({ _id: id })
+    const staff = await User.findById(id)
     const exams = await Exam.find({ performingOptometrist: id })
     if (staff) { 
       res.render('pages/staff/staff-view', { staff, exams, title:`View ${staff.username}` })
@@ -154,7 +154,7 @@ router.get('/edit/:staffID', ensureAuthenticated, async (req, res) => {
   const id = req.params.staffID
 
   try {
-    const staff = await User.findOne({ _id: id })
+    const staff = await User.findById(id)
     if (staff) { 
       res.render('pages/staff/staff-edit', { staff, title:`Edit ${staff.username}`,})
       return
@@ -169,7 +169,7 @@ router.post('/edit/:staffID', ensureAuthenticated, async (req, res) => {
   const id = req.params.staffID
   let staff
 
-  try { staff = await User.findOne({ _id: id }) }
+  try { staff = await User.findById(id) }
   catch (error) { res.render('errors/500'); return }
 
   const {
@@ -208,12 +208,13 @@ router.post('/edit/:staffID', ensureAuthenticated, async (req, res) => {
     // check password is at least 8 chars
     if (password.length < 8) {
       errors.push({
-        msg: 'Password must be at least 4 characters'
+        msg: 'Password must be at least 8 characters'
       })
     }
 
     if (errors.length > 0) {
       res.render('pages/staff/staff-edit', {
+        staff,
         errors,
         title:`Edit ${staff.username}`
       })
