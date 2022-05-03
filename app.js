@@ -1,6 +1,6 @@
 const express = require('express') //server
 const expressLayouts = require('express-ejs-layouts');
-// const expressFileUpload = require('express-fileupload');
+const expressFileUpload = require('express-fileupload');
 const mongoose = require('mongoose') //db connecton
 const MongoStore = require('connect-mongo') //db connection
 const passport = require('passport') //authentication
@@ -8,7 +8,6 @@ const flash = require('connect-flash') //messages
 const session = require('express-session') //sessions
 const morgan = require('morgan') //logging
 const path = require("path") //platform independent path tools
-
 
 const app = express()
 //set static folder
@@ -35,7 +34,7 @@ app.set('view engine', 'ejs')
 // Express body parser & file upload validation
 app.use(express.urlencoded({ extended: true })) // form posts etc
 app.use(express.json()) // json posts
-// app.use(expressFileUpload({createParentPath: true})) // files in forms
+app.use(expressFileUpload()) // files in forms
 
 // Express session - persists logins
 app.use(
@@ -61,6 +60,8 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error')
   next()
 })
+
+
 
 
 // Routes

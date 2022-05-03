@@ -6,7 +6,7 @@
 
       <% include("../../partials/messages") %>
 
-      <form action="" method="POST">
+      <form action="" enctype="multipart/form-data" method="POST">
         
         <div class="form-group container noGutter">
           <h2>History and Symptoms:</h2>
@@ -641,6 +641,16 @@
 </div>
 
 <script>
+
+attachments.addEventListener("change", ev =>{
+  Array.from(attachments.files).forEach(file => {
+    if(file.size > 4 * 1024 * 1024){
+      alert("Files too large")
+      attachments.value = ""
+    }
+  })
+})
+
   fundusLeft.addEventListener("change", _ => {
     if (!fundusLeft.value) {
       fundusLeftOtherDiv.classList.remove("d-none")

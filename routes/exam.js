@@ -4,6 +4,8 @@ const User = require("../models/User");
 const Patient = require("../models/Patient");
 const Exam = require("../models/Exam");
 const {ensureAuthenticated,} = require("../config/auth");
+const stream = require("stream");
+
 
 //View an exam
 router.get("/view/:examID", ensureAuthenticated, async (req, res) => {
@@ -32,7 +34,7 @@ router.get("/add/:patientID", ensureAuthenticated, async (req, res) => {
   try {
     const patient = await Patient.findById(id)
     const optometrists = await User.find({ optometrist: true })
-    const lastExam = await Exam.findOne({patientID:id}).sort({"dateOfVisit": -1}).limit(1)
+    const lastExam = await Exam.findOne({patientID:id}).sort({"dateOfVisit": -1, "dateAdded":-1}).limit(1)
     if (patient) {
       res.render("pages/exam/exam-add", {
         user: req.user,
@@ -51,6 +53,7 @@ router.get("/add/:patientID", ensureAuthenticated, async (req, res) => {
 
 //Add exam
 router.post("/add/:patientID", ensureAuthenticated, async (req, res) => {
+
   //most fileds can be directly taken, those that are missing have a comment line
   let exam = {
     patientID: req.body.patientID,
@@ -124,9 +127,11 @@ router.post("/add/:patientID", ensureAuthenticated, async (req, res) => {
     exam.sphereRight = `${req.body.sphereRightSign}${req.body.sphereRight}`
   } else exam.sphereRight = req.body.sphereRight
 
-  // if(req.body.attachments){
-  //   exam.attachments = exam.attachments.push(req.body.attachments)
-  // }
+  if(req.files){
+    let files = []
+    files.push(req.files.attachments)
+    exam.attachments = files.flat()
+  }
     
   try {
     const newExam = new Exam(exam)
@@ -142,6 +147,27 @@ router.post("/add/:patientID", ensureAuthenticated, async (req, res) => {
   res.redirect(`/patient/view/${req.body.patientID}`)
 })
 
+
+//Page to add exam to patient specified in URL
+router.get("/download/:examID/:fileIndex", ensureAuthenticated, async (req, res) => {
+  const id = req.params.examID
+  const index = req.params.fileIndex
+
+  try {
+    const exam = await Exam.findById(id)
+    const attachment = exam.attachments[index]
+    let fileContents = Buffer.from(attachment.data.buffer, "binary")
+    let readStream = new stream.PassThrough();
+    readStream.end(fileContents);
+
+    res.set('Content-disposition', 'attachment; filename=' + attachment.name)
+    res.set('Content-Type', attachment.minetype)
+    readStream.pipe(res)
+  
+  } catch (error) {
+    res.send("<script>window.close();</script > ") //close tab by sending script
+  }
+})
 
 
 module.exports = router

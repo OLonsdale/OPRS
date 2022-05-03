@@ -120,8 +120,7 @@ router.get('/list', ensureAuthenticated, async (req, res) => {
   
   try {
     const users = await User.find().skip(skip).limit(RESULTS_PER_PAGE)
-    const totalPages = Math.ceil( User.estimatedDocumentCount() / RESULTS_PER_PAGE )
-
+    const totalPages = Math.ceil( await User.estimatedDocumentCount() / RESULTS_PER_PAGE )
     res.render('pages/staff/staff-list', {
       title:"List Staff",
       users,

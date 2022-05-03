@@ -87,7 +87,7 @@ router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
 
   try {
     const patient = await Patient.findById(id)
-    const exams = await Exam.find({ patientID: id }).skip(skip).limit(RESULTS_PER_PAGE)
+    const exams = await Exam.find({ patientID: id }).sort({dateOfVisit:-1,dateAdded:-1}).skip(skip).limit(RESULTS_PER_PAGE)
     const totalPages = Math.ceil(exams.length / RESULTS_PER_PAGE)
     const optometrists = await User.find()
     if (patient) {
