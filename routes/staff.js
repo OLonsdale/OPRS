@@ -120,7 +120,7 @@ router.get('/list', ensureAuthenticated, async (req, res) => {
   
   try {
     const users = await User.find().skip(skip).limit(RESULTS_PER_PAGE)
-    const totalPages = Math.ceil( await User.estimatedDocumentCount({}) / RESULTS_PER_PAGE )
+    const totalPages = Math.ceil( User.estimatedDocumentCount() / RESULTS_PER_PAGE )
 
     res.render('pages/staff/staff-list', {
       title:"List Staff",
@@ -137,10 +137,20 @@ router.get('/view/:staffID', ensureAuthenticated, async (req, res) => {
   const id = req.params.staffID
 
   try {
+
+    //number of elements to show per page
+    const RESULTS_PER_PAGE = 25
+    //cleans search queries
+    const query = Object.entries(req.query).reduce((obj,[key,value]) => (value ? (obj[key]=value, obj) : obj), {})
+    //limit how many documents skipped for search, (goes up in 50's)
+    //default 0 if not specified in url
+    const skip = (Number(query.page) || 0) * RESULTS_PER_PAGE
     const staff = await User.findById(id)
-    const exams = await Exam.find({ performingOptometrist: id })
+    const exams = await Exam.find({ performingOptometrist: id }).skip(skip).limit(RESULTS_PER_PAGE)
+    const totalPages = Math.ceil(exams.length / RESULTS_PER_PAGE)
+
     if (staff) { 
-      res.render('pages/staff/staff-view', { staff, exams, title:`View ${staff.username}` })
+      res.render('pages/staff/staff-view', { staff, exams, title:`View ${staff.username}`,totalPages })
       return
     }
     throw ("not found")

@@ -1,16 +1,5 @@
 attachments for exams - nightmare
 
-audit filter between timestamps, and involving
-a certain user / ip, and/or accessing a particular record
-
-staff view needs a lot of work, as does exam view
-
-pagination needed for exam list in staff page and patient page
-
-exam disc shape left
-
-janky login
-
 ///
 Discussion Points
 ///
@@ -28,3 +17,4 @@ https://nvd.nist.gov/vuln/detail/CVE-2022-29078
 mongoose .lean
 
 mongodb mongoose
+

@@ -126,6 +126,7 @@
 
 <a href="/exam/add/<%= patient.id %>" class="btn btn-primary mt-3 mb-1">Add Exam</a>
 
+<%- include("../../partials/page-buttons") %> 
 <div class="table-responsive">
   <table class="table table-striped table-hover">
     <thead class="thead-dark">
@@ -140,7 +141,7 @@
       <% exams.forEach(exam => { %>
         <tr>
           <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
-          <td><%= optoms.find(optom => optom._id == exam.performingOptometrist).name %></td>
+          <td><%= optometrists.find(optom => optom._id == exam.performingOptometrist).name %></td>
           <td><%= exam.id %></td>
           <td>
             <a class="btn btn-outline-danger btn-sm" href="/admin/archive/add/exam/<%= exam.id %>">Archive</a>

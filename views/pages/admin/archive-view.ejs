@@ -43,7 +43,7 @@
   <tr>
     <td>Performing Optometrist</td>
     <td>
-      <%= optoms.find(optom => optom._id ==
+      <%= optometrists.find(optom => optom._id ==
       element.examDocument.performingOptometrist).name %>
     </td>
   </tr>
@@ -405,7 +405,7 @@ end of the opening textarea tag doesn't break stuff %>
             <tr>
               <td>Performing Optometrist</td>
               <td>
-                <%= optoms.find(optom => optom._id ==
+                <%= optometrists.find(optom => optom._id ==
                 exam.performingOptometrist).name %>
               </td>
             </tr>

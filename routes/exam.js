@@ -10,11 +10,11 @@ router.get("/view/:examID", ensureAuthenticated, async (req, res) => {
   const id = req.params.examID
   try {
     const exam = await Exam.findById(id)
-    const optoms = await User.find()
+    const optometrists = await User.find()
     if (exam) {
       res.render("pages/exam/exam-view", {
         exam,
-        optoms,
+        optometrists,
         title:"View Exam"
       })
       return
@@ -72,7 +72,7 @@ router.post("/add/:patientID", ensureAuthenticated, async (req, res) => {
     vitreousLeft: req.body.vitreousLeft,
     vitreousRight: req.body.vitreousRight,
     viterousComment: req.body.viterousComment,
-    diskLeft: req.body.diskLeft,
+    discLeft: req.body.discLeft,
     discRight: req.body.discRight,
     discComment: req.body.discComment,
     fundusLeft: req.body.fundusLeft || req.body.fundusLeftOther,

@@ -62,7 +62,6 @@ router.get('/list/', ensureAuthenticated, async (req, res) => {
     if(query.order == "za") order = -1
     sort = {[query.sort]:[order]} 
   }
-
   
   try {
     const patients = await Patient.find().sort(sort).skip(skip).limit(RESULTS_PER_PAGE)
@@ -82,15 +81,21 @@ router.get('/list/', ensureAuthenticated, async (req, res) => {
 router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
 
+  const RESULTS_PER_PAGE = 25
+  const query = Object.entries(req.query).reduce((obj, [key, value]) => (value ? (obj[key] = value, obj) : obj), {})
+  const skip = (Number(query.page) || 0) * RESULTS_PER_PAGE
+
   try {
     const patient = await Patient.findById(id)
-    const exams = await Exam.find({ patientID: id })
-    const optoms = await User.find({ })
+    const exams = await Exam.find({ patientID: id }).skip(skip).limit(RESULTS_PER_PAGE)
+    const totalPages = Math.ceil(exams.length / RESULTS_PER_PAGE)
+    const optometrists = await User.find()
     if (patient) {
       res.render('pages/patient/patient-view', {
         patient,
         exams,
-        optoms,
+        optometrists,
+        totalPages,
         title:`View ${patient.firstName} ${patient.lastName}`
       })
       return
@@ -151,6 +156,7 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
   
   try {
     const patient = await Patient.findById(id)
+    console.log(patient)
 
     if (patient) {
 
@@ -161,32 +167,28 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
         patientDocument: patient,
       }) 
 
-      let changes = []
+      let changes = new Set()
 
+      //compares old values to new values, adds changes to list and updates original patient 
       for (const [key, value] of Object.entries(newInfo)) {
-        if(patient[key] != value && key != "editReason" && key != "genderOther"){
+        if(key == "editReason" || key == "genderOther") continue
+
+        if(key == "gender" && patient.gender != newInfo.genderOther && newInfo.gender == ""){
+            changes.add("gender")
+            patient.gender = newInfo.genderOther
+            continue
+        }
+
+        if(patient[key] != value){
           patient[key] = value
-          changes.push(key)
+          changes.add(key)
         }
       }
 
-      console.log(changes)
-
-      if(changes.includes("gender")){
-        if(patient.gender == newInfo.genderOther){
-          changes.splice(changes.indexOf("gender"), 1)
-          changes.splice(changes.indexOf("genderOther"), 1)
-        }
-      }
-
-      // changes.splice(changes.indexOf("editReason"), 1)
-
-      //turn into list, capitalise first letter
-      
-      if(changes.length > 0){
-        changes = changes.join(", ")
-        changes = changes.replace( /([A-Z])/g, " $1" )
-        changes = changes.charAt(0).toUpperCase() + changes.slice(1)
+      if(changes.size > 0){
+        changes = Array.from(changes).join(", ") //converts to array then stiches into list
+        changes = changes.replace( /([A-Z])/g, " $1" ) //converts "cammelCase" to "Sentence case"
+        changes = changes.charAt(0).toUpperCase() + changes.slice(1) //capitalises first letter
         patient.save()
         archivePatient.fieldsChanged = changes
         archivePatient.save()

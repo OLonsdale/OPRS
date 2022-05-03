@@ -23,20 +23,17 @@ router.get('/archive/list', ensureAuthenticated, async (req, res) => {
     const query = Object.entries(req.query).reduce((obj, [key, value]) => (value ? (obj[key] = value, obj) : obj), {})
     //results to skip to equate to page numbers, default 0 for page 1
     const skip = (Number(query.page) || 0) * RESULTS_PER_PAGE
-    //number of pages total, round up for less than RESULTS_PER_PAGE number of results
-    const documentCount = await Archive.estimatedDocumentCount()
-    // const totalPages = (documentCount < RESULTS_PER_PAGE) ? 1 :  Math.ceil( documentCount / RESULTS_PER_PAGE )
-    const totalPages = Math.ceil(documentCount / RESULTS_PER_PAGE)
-
     //get results
-    const archive = await Archive.find().skip(skip).limit(RESULTS_PER_PAGE)
+    const archive = await Archive.find().sort({dateArchived:-1}).skip(skip).limit(RESULTS_PER_PAGE)
+    //get page count, round to next int
+    const totalPages = Math.ceil(await Archive.estimatedDocumentCount() / RESULTS_PER_PAGE)
     //get optometrists
-    const optoms = await User.find()
+    const optometrists = await User.find()
 
     res.render('pages/admin/archive-list', {
       elements: archive,
       title: "Archive",
-      optoms,
+      optometrists,
       totalPages
     })
   } catch (error) {
@@ -51,11 +48,11 @@ router.get('/archive/view/:archiveID', ensureAuthenticated, async (req, res) => 
   try {
     //get document by id, and all users
     const element = await Archive.findById(_id)
-    const optoms = await User.find({})
+    const optometrists = await User.find()
     if (element) {
       res.render('pages/admin/archive-view', {
         element,
-        optoms,
+        optometrists,
         title: `Archived Document`
       })
       return
@@ -88,14 +85,13 @@ router.get('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
   }
 
   try {
-    const optoms = await User.find({})
+    const optometrists = await User.find()
     if (element) {
       res.render('pages/admin/archive-add', {
         element,
-        optoms,
+        optometrists,
         type,
         title: `Archive ${type}`
-
       })
       return
     }
@@ -110,7 +106,6 @@ router.get('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
 router.post('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
   const _id = req.params.id
   const type = req.params.type
-  const archiveReason = req.body.archiveReason
 
   //get document
   if (type == "patient") {
@@ -118,11 +113,12 @@ router.post('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
       const patient = await Patient.findById(_id)
       const archivePatient = new Archive({
         archiveType: "Patient Archived by User",
-        archiveReason: `${archiveReason}`,
+        archiveReason: `${req.body.archiveReason}`,
         archivedBy: req.user._id,
         patientDocument: patient,
       })
 
+      //archive all exams of patient
       //can't await in .foreach loop
       for (const examID of patient.exams) {
         const exam = await Exam.findOne({
@@ -131,10 +127,11 @@ router.post('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
         archivePatient.exams.push(exam)
         exam.remove()
       }
+      //remove old exam
       patient.remove()
 
+      //save the new docuemnt
       archivePatient.save()
-
 
     } catch (err) {
       res.render("errors/500")
@@ -144,7 +141,7 @@ router.post('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
       const exam = await Exam.findById(_id)
       const archiveExam = new Archive({
         archiveType: "Exam Archived by User",
-        archiveReason: `${archiveReason}`,
+        archiveReason: `${req.body.archiveReason}`,
         archivedBy: req.user._id,
         examDocument: exam,
       })
@@ -191,16 +188,14 @@ router.get('/audit/list', ensureAuthenticated, async (req, res) => {
       }
     }
 
-    const audit = await Audit.find(filter).sort({
-      timestamp: -1
-    }).skip(skip).limit(RESULTS_PER_PAGE)
-    const totalPages = Math.ceil(audit.length / RESULTS_PER_PAGE)
+    const audit = await Audit.find(filter).sort({ timestamp: -1 }).skip(skip).limit(RESULTS_PER_PAGE)
+    const totalPages = Math.ceil(await Audit.countDocuments(filter) / RESULTS_PER_PAGE)
 
-    const optoms = await User.find()
+    const optometrists = await User.find()
     res.render('pages/admin/audit-list', {
       elements: audit,
       title: "Audit Logs",
-      optoms,
+      optometrists,
       totalPages,
       lastQuery: query
     })

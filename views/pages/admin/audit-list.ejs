@@ -11,7 +11,7 @@
     <label class="form-label" for="filterByUser">By:</label>
     <select name="filterByUser" class="form-select" id="filterByUser" value="<%- lastQuery.filterByUser %>">
       <option value="">None</option>
-      <% optoms.forEach(optom => { %>
+      <% optometrists.forEach(optom => { %>
        <option value="<%- optom._id %>" 
         <% if (lastQuery.filterByUser == optom._id) { %>
         selected
@@ -47,9 +47,9 @@
       <% elements.forEach(element => { %>
         <tr>
           <td><%= element.event %></td>
-          <td><%= optoms.find(optom => optom._id == element.user).username %></td>
+          <td><%= optometrists.find(optom => optom._id == element.user).username %></td>
           <td><%= element.IP.replace("::ffff:","") %></td>
-          <td><%= element.timestamp.toISOString().replace("T"," ").replace("Z","") %></td>
+          <td><%= element.timestamp.toLocaleDateString('en-GB') %> - <%= element.timestamp.toLocaleTimeString('en-GB') %></td>
         </tr>
       <% }) %>
     </tbody>

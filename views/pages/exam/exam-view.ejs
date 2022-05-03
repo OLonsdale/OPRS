@@ -1,178 +1,260 @@
-<% if (exam) { %>
-  <h1> Exam </h1>
-  <h2> Metadata </h2>
-  <table class="table">
-    <tr>
-      <td>Exam ID</td>
-      <td><%= exam._id %></td>
-    </tr>
-    <tr>
-      <td>Patient ID</td>
-      <td><%= exam.patientID %><span class="p-5"><a class="btn btn-sm btn-outline-secondary" href="/patient/view/<%=exam.patientID%>">View Patient</a></span></td>
-    </tr>
-    <tr>
-      <td>Performing Optometrist</td>
-      <td><%= optoms.find(optom => optom._id == exam.performingOptometrist).name %></td>
-    </tr>
-    <tr>
-      <td>Author of Exam</td>
-      <td><%= exam.author %></td>
-    </tr>
-    <tr>
-      <td>Date of Exam</td>
-      <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
-    </tr>
-    <tr>
-      <td>Date of Entry</td>
-      <td><%= exam.dateAdded.toLocaleDateString('en-GB') %></td>
-    </tr>
-  </table>
-  <h2> About </h2>
-  <table class="table">
-    <tr>
-      <td>Reason for visit</td>
-      <td><%= exam.visitReason %></td>
-    </tr>
-    <tr>
-      <td>Family history</td>
-      <td><%= exam.familyHistory %></td>
-    </tr>
-    <tr>
-      <td>General Health</td>
-      <td><%= exam.generalHealth %></td>
-    </tr>
-    <tr>
-      <td>Medication</td>
-      <td><%= exam.medication %></td>
-    </tr>
-    <tr>
-      <td>Patient Drives</td>
-      <td><%= exam.patientDrives %></td>
-    </tr>
-    <tr>
-      <td>Patient uses VDU</td>
-      <td><%= exam.patientUsesVDU %></td>
-    </tr>
-    <tr>
-      <td>Occupation</td>
-      <td><%= exam.occupation %></td>
-    </tr>
-    <tr>
-      <td>Ocular History</td>
-      <td><%= exam.ocularHistory %></td>
-    </tr>   
-  </table>
+<div class="accordion" id="exam">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Metadata
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#exam">
+      <div class="accordion-body">
+        <table class="table">
+          <tr>
+            <td>Exam ID</td>
+            <td><%= exam._id %></td>
+          </tr>
+          <tr>
+            <td>Patient ID</td>
+            <td><%= exam.patientID %><span class="p-5"><a class="btn btn-sm btn-outline-secondary" href="/patient/view/<%=exam.patientID%>">View Patient</a></span></td>
+          </tr>
+          <tr>
+            <td>Performing Optometrist</td>
+            <td><%= optometrists.find(optom => optom._id == exam.performingOptometrist).name %></td>
+          </tr>
+          <tr>
+            <td>Author of Exam</td>
+            <td><%= exam.author %></td>
+          </tr>
+          <tr>
+            <td>Date of Exam</td>
+            <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
+          </tr>
+          <tr>
+            <td>Date of Entry</td>
+            <td><%= exam.dateAdded.toLocaleDateString('en-GB') %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+        aria-expanded="false" aria-controls="collapseTwo">
+        About
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#exam">
+      <div class="accordion-body">
+        <table class="table">
+          <tr>
+            <td>Reason for visit</td>
+            <td><%= exam.visitReason %></td>
+          </tr>
+          <tr>
+            <td>Family history</td>
+            <td><%= exam.familyHistory %></td>
+          </tr>
+          <tr>
+            <td>General Health</td>
+            <td><%= exam.generalHealth %></td>
+          </tr>
+          <tr>
+            <td>Medication</td>
+            <td><%= exam.medication %></td>
+          </tr>
+          <tr>
+            <td>Patient Drives</td>
+            <td><%= exam.patientDrives %></td>
+          </tr>
+          <tr>
+            <td>Patient uses VDU</td>
+            <td><%= exam.patientUsesVDU %></td>
+          </tr>
+          <tr>
+            <td>Occupation</td>
+            <td><%= exam.occupation %></td>
+          </tr>
+          <tr>
+            <td>Ocular History</td>
+            <td><%= exam.ocularHistory %></td>
+          </tr>   
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Exam
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#exam">
+      <div class="accordion-body">
+        <table class="table">
+          <thead>
+            <th>Field</th>
+            <th>Right Eye</th>
+            <th>Left Eye</th>
+          </thead>
+          <tr>
+            <td>Lens Opacity</td>
+            <td><%= exam.lensOpacityRight  || "Not Recorded" %></td>
+            <td><%= exam.lensOpacityLeft  || "Not Recorded" %></td>
+          </tr>
+          <tr>
+            <td>Lens Comment</td>
+            <td><%= exam.lensComment  || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Viterous</td>
+            <td><%= exam.vitreousRight  || "Not Recorded" %></td>
+            <td><%= exam.vitreousLeft  || "Not Recorded" %></td>
+          </tr>
+          <tr>
+            <td>Viterous Comment</td>
+            <td><%= exam.viterousComment  || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Disc Shape</td>
+            <td><%= exam.discRight  || "Not Recorded" %></td>
+            <td><%= exam.discLeft  || "Not Recorded" %></td>
+          </tr>
+          <tr>
+            <td>Disc Comment</td>
+            <td><%= exam.discComment  || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Fundus</td>
+            <td><%= exam.fundusRight  || "Not Recorded" %></td>
+            <td><%= exam.fundusLeft  || "Not Recorded" %></td>
+          </tr>
+          <tr>
+            <td>Macula</td>
+            <td><%= exam.maculaRight || "Not Recorded" %></td>
+            <td><%= exam.maculaLeft || "Not Recorded" %></td>
+          </tr>
+          <tr>
+            <td>Pupils</td>
+            <td><%= exam.pupils || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Pupils Comment</td>
+            <td><%= exam.pupilsComment || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>IOP</td>
+            <td><%= exam.IOPRight || "Not Recorded" %></td>
+            <td><%= exam.IOPLeft || "Not Recorded" %></td>
+          </tr>
+          <tr>
+            <td>IOP Comment</td>
+            <td><%= exam.IOPComment || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+      
+          <tr>
+            <td>Visual Field</td>
+            <td><%= exam.visualFieldRight || "Not Recorded" %></td>
+            <td><%= exam.visualFieldLeft || "Not Recorded" %></td>
+          </tr>
+          <tr>
+            <td>Visual Field Comment</td>
+            <td><%= exam.visualFieldComment || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Fixation Disparity</td>
+            <td><%= exam.fixationDisparity || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Motility</td>
+            <td><%= exam.motility || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Convergence</td>
+            <td><%= exam.convergence || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Stereopsis</td>
+            <td><%= exam.stereopsis || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Visual Acuity</td>
+            <td><%= exam.visualAcuity || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingFour">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
+        aria-expanded="false" aria-controls="collapseFour">
+        Perscription
+      </button>
+    </h2>
+    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#exam">
+      <div class="accordion-body">
+        <table class="table">
+          <thead>
+            <th>Field</th>
+            <th>Right Eye</th>
+            <th>Left Eye</th>
+          </thead>
+          <tr>
+            <td>Sphere</td>
+            <td><%= exam.sphereRight  || "Not Recorded" %> </td>
+            <td><%=  exam.sphereLeft || "Not Recorded" %></td>
+          </tr>
+          <tr>
+            <td>Cylinder</td>
+            <td><%= exam.cylinderRight || "Not Recorded" %></td>
+            <td><%= exam.cylinderLeft || "Not Recorded" %></td>
+          </tr>
+          <tr>
+            <td>Axis</td>
+            <td><%= exam.axisRight || "Not Recorded" %></td>
+            <td><%= exam.axisLeft || "Not Recorded" %></td>
+          </tr>
+          <tr>
+            <td>Prism/Base</td>
+            <td><%= exam.prismBaseRight || "Not Recorded" %></td>
+            <td><%= exam.prismBaseLeft || "Not Recorded" %></td>
+          </tr>
+          <tr>
+            <td>Advice Given</td>
+            
+            <% if (exam.adviceGiven == "noChange") { %>
+             <td>No Change</td>
+            <% } else if (exam.adviceGiven == "newPrescription") { %>
+              <td>New Perscription Given</td>
+            <% } else if (exam.adviceGiven == "noPrescription") { %>
+              <td>No Prescription Given</td>
+              <% } else { %>
+              <td><%- exam.adviceGiven %></td>
+            <% } %>
+            
+            <td></td>
+          </tr>
+          <tr>
+            <td>Recall Code</td>
+            <td><%= exam.recallCode || "Not Recorded" %></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <h2>Exam</h2>
-  <table class="table">
-    <tr>
-      <td>Lens Opacity</td>
-      <td>Right: <%= exam.lensOpacityRight%> - Left: <%= exam.lensOpacityLeft%></td>
-    </tr>
-    <tr>
-      <td>Lens Comment</td>
-      <td><%= exam.lensComment%></td>
-    </tr>
-    <tr>
-      <td>Viterous</td>
-      <td>Right: <%= exam.vitreousRight%> - Left: <%= exam.vitreousLeft%></td>
-    </tr>
-    <tr>
-      <td>Viterous Comment</td>
-      <td><%= exam.viterousComment%></td>
-    </tr>
-    <tr>
-      <td>Disc Shape</td>
-      <td>Right: <%= exam.discRight%> - Left: <%= exam.discLeft%></td>
-    </tr>
-    <tr>
-      <td>Disc Comment</td>
-      <td><%= exam.discComment %></td>
-    </tr>
-    <tr>
-      <td>Fundus</td>
-      <td>Right: <%= exam.fundusRight%> - Left: <%= exam.fundusLeft%></td>
-    </tr>
-    <tr>
-      <td>Macula</td>
-      <td>Right: <%= exam.maculaRight%> - Left: <%= exam.maculaLeft%></td>
-    </tr>
-    <tr>
-      <td>Pupils</td>
-      <td><%= exam.pupils%></td>
-    </tr>
-    <tr>
-      <td>Pupils Comment</td>
-      <td><%= exam.pupilsComment%></td>
-    </tr>
-    <tr>
-      <td>IOP</td>
-      <td>Right: <%= exam.IOPRight%> - Left: <%= exam.IOPLeft%></td>
-    </tr>
-    <tr>
-      <td>IOP Comment</td>
-      <td><%= exam.IOPComment%></td>
-    </tr>
 
-    <tr>
-      <td>Visual Field</td>
-      <td>Right: <%= exam.visualFieldRight%> - Left: <%= exam.visualFieldLeft%></td>
-    </tr>
-    <tr>
-      <td>Visual Field Comment</td>
-      <td><%= exam.visualFieldComment%></td>
-    </tr>
-    <tr>
-      <td>Fixation Disparity</td>
-      <td><%= exam.fixationDisparity%></td>
-    </tr>
-    <tr>
-      <td>Motility</td>
-      <td><%= exam.motility%></td>
-    </tr>
-    <tr>
-      <td>Convergence</td>
-      <td><%= exam.convergence%></td>
-    </tr>
-    <tr>
-      <td>Stereopsis</td>
-      <td><%= exam.stereopsis%></td>
-    </tr>
-    <tr>
-      <td>Visual Acuity</td>
-      <td><%= exam.visualAcuity%></td>
-    </tr>
-  </table>
-  <h2>Prescription</h2>
-  <table class="table">
-    <tr>
-      <td>Sphere</td>
-      <td><%= exam.sphereRight %> | <%=  exam.sphereLeft %></td>
-    </tr>
-    <tr>
-      <td>Cylinder</td>
-      <td><%= exam.cylinderRight %> | <%= exam.cylinderLeft %></td>
-    </tr>
-    <tr>
-      <td>Axis</td>
-      <td><%= exam.axisRight %> | <%= exam.axisLeft %></td>
-    </tr>
-    <tr>
-      <td>Prism/Base</td>
-      <td><%= exam.prismBaseRight %> | <%= exam.prismBaseLeft %></td>
-    </tr>
-    <tr>
-      <td>Advice Given</td>
-      <td><%= exam.adviceGiven %></td>
-    </tr>
-    <tr>
-      <td>Recall Code</td>
-      <td><%= exam.recallCode %></td>
-    </tr>
-  </table>
-  
-  <% } else { %>
-
-    <h1>No exam</h1>
-
-<% } %>

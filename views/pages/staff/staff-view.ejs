@@ -1,9 +1,9 @@
 <% if (staff) { %>
 
   
-  <a href="/staff/edit/<%= staff.id %>" class="btn btn-primary mt-2 mb-5">Edit Staff Member</a>
+  <a href="/staff/edit/<%= staff.id %>" class="btn btn-primary mt-2 mb-3">Edit Staff Member</a>
 
-  <div class="accordion" id="staffMember">
+  <div class="accordion mb-3" id="staffMember">
     <div class="accordion-item">
       <h2 class="accordion-header" id="metadata">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -12,17 +12,24 @@
       </h2>
       <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="metadata" data-bs-parent="#staffMember">
         <div class="accordion-body">
-          <div >
-          <p>ID: <%= staff._id %></p>
-          </div>
-        
-          <div >
-          <p>Name: <%= staff.name %></p>
-          </div>
-        
-          <div >
-          <p>Active Optometrist: <%= staff.optometrist %></p>
-          </div>
+          <table class="table">
+            <tr> 
+              <td>ID</td>
+              <td><%= staff._id %></td>
+            </tr>
+            <tr> 
+              <td>Username</td>
+              <td><%= staff.username %></td>
+            </tr>
+            <tr> 
+              <td>Name</td>
+              <td><%= staff.name %></td>
+            </tr>
+            <tr> 
+              <td>Active Optometrist</td>
+              <td><%= staff.optometrist %></td>
+            </tr>
+          </table>
         </div>
       </div>
       <h2 class="accordion-header" id="contact">
@@ -32,50 +39,63 @@
       </h2>
       <div id="collapseTwo" class="accordion-collapse collapse collapsed" aria-labelledby="metadata" data-bs-parent="#staffMember">
         <div class="accordion-body">
-          <div> <p>Email: <%= staff.email %></p> </div>
-          <div> <p>Main phone: <%= staff.phonePrimary %></p> </div>
-          <div> <p>Alternate phone: <%= staff.phoneSecondary %></p> </div>
-          <div> <p>Address: <%= staff.address %></p> </div>
+          <table class="table">
+            <tr> 
+              <td>Email</td>
+              <td><%= staff.email %></td>
+            </tr>
+            <tr> 
+              <td>Main phone</td>
+              <td><%= staff.phonePrimary %></td>
+            </tr>
+            <tr> 
+              <td>Alternate phone</td>
+              <td><%= staff.phoneSecondary %></td>
+            </tr>
+            <tr> 
+              <td>Address</td>
+              <td><%= staff.address %></td>
+            </tr>
+          </table>
         </div>
       </div>
-      
     </div>
-    
   </div>
 
   <% if (exams.length > 0) { %>
 
-  <h2>Exams by optometrist</h2>
-  <div class="table-responsive">
-    <table class="table table-striped table-hover">
-      <thead class="thead-dark">
-        <tr class="table-dark">
-          <th>Exam Date</th>
-          <th>Patient ID</th>
-          <th>Exam ID</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% exams.forEach(exam => { %>
-        <tr>
-          <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
-          <td><%= exam.patientID %></td>
-          <td><%= exam.id %></td>
-          <td>
-            <a
-              type="button"
-              class="btn btn-secondary btn-sm"
-              href="/exam/view/<%= exam.id %>"
-            >
-              View
-            </a>
-          </td>
-        </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  </div>
+    <h2>Exams by optometrist</h2>
+    <%- include("../../partials/page-buttons") %> 
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+          <tr class="table-dark">
+            <th>Exam Date</th>
+            <th>Patient ID</th>
+            <th>Exam ID</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% exams.forEach(exam => { %>
+          <tr>
+            <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
+            <td><%= exam.patientID %></td>
+            <td><%= exam.id %></td>
+            <td>
+              <a
+                type="button"
+                class="btn btn-secondary btn-sm"
+                href="/exam/view/<%= exam.id %>"
+              >
+                View
+              </a>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
 
   <% } %> 
 <% } %>

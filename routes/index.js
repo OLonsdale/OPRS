@@ -16,11 +16,15 @@ router.get('/', forwardAuthenticated, (_req, res) => res.render('pages/index/log
   layout: false //no layout, meaning no navbar. layout.ejs not used
 }))
 
+router.get('/login', forwardAuthenticated, (_req, res) => res.render('pages/index/login', {
+  layout: false //no layout, meaning no navbar. layout.ejs not used
+}))
+
 // Login
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/dashboard',
-    failureRedirect: '/',
+    failureRedirect: '/login',
     failureFlash: true,
   })(req, res, next)
 })
