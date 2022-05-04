@@ -14,7 +14,7 @@ const app = express()
 app.use(express.static(path.join(__dirname,"public")));
 
 // Logging requests to console with responses.
-app.use(morgan("dev"))
+app.use(morgan("short"))
 
 // Passport Config
 require('./config/passport')(passport)

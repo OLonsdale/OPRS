@@ -1,3 +1,8 @@
+TODO:
+
+Maybe filter on archive? Or at least show name of patient affected/effected
+Maybe filter staff
+export patient with exams?
 
 ///
 Discussion Points
@@ -17,3 +22,5 @@ mongoose .lean
 
 mongodb mongoose
 
+decisions:
+not to embed too many documents

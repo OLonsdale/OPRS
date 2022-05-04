@@ -6,6 +6,28 @@
 
       <% include("../../partials/messages") %>
 
+      
+      <% let familyHistory  %>
+      <% let generalHealth  %>
+      <% let medication     %>
+      <% let patientDrives  %>
+      <% let patientUsesVDU %>
+      <% let ocularHistory  %>
+      <% let occupation     %>
+
+      <% if (lastExam) { %>
+        <% familyHistory = lastExam.familyHistory %>
+        <% generalHealth = lastExam.generalHealth  %>
+        <% medication = lastExam.medication %>
+        <% patientDrives = lastExam.patientDrives %>
+        <% patientUsesVDU = lastExam.patientUsesVDU %>
+        <% ocularHistory = lastExam.ocularHistory %>
+        <% occupation = lastExam.occupation %>
+        <p class="lead">
+            Some fields populated with details from last exam
+        </p>
+      <% } %>
+
       <form action="" enctype="multipart/form-data" method="POST">
         
         <div class="form-group container noGutter">
@@ -48,19 +70,19 @@
           <%# Family History %>
           <div class="row mb-3">
             <label for="familyHistory" class="form-label">Family History:</label>
-            <textarea class="form-control" name="familyHistory" id="familyHistory" rows="1"><%= lastExam.familyHistory %></textarea>
+            <textarea class="form-control" name="familyHistory" id="familyHistory" rows="1"><%= familyHistory %></textarea>
           </div>
 
           <%# General Health %>
           <div class="row mb-3">
             <label for="generalHealth" class="form-label">General Health:</label>
-            <textarea class="form-control" name="generalHealth" id="generalHealth" rows="1"><%= lastExam.generalHealth %></textarea>
+            <textarea class="form-control" name="generalHealth" id="generalHealth" rows="1"><%= generalHealth %></textarea>
           </div>
           
           <%# Medication %>
           <div class="row mb-3">
             <label for="medication" class="form-label">Medication:</label>
-            <textarea class="form-control" name="medication" id="medication" rows="1"><%= lastExam.medication %></textarea>
+            <textarea class="form-control" name="medication" id="medication" rows="1"><%= medication %></textarea>
           </div>
 
           <%# Patient Drives %>
@@ -68,7 +90,7 @@
             <div class="container">
               <label for="patientDrives" class="form-label">Patient Drives:</label>
               <input type="checkbox" class="form-check-input" id="patientDrives" name="patientDrives" value="true"
-              <% if (lastExam.patientDrives) { %>
+              <% if (patientDrives) { %>
               checked
              <% } %> />
             </div>
@@ -79,7 +101,7 @@
             <div class="container">
               <label for="patientUsesVDU" class="form-label">Patient Uses VDU:</label>
               <input type="checkbox" class="form-check-input" id="patientUsesVDU" name="patientUsesVDU" value="true"
-               <% if (lastExam.patientUsesVDU) { %>
+               <% if (patientUsesVDU) { %>
                checked
               <% } %> />
             </div>
@@ -88,13 +110,13 @@
           <%# Occupation %>
           <div class="row mb-3">
             <label for="occupation" class="form-label">Occupation:</label>
-            <textarea class="form-control" name="occupation" id="occupation" rows="1"><%= lastExam.occupation %></textarea>
+            <textarea class="form-control" name="occupation" id="occupation" rows="1"><%= occupation %></textarea>
           </div>
 
           <%# Ocular History %>
           <div class="row mb-3">
             <label for="ocularHistory" class="form-label">Ocular History:</label>
-            <textarea class="form-control" name="ocularHistory" id="ocularHistory" rows="1"><%= lastExam.ocularHistory %></textarea>
+            <textarea class="form-control" name="ocularHistory" id="ocularHistory" rows="1"><%= ocularHistory %></textarea>
           </div>
 
           <%# Date of Visit %>
@@ -643,12 +665,19 @@
 <script>
 
 attachments.addEventListener("change", ev =>{
+  let total = 0
   Array.from(attachments.files).forEach(file => {
+    total += file.size
     if(file.size > 4 * 1024 * 1024){
-      alert("Files too large")
+      alert(`File ${file.name} is too large`)
       attachments.value = ""
+      total = 0
     }
   })
+  if(total > 6 * 1024 * 1024){
+    alert("Files too large")
+    attachments.value = ""
+  }
 })
 
   fundusLeft.addEventListener("change", _ => {
@@ -690,4 +719,5 @@ attachments.addEventListener("change", ev =>{
       motilityOtherDiv.classList.add("d-none")
     }
   })
+
 </script>
