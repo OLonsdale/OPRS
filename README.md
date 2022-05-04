@@ -2,7 +2,7 @@
 
 
 
-[A live version of the site can be found at](https://oprs-2022.herokuapp.com)
+[A live version of the site can be found here](https://oprs-2022.herokuapp.com) It will be an update or two behind.
 
 This systems allows the staff of the opticians to log in and create patients, and record exams for that patient.
 
