@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const PatientSchema = new mongoose.Schema({
   firstName: {
@@ -65,8 +65,8 @@ const PatientSchema = new mongoose.Schema({
     type: String,
   },
 
-});
+})
 
-const Patient = mongoose.model("Patient", PatientSchema);
+const Patient = mongoose.model("Patient", PatientSchema)
 
-module.exports = Patient;
+module.exports = Patient

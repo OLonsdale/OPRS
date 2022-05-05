@@ -39,7 +39,8 @@ router.get("/logout", (req, res) => {
 router.get("/dashboard", ensureAuthenticated, (req, res) => res.render("pages/index/dashboard", {
   user: req.user,
   title:"Dashboard"
-}))
+  }
+))
 
 // Magic find page
 router.get("/find", ensureAuthenticated, (req, res) => res.render("pages/index/search-all", {

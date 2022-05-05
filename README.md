@@ -1,8 +1,10 @@
-# Opticians Patient Record System
+# Optician's Patient Record System
 
+To install, download the source and extract it. Open the directory in the terminal and run `npm install` (you will need npm).
 
+Once the dependencies have been installed, run `npm run dev` to open the server in a dev environment with nodemon.
 
-[A live version of the site can be found here](https://oprs-2022.herokuapp.com) It will be an update or two behind.
+[A semi-live version of the site can be found here](https://oprs-2022.herokuapp.com) It will be an update or two behind.
 
 This systems allows the staff of the opticians to log in and create patients, and record exams for that patient.
 

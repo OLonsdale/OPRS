@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 const Patient = require("../models/Patient").schema
 const Exam = require("../models/Exam").schema
 
@@ -29,8 +29,8 @@ const ArchiveSchema = new mongoose.Schema({
     type: [Exam]
   }
 
-}, {collection: "archive"});
+}, {collection: "archive"})
 
-const Archive = mongoose.model("Archive", ArchiveSchema);
+const Archive = mongoose.model("Archive", ArchiveSchema)
 
-module.exports = Archive;
+module.exports = Archive

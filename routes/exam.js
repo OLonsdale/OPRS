@@ -1,10 +1,10 @@
-const express = require("express");
-const router = express.Router();
-const User = require("../models/User");
-const Patient = require("../models/Patient");
-const Exam = require("../models/Exam");
-const {ensureAuthenticated,} = require("../config/auth");
-const stream = require("stream");
+const express = require("express")
+const router = express.Router()
+const User = require("../models/User")
+const Patient = require("../models/Patient")
+const Exam = require("../models/Exam")
+const {ensureAuthenticated,} = require("../config/auth")
+const stream = require("stream")
 
 
 //View an exam
@@ -26,7 +26,7 @@ router.get("/view/:examID", ensureAuthenticated, async (req, res) => {
     res.render("errors/404")
     return
   }
-});
+})
 
 //Page to add exam to patient specified in URL
 router.get("/add/:patientID", ensureAuthenticated, async (req, res) => {
@@ -148,24 +148,30 @@ router.post("/add/:patientID", ensureAuthenticated, async (req, res) => {
 })
 
 
-//Page to add exam to patient specified in URL
+//download a file then close the tab
 router.get("/download/:examID/:fileIndex", ensureAuthenticated, async (req, res) => {
   const id = req.params.examID
   const index = req.params.fileIndex
 
   try {
+    //get the exam
     const exam = await Exam.findById(id)
+    //get the file from the exam as specified by index
     const attachment = exam.attachments[index]
+    //convert to a buffer
     let fileContents = Buffer.from(attachment.data.buffer, "binary")
-    let readStream = new stream.PassThrough();
-    readStream.end(fileContents);
-
+    //stream from the buffer
+    let readStream = new stream.PassThrough()
+    //close the stream
+    readStream.end(fileContents)
+    //set resonse headers
     res.set("Content-disposition", "attachment; filename=" + attachment.name)
     res.set("Content-Type", attachment.minetype)
+    //send the response
     readStream.pipe(res)
   
   } catch (error) {
-    res.send("<script>window.close();</script > ") //close tab by sending script
+    res.send("<script>window.close()</script > ") //close tab by sending script
   }
 })
 

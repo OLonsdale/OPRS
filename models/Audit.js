@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const AuditSchema = new mongoose.Schema({
   event: {
@@ -15,8 +15,8 @@ const AuditSchema = new mongoose.Schema({
     default: Date.now,
   },
 
-}, {collection: "audit"});
+}, {collection: "audit"})
 
-const Audit = mongoose.model("Audit", AuditSchema);
+const Audit = mongoose.model("Audit", AuditSchema)
 
-module.exports = Audit;
+module.exports = Audit

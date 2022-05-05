@@ -2,4 +2,4 @@ let dbPassword = "mongodb+srv://olonsdale:aFzpqzQKkdrW3Mv@oprs-cluster.1i256.mon
 
 module.exports = {
     mongoURI: dbPassword
-};
+}

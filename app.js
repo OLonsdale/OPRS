@@ -1,6 +1,6 @@
 const express = require("express") //server
-const expressLayouts = require("express-ejs-layouts");
-const expressFileUpload = require("express-fileupload");
+const expressLayouts = require("express-ejs-layouts")
+const expressFileUpload = require("express-fileupload")
 const mongoose = require("mongoose") //db connecton
 const MongoStore = require("connect-mongo") //db connection
 const passport = require("passport") //authentication
@@ -11,7 +11,7 @@ const path = require("path") //platform independent path tools
 
 const app = express()
 //set static folder
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname,"public")))
 
 // Logging requests to console with responses.
 app.use(morgan("short"))
