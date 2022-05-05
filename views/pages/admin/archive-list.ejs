@@ -14,7 +14,7 @@
         <tr>
           <td><%= element.archiveType %></td>
           <td><%= optometrists.find(optom => optom._id == element.archivedBy).name %></td>
-          <td><%= element.dateArchived.toLocaleDateString('en-GB') %> - <%= element.dateArchived.toLocaleTimeString('en-GB') %></td>
+          <td><%= element.dateArchived.toLocaleDateString("en-GB") %> - <%= element.dateArchived.toLocaleTimeString("en-GB") %></td>
           <td> <a type="button" class="btn btn-secondary btn-sm" href="/admin/archive/view/<%= element._id %>" > View </a> </td>
         </tr>
       <% }) %>

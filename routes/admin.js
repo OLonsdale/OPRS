@@ -1,22 +1,22 @@
-const express = require('express')
+const express = require("express")
 const router = express.Router()
-const User = require('../models/User')
-const Patient = require('../models/Patient')
-const Exam = require('../models/Exam')
-const Archive = require('../models/Archive')
-const Audit = require('../models/Audit')
+const User = require("../models/User")
+const Patient = require("../models/Patient")
+const Exam = require("../models/Exam")
+const Archive = require("../models/Archive")
+const Audit = require("../models/Audit")
 const {
   ensureAuthenticated,
-} = require('../config/auth')
+} = require("../config/auth")
 
 
 // Admin Dashboard
-router.get('/', ensureAuthenticated, (_req, res) => res.render('pages/admin/admin'))
+router.get("/", ensureAuthenticated, (_req, res) => res.render("pages/admin/admin"))
 
 //Archive System
 
 // Archive list
-router.get('/archive/list', ensureAuthenticated, async (req, res) => {
+router.get("/archive/list", ensureAuthenticated, async (req, res) => {
   try {
     const RESULTS_PER_PAGE = 25
     //clean queries from URL
@@ -30,7 +30,7 @@ router.get('/archive/list', ensureAuthenticated, async (req, res) => {
     //get optometrists
     const optometrists = await User.find()
 
-    res.render('pages/admin/archive-list', {
+    res.render("pages/admin/archive-list", {
       elements: archive,
       title: "Archive",
       optometrists,
@@ -42,7 +42,7 @@ router.get('/archive/list', ensureAuthenticated, async (req, res) => {
 })
 
 //View archived document
-router.get('/archive/view/:archiveID', ensureAuthenticated, async (req, res) => {
+router.get("/archive/view/:archiveID", ensureAuthenticated, async (req, res) => {
   const _id = req.params.archiveID
 
   try {
@@ -50,7 +50,7 @@ router.get('/archive/view/:archiveID', ensureAuthenticated, async (req, res) => 
     const element = await Archive.findById(_id)
     const optometrists = await User.find()
     if (element) {
-      res.render('pages/admin/archive-view', {
+      res.render("pages/admin/archive-view", {
         element,
         optometrists,
         title: `Archived Document`
@@ -59,13 +59,13 @@ router.get('/archive/view/:archiveID', ensureAuthenticated, async (req, res) => 
     }
     throw ("not found")
   } catch (error) {
-    res.render('errors/404')
+    res.render("errors/404")
     return
   }
 })
 
 //Page to add document to archive. Works on patients and exams.
-router.get('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
+router.get("/archive/add/:type/:id", ensureAuthenticated, async (req, res) => {
   const _id = req.params.id
   const type = req.params.type
   let element
@@ -87,7 +87,7 @@ router.get('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
   try {
     const optometrists = await User.find()
     if (element) {
-      res.render('pages/admin/archive-add', {
+      res.render("pages/admin/archive-add", {
         element,
         optometrists,
         type,
@@ -97,13 +97,13 @@ router.get('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
     }
     throw ("not found")
   } catch (error) {
-    res.render('errors/404')
+    res.render("errors/404")
     return
   }
 })
 
 //Add document to archive
-router.post('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
+router.post("/archive/add/:type/:id", ensureAuthenticated, async (req, res) => {
   const _id = req.params.id
   const type = req.params.type
 
@@ -119,7 +119,7 @@ router.post('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
       })
 
       //archive all exams of patient
-      //can't await in .foreach loop
+      //can"t await in .foreach loop
       for (const examID of patient.exams) {
         const exam = await Exam.findOne({
           _id: examID
@@ -159,7 +159,7 @@ router.post('/archive/add/:type/:id', ensureAuthenticated, async (req, res) => {
 
 //logs
 
-router.get('/audit/list', ensureAuthenticated, async (req, res) => {
+router.get("/audit/list", ensureAuthenticated, async (req, res) => {
   try {
     //See "Archive list get request route" for line-by-line breakdown.
     const RESULTS_PER_PAGE = 25
@@ -192,7 +192,7 @@ router.get('/audit/list', ensureAuthenticated, async (req, res) => {
     const totalPages = Math.ceil(await Audit.countDocuments(filter) / RESULTS_PER_PAGE)
 
     const optometrists = await User.find()
-    res.render('pages/admin/audit-list', {
+    res.render("pages/admin/audit-list", {
       elements: audit,
       title: "Audit Logs",
       optometrists,

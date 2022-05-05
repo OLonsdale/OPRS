@@ -57,7 +57,7 @@ const PatientSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  exams: { //holds id's only
+  exams: { //holds id"s only
     type: Array,
     default: [],
   },

@@ -49,7 +49,7 @@
           <td><%= element.event %></td>
           <td><%= optometrists.find(optom => optom._id == element.user).username %></td>
           <td><%= element.IP.replace("::ffff:","") %></td>
-          <td><%= element.timestamp.toLocaleDateString('en-GB') %> - <%= element.timestamp.toLocaleTimeString('en-GB') %></td>
+          <td><%= element.timestamp.toLocaleDateString("en-GB") %> - <%= element.timestamp.toLocaleTimeString("en-GB") %></td>
         </tr>
       <% }) %>
     </tbody>

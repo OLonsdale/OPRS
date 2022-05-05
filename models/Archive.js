@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const Patient = require('../models/Patient').schema
-const Exam = require('../models/Exam').schema
+const Patient = require("../models/Patient").schema
+const Exam = require("../models/Exam").schema
 
 const ArchiveSchema = new mongoose.Schema({
   archiveType: {

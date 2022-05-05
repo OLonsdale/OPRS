@@ -20,19 +20,19 @@
           <div class="mb-3">
             <label for="inputFirstName" class="form-label">First Name:</label>
             <input required id="inputFirstName" name="firstName" class="form-control" type="text"
-              value="<%= typeof patient.firstName != 'undefined' ? patient.firstName : '' %>" />
+              value="<%= typeof patient.firstName != "undefined" ? patient.firstName : "" %>" />
           </div>
 
           <div class="mb-3">
             <label for="inputMiddleName" class="form-label">Middle Names:</label>
             <input id="inputMiddleName" name="middleName" class="form-control" type="text"
-              value="<%= typeof patient.middleName != 'undefined' ? patient.middleName : '' %>" />
+              value="<%= typeof patient.middleName != "undefined" ? patient.middleName : "" %>" />
           </div>
 
           <div class="mb-3">
             <label for="inputLastName" class="form-label">Last Name:</label>
             <input required id="inputLastName" name="lastName" class="form-control" type="text"
-              value="<%= typeof patient.lastName != 'undefined' ? patient.lastName : '' %>" />
+              value="<%= typeof patient.lastName != "undefined" ? patient.lastName : "" %>" />
           </div>
 
           <h2>Bio:</h2>
@@ -54,26 +54,26 @@
           <div class="mb-3">
             <label for="inputDateOfBirth">Date of birth:</label>
             <input class="form-control" name="dateOfBirth" id="inputDateOfBirth" type="date"
-              value="<%= typeof patient.dateOfBirth != 'undefined' ? patient.dateOfBirth : '' %>" />
+              value="<%= typeof patient.dateOfBirth != "undefined" ? patient.dateOfBirth : "" %>" />
           </div>
 
           <h2>Contact:</h2>
           <div class="mb-3">
             <label for="inputLandline" class="form-label">Landline number:</label>
             <input id="inputLandline" name="phoneLandline" class="form-control" type="text"
-              value="<%= typeof patient.phoneLandline != 'undefined' ? patient.phoneLandline : '' %>" />
+              value="<%= typeof patient.phoneLandline != "undefined" ? patient.phoneLandline : "" %>" />
           </div>
 
           <div class="mb-3">
             <label for="inputMobile" class="form-label">Mobile number:</label>
             <input id="inputMobile" name="phoneMobile" class="form-control" type="text"
-              value="<%= typeof patient.phoneMobile != 'undefined' ? patient.phoneMobile : '' %>" />
+              value="<%= typeof patient.phoneMobile != "undefined" ? patient.phoneMobile : "" %>" />
           </div>
 
           <div class="mb-3">
             <label for="inputEmail" class="form-label">Email Address:</label>
             <input id="inputEmail" name="email" class="form-control" type="text"
-              value="<%= typeof patient.email != 'undefined' ? patient.email : '' %>" />
+              value="<%= typeof patient.email != "undefined" ? patient.email : "" %>" />
           </div>
 
           <h2>Address:</h2>
@@ -81,38 +81,38 @@
           <div class="mb-3">
             <label for="inputHouseNumber" class="form-label">House Number:</label>
             <input id="inputHouseNumber" name="addressHouseNumber" class="form-control" type="text"
-              value="<%= typeof patient.addressHouseNumber != 'undefined' ? patient.addressHouseNumber : '' %>" />
+              value="<%= typeof patient.addressHouseNumber != "undefined" ? patient.addressHouseNumber : "" %>" />
           </div>
 
           <div class="mb-3">
             <label for="inputAddressLineOne">Line 1:</label>
             <input id="inputAddressLineOne" name="addressLineOne" class="form-control" type=" text"
-              value="<%= typeof patient.addressLineOne != 'undefined' ? patient.addressLineOne : '' %>" />
+              value="<%= typeof patient.addressLineOne != "undefined" ? patient.addressLineOne : "" %>" />
           </div>
 
           <div class="mb-3">
             <label for="inputAddressLineTwo">Line 2:</label>
             <input id="inputAddressLineTwo" name="addressLineTwo" class="form-control" type=" text"
-              value="<%= typeof patient.addressLineTwo != 'undefined' ? patient.addressLineTwo : '' %>" />
+              value="<%= typeof patient.addressLineTwo != "undefined" ? patient.addressLineTwo : "" %>" />
           </div>
 
           <div class="mb-3">
             <label for="inputAddressCity">City:</label>
             <input id="inputAddressCity" name="addressCity" class="form-control" type=" text"
-              value="<%= typeof patient.addressCity != 'undefined' ? patient.addressCity : '' %>" />
+              value="<%= typeof patient.addressCity != "undefined" ? patient.addressCity : "" %>" />
           </div>
 
           <div class="mb-3">
             <label for="inputAddressPostCode">Post Code:</label>
             <input id="inputAddressPostCode" name="addressPostcode" class="form-control" type="text"
-              value="<%= typeof patient.addressPostcode != 'undefined' ? patient.addressPostcode : '' %>" />
+              value="<%= typeof patient.addressPostcode != "undefined" ? patient.addressPostcode : "" %>" />
           </div>
 
           <div class="mb-3">
             <h2>Medical Details:</h2>
             <label for="inputNHSNumber">NHS Number:</label>
             <input id="inputNHSNumber" name="NHSNumber" class="form-control" type="text"
-              value="<%= typeof patient.NHSNumber != 'undefined' ? patient.NHSNumber : '' %>" />
+              value="<%= typeof patient.NHSNumber != "undefined" ? patient.NHSNumber : "" %>" />
           </div>
 
           <div class="mb-3">
@@ -132,13 +132,13 @@
           <div class="mb-3">
             <label for="inputGPName">GP Name:</label>
             <input class="form-control" id="inputGPName" name="GPName" type="text"
-              value="<%= typeof patient.GPName != 'undefined' ? patient.GPName : '' %>" />
+              value="<%= typeof patient.GPName != "undefined" ? patient.GPName : "" %>" />
           </div>
 
           <div class="mb-3">
             <label for="inputGPAddress">GP Address:</label>
             <textarea class="form-control" name="GPAddress" id="inputGPAddress"
-              rows="5"><%= typeof patient.GPAddress != 'undefined' ? patient.GPAddress : '' %></textarea>
+              rows="5"><%= typeof patient.GPAddress != "undefined" ? patient.GPAddress : "" %></textarea>
           </div>
 
           <div class="mb-3">
@@ -147,7 +147,7 @@
             <textarea class="form-control" name="notes" id="notes" rows="5"
               placeholder="prefered contact, accessability, safeguarding etc."></textarea>
               <script>
-                notes.value = "<%= typeof patient.notes != 'undefined' ? patient.notes : '' %>"
+                notes.value = "<%= typeof patient.notes != "undefined" ? patient.notes : "" %>"
               </script>
           </div>
 

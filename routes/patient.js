@@ -1,21 +1,21 @@
-const express = require('express')
+const express = require("express")
 const router = express.Router()
-const User = require('../models/User')
-const Patient = require('../models/Patient')
-const Exam = require('../models/Exam')
-const Archive = require('../models/Archive')
-const {ensureAuthenticated,} = require('../config/auth')
+const User = require("../models/User")
+const Patient = require("../models/Patient")
+const Exam = require("../models/Exam")
+const Archive = require("../models/Archive")
+const {ensureAuthenticated,} = require("../config/auth")
 
 //create patient page
-router.get('/add', ensureAuthenticated, (req, res) => res.render('pages/patient/patient-add',{title:"Add Patient"}))
+router.get("/add", ensureAuthenticated, (req, res) => res.render("pages/patient/patient-add",{title:"Add Patient"}))
 
 //add patient to db
-router.post('/add', ensureAuthenticated, async (req, res) => {
-  let patient = {
+router.post("/add", ensureAuthenticated, async (req, res) => {
+  const patient = {
     firstName: req.body.firstName,
     middleName: req.body.middleName,
     lastName: req.body.lastName,
-    gender: req.body.genderOther || req.body.gender,
+    gender: req.body.genderOther || req.body.gender || "Other",
     dateOfBirth: req.body.dateOfBirth,
     phoneLandline: req.body.landline,
     phoneMobile: req.body.mobile,
@@ -39,19 +39,19 @@ router.post('/add', ensureAuthenticated, async (req, res) => {
     res.render("errors/404")
   }
 
-  req.flash('success_msg', 'Patient has been added')
-  res.redirect('/patient/list')
+  req.flash("success_msg", "Patient has been added")
+  res.redirect("/patient/list")
 })
 
 //list patients
-router.get('/list/', ensureAuthenticated, async (req, res) => {
+router.get("/list/", ensureAuthenticated, async (req, res) => {
 
   //number of elements to show per page
   const RESULTS_PER_PAGE = 25
   //cleans search queries
   const query = Object.entries(req.query).reduce((obj,[key,value]) => (value ? (obj[key]=value, obj) : obj), {})
 
-  //limit how many documents skipped for search, (goes up in 50's)
+  //limit how many documents skipped for search, (goes up in 50"s)
   //default 0 if not specified in url
   const skip = (Number(query.page) || 0) * RESULTS_PER_PAGE
   //sort order. Default sort by last name A-Z, then first name A-Z
@@ -66,7 +66,7 @@ router.get('/list/', ensureAuthenticated, async (req, res) => {
   try {
     const patients = await Patient.find().sort(sort).skip(skip).limit(RESULTS_PER_PAGE)
     const totalPages = Math.ceil( await Patient.estimatedDocumentCount() / RESULTS_PER_PAGE )
-    res.render('pages/patient/patient-list', {
+    res.render("pages/patient/patient-list", {
       patients,
       title:"List Patients",
       totalPages
@@ -78,7 +78,7 @@ router.get('/list/', ensureAuthenticated, async (req, res) => {
 
 
 // view patient
-router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
+router.get("/view/:patientID", ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
 
   const RESULTS_PER_PAGE = 25
@@ -91,7 +91,7 @@ router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
     const totalPages = Math.ceil(exams.length / RESULTS_PER_PAGE)
     const optometrists = await User.find()
     if (patient) {
-      res.render('pages/patient/patient-view', {
+      res.render("pages/patient/patient-view", {
         patient,
         exams,
         optometrists,
@@ -102,19 +102,19 @@ router.get('/view/:patientID', ensureAuthenticated, async (req, res) => {
     }
     throw ("not found")
   } catch (error) {
-    res.render('errors/404')
+    res.render("errors/404")
     return
   }
 })
 
 // edit patient
-router.get('/edit/:patientID', ensureAuthenticated, async (req, res) => {
+router.get("/edit/:patientID", ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
 
   try {
     const patient = await Patient.findById(id)
     if (patient) {
-      res.render('pages/patient/patient-edit', {
+      res.render("pages/patient/patient-edit", {
         patient,
         title:`Edit ${patient.firstName} ${patient.lastName}`
       })
@@ -122,21 +122,20 @@ router.get('/edit/:patientID', ensureAuthenticated, async (req, res) => {
     }
     throw ("not found")
   } catch (error) {
-    res.render('errors/404')
+    res.render("errors/404")
     return
   }
 })
 
 //edit post
-router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
+router.post("/edit/:patientID", ensureAuthenticated, async (req, res) => {
   const id = req.params.patientID
 
   const newInfo = {
     firstName: req.body.firstName,
     middleName: req.body.middleName,
     lastName: req.body.lastName,
-    gender: req.body.gender,
-    genderOther: req.body.genderOther,
+    gender: req.body.gender || req.body.genderOther || "Other",
     dateOfBirth: req.body.dateOfBirth,
     phoneLandline: req.body.phoneLandline,
     phoneMobile: req.body.phoneMobile,
@@ -167,26 +166,20 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
         patientDocument: patient,
       }) 
 
-      let changes = new Set()
+      let changes = []
 
       //compares old values to new values, adds changes to list and updates original patient 
       for (const [key, value] of Object.entries(newInfo)) {
-        if(key == "editReason" || key == "genderOther") continue
-
-        if(key == "gender" && patient.gender != newInfo.genderOther && newInfo.gender == ""){
-            changes.add("gender")
-            patient.gender = newInfo.genderOther
-            continue
-        }
+        if(key == "editReason") continue
 
         if(patient[key] != value){
           patient[key] = value
-          changes.add(key)
+          changes.push(key)
         }
       }
 
       if(changes.size > 0){
-        changes = Array.from(changes).join(", ") //converts to array then stiches into list
+        changes = changes.join(", ") //converts to array then stiches into list
         changes = changes.replace( /([A-Z])/g, " $1" ) //converts "cammelCase" to "Sentence case"
         changes = changes.charAt(0).toUpperCase() + changes.slice(1) //capitalises first letter
         patient.save()
@@ -201,7 +194,7 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
     throw ("not found")
   } catch (error) {
     console.log(error)
-    res.redirect(`/errors/500`)
+    res.redirect("/errors/500")
     return
   }
 })
@@ -209,17 +202,17 @@ router.post('/edit/:patientID', ensureAuthenticated, async (req, res) => {
 // search patient page
 router.get("/search/", ensureAuthenticated, async (req, res) => {
 
-  // mess removes empty params as obtained from URL e.g /patient/search?firstName=oliver&lastName=&dateOfBirth= -> { firstName: 'oliver' }
+  // mess removes empty params as obtained from URL e.g /patient/search?firstName=oliver&lastName=&dateOfBirth= -> { firstName: "oliver" }
   const query = Object.entries(req.query).reduce((obj,[key,value]) => (value ? (obj[key]=value, obj) : obj), {})
   let patients = []
   if(Object.keys(query).length !== 0){
-    patients = await Patient.find(query).collation({locale: 'en', strength: 1}).sort({"lastName": 1, "firstName": 1}).limit(30)
+    patients = await Patient.find(query).collation({locale: "en", strength: 1}).sort({"lastName": 1, "firstName": 1}).limit(30)
   }
 
   res.render("pages/patient/patient-search", {
     last: query,
     patients,
-    title:`Search Patients`,
+    title:"Search Patients",
   })
  
 })

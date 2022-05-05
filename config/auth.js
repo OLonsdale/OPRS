@@ -1,4 +1,4 @@
-const Audit = require('../models/Audit')
+const Audit = require("../models/Audit")
 
 module.exports = {
   //only allows access for authenticated users
@@ -12,14 +12,14 @@ module.exports = {
       auditEvent.save()
       return next();
     }
-    req.flash('error_msg', 'Please log in to view that resource');
-    res.redirect('/login');
+    req.flash("error_msg", "Please log in to view that resource");
+    res.redirect("/login");
   },
   //only allows to login for non-authenticated users
   forwardAuthenticated(req, res, next) {
     if (!req.isAuthenticated()) {
       return next();
     }
-    res.redirect('/dashboard');
+    res.redirect("/dashboard");
   },
 };

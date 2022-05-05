@@ -1,12 +1,12 @@
-const express = require('express') //server
-const expressLayouts = require('express-ejs-layouts');
-const expressFileUpload = require('express-fileupload');
-const mongoose = require('mongoose') //db connecton
-const MongoStore = require('connect-mongo') //db connection
-const passport = require('passport') //authentication
-const flash = require('connect-flash') //messages
-const session = require('express-session') //sessions
-const morgan = require('morgan') //logging
+const express = require("express") //server
+const expressLayouts = require("express-ejs-layouts");
+const expressFileUpload = require("express-fileupload");
+const mongoose = require("mongoose") //db connecton
+const MongoStore = require("connect-mongo") //db connection
+const passport = require("passport") //authentication
+const flash = require("connect-flash") //messages
+const session = require("express-session") //sessions
+const morgan = require("morgan") //logging
 const path = require("path") //platform independent path tools
 
 const app = express()
@@ -17,10 +17,10 @@ app.use(express.static(path.join(__dirname,"public")));
 app.use(morgan("short"))
 
 // Passport Config
-require('./config/passport')(passport)
+require("./config/passport")(passport)
 
 // Get mongo connection string
-const db = require('./config/keys').mongoURI
+const db = require("./config/keys").mongoURI
 
 // Connect to MongoDB
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, )
@@ -29,7 +29,7 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, )
 
 // EJS for templating html with js
 app.use(expressLayouts)
-app.set('view engine', 'ejs')
+app.set("view engine", "ejs")
 
 // Express body parser & file upload validation
 app.use(express.urlencoded({ extended: true })) // form posts etc
@@ -39,7 +39,7 @@ app.use(expressFileUpload()) // files in forms
 // Express session - persists logins
 app.use(
   session({
-    secret: 'secret',
+    secret: "secret",
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({mongoUrl: db}),
@@ -55,21 +55,18 @@ app.use(flash())
 
 // Global variables
 app.use((req, res, next) => {
-  res.locals.success_msg = req.flash('success_msg')
-  res.locals.error_msg = req.flash('error_msg')
-  res.locals.error = req.flash('error')
+  res.locals.success_msg = req.flash("success_msg")
+  res.locals.error_msg = req.flash("error_msg")
+  res.locals.error = req.flash("error")
   next()
 })
 
-
-
-
 // Routes
-app.use('/', require('./routes/index'))
-app.use('/patient', require('./routes/patient'))
-app.use('/exam', require('./routes/exam'))
-app.use('/staff', require('./routes/staff'))
-app.use('/admin', require('./routes/admin'))
+app.use("/", require("./routes/index"))
+app.use("/patient", require("./routes/patient"))
+app.use("/exam", require("./routes/exam"))
+app.use("/staff", require("./routes/staff"))
+app.use("/admin", require("./routes/admin"))
 app.use((req, res) => {
   res.status(404).render("errors/404")
 })

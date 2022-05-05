@@ -160,8 +160,8 @@ router.get("/download/:examID/:fileIndex", ensureAuthenticated, async (req, res)
     let readStream = new stream.PassThrough();
     readStream.end(fileContents);
 
-    res.set('Content-disposition', 'attachment; filename=' + attachment.name)
-    res.set('Content-Type', attachment.minetype)
+    res.set("Content-disposition", "attachment; filename=" + attachment.name)
+    res.set("Content-Type", attachment.minetype)
     readStream.pipe(res)
   
   } catch (error) {

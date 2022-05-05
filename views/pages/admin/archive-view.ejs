@@ -11,7 +11,7 @@
   </tr>
   <tr>
     <td>Date Archived</td>
-    <td><%= element.dateArchived.toLocaleDateString('en-GB') %></td>
+    <td><%= element.dateArchived.toLocaleDateString("en-GB") %></td>
   </tr>
   <tr>
     <td>Fields Changed</td>
@@ -53,11 +53,11 @@
   </tr>
   <tr>
     <td>Date of exam</td>
-    <td><%= element.examDocument.dateOfVisit.toLocaleDateString('en-GB') %></td>
+    <td><%= element.examDocument.dateOfVisit.toLocaleDateString("en-GB") %></td>
   </tr>
   <tr>
     <td>Date of Entry</td>
-    <td><%= element.examDocument.dateAdded.toLocaleDateString('en-GB') %></td>
+    <td><%= element.examDocument.dateAdded.toLocaleDateString("en-GB") %></td>
   </tr>
 </table>
 <h2>About</h2>
@@ -285,7 +285,7 @@
           <tr>
             <td>Date Added</td>
             <td>
-              <%= element.patientDocument.dateAdded.toLocaleDateString('en-GB')
+              <%= element.patientDocument.dateAdded.toLocaleDateString("en-GB")
               %>
             </td>
           </tr>
@@ -369,7 +369,7 @@
 
 <label for="patientNotes">Important Notes:</label>
 <%# Value added programatically so that the linter adding a linebreak after the
-end of the opening textarea tag doesn't break stuff %>
+end of the opening textarea tag doesn"t break stuff %>
 <textarea id="patientNotes" disabled rows="5" style="resize: none" class="form-control"></textarea>
 <script>
   patientNotes.value = "<%= element.patientDocument.notes %>";
@@ -384,7 +384,7 @@ end of the opening textarea tag doesn't break stuff %>
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse<%= exam._id %>" aria-expanded="true" aria-controls="collapse<%= exam._id %>">
           Exam <%= exam._id %> from <%=
-          exam.dateOfVisit.toLocaleDateString('en-GB') %>
+          exam.dateOfVisit.toLocaleDateString("en-GB") %>
         </button>
       </h2>
       <div id="collapse<%= exam._id %>" class="accordion-collapse collapse" aria-labelledby="heading<%= exam._id %>"
@@ -415,11 +415,11 @@ end of the opening textarea tag doesn't break stuff %>
             </tr>
             <tr>
               <td>Date of exam</td>
-              <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
+              <td><%= exam.dateOfVisit.toLocaleDateString("en-GB") %></td>
             </tr>
             <tr>
               <td>Date of Entry</td>
-              <td><%= exam.dateAdded.toLocaleDateString('en-GB') %></td>
+              <td><%= exam.dateAdded.toLocaleDateString("en-GB") %></td>
             </tr>
           </table>
           <h2>About</h2>

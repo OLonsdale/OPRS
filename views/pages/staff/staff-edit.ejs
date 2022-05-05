@@ -13,7 +13,7 @@
         <div class="mb-3">
           <label for="name">Name</label>
           <input type="name" id="name" name="name" class="form-control" placeholder="Create Password"
-          value="<%= typeof staff.name != 'undefined' ? staff.name : '' %>" />
+          value="<%= typeof staff.name != "undefined" ? staff.name : "" %>" />
         </div>
 
         <div class="mb-3">
@@ -25,12 +25,12 @@
         <div class="mb-3">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" class="form-control" placeholder="Create Password" minlength="8"
-          value="<%= typeof password != 'undefined' ? password : '' %>" />
+          value="<%= typeof password != "undefined" ? password : "" %>" />
         </div>
         <div class="mb-3">
           <label for="password2">Confirm Password</label>
           <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password" minlength="8"
-          value="<%= typeof password2 != 'undefined' ? password2 : '' %>" />
+          value="<%= typeof password2 != "undefined" ? password2 : "" %>" />
         </div>
 
         <h2 class="lead">Optional Contact Details</h2>
@@ -38,25 +38,25 @@
         <div class="mb-3">
           <label for="email">Email Address</label>
           <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email Address"
-            value="<%= typeof email != 'undefined' ? email : '' %>" />
+            value="<%= typeof email != "undefined" ? email : "" %>" />
         </div>
 
         <div class="mb-3">
           <label for="phonePrimary">Primary Phone Number</label>
           <input type="phonePrimary" id="phonePrimary" name="phonePrimary" class="form-control" placeholder="Enter main phone number"
-            value="<%= typeof phonePrimary != 'undefined' ? phonePrimary : '' %>" />
+            value="<%= typeof phonePrimary != "undefined" ? phonePrimary : "" %>" />
         </div>
 
         <div class="mb-3">
           <label for="phoneSecondary">Other Phone Number</label>
           <input type="phoneSecondary" id="phoneSecondary" name="phoneSecondary" class="form-control" placeholder="Enter backup phone number"
-            value="<%= typeof phoneSecondary != 'undefined' ? phoneSecondary : '' %>" />
+            value="<%= typeof phoneSecondary != "undefined" ? phoneSecondary : "" %>" />
         </div>
 
         <div class="mb-3">
           <label for="address">Home Address</label>
           <textarea type="address" id="address" name="address" class="form-control" placeholder="Enter home address"
-            value="<%= typeof address != 'undefined' ? address : '' %>" ></textarea>
+            value="<%= typeof address != "undefined" ? address : "" %>" ></textarea>
         </div>
 
         <input type="submit" class="btn btn-primary">

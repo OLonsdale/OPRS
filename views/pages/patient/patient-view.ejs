@@ -46,7 +46,7 @@
             </tr>
             <tr>
               <td>Date Added</td>
-              <td><%= patient.dateAdded.toLocaleDateString('en-GB') %></td>
+              <td><%= patient.dateAdded.toLocaleDateString("en-GB") %></td>
             </tr>
           </table>
         </div>
@@ -142,7 +142,7 @@
     <tbody>
       <% exams.forEach(exam => { %>
         <tr>
-          <td><%= exam.dateOfVisit.toLocaleDateString('en-GB') %></td>
+          <td><%= exam.dateOfVisit.toLocaleDateString("en-GB") %></td>
           <td><%= optometrists.find(optom => optom._id == exam.performingOptometrist).name %></td>
           <td><%= exam.id %></td>
           <td>

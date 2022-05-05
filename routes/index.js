@@ -1,53 +1,53 @@
-const express = require('express')
+const express = require("express")
 const router = express.Router()
-const passport = require('passport')
-const User = require('../models/User')
-const Patient = require('../models/Patient')
-const Exam = require('../models/Exam')
-const Archive = require('../models/Archive')
-const Audit = require('../models/Audit')
+const passport = require("passport")
+const User = require("../models/User")
+const Patient = require("../models/Patient")
+const Exam = require("../models/Exam")
+const Archive = require("../models/Archive")
+const Audit = require("../models/Audit")
 const {
   ensureAuthenticated,
   forwardAuthenticated
-} = require('../config/auth')
+} = require("../config/auth")
 
-//Login page, if already logged in, you'll get shunted to the dashboard
-router.get('/', forwardAuthenticated, (_req, res) => res.render('pages/index/login', {
+//Login page, if already logged in, you"ll get shunted to the dashboard
+router.get("/", forwardAuthenticated, (_req, res) => res.render("pages/index/login", {
   layout: false //no layout, meaning no navbar. layout.ejs not used
 }))
 
-router.get('/login', forwardAuthenticated, (_req, res) => res.render('pages/index/login', {
+router.get("/login", forwardAuthenticated, (_req, res) => res.render("pages/index/login", {
   layout: false //no layout, meaning no navbar. layout.ejs not used
 }))
 
 // Login
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/login',
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", {
+    successRedirect: "/dashboard",
+    failureRedirect: "/login",
     failureFlash: true,
   })(req, res, next)
 })
 
 // Logout
-router.get('/logout', (req, res) => {
+router.get("/logout", (req, res) => {
   req.logout()
-  req.flash('success_msg', 'You are logged out')
-  res.redirect('/')
+  req.flash("success_msg", "You are logged out")
+  res.redirect("/")
 })
 // Dashboard
-router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('pages/index/dashboard', {
+router.get("/dashboard", ensureAuthenticated, (req, res) => res.render("pages/index/dashboard", {
   user: req.user,
   title:"Dashboard"
 }))
 
 // Magic find page
-router.get('/find', ensureAuthenticated, (req, res) => res.render('pages/index/search-all', {
+router.get("/find", ensureAuthenticated, (req, res) => res.render("pages/index/search-all", {
   title:"Magic Search", failed:false
 }))
 
 //Find any document by the ID number
-router.post('/find', ensureAuthenticated, async (req, res) => {
+router.post("/find", ensureAuthenticated, async (req, res) => {
   const _id = req.body._id
 
   try{
