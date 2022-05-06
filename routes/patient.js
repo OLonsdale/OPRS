@@ -155,7 +155,6 @@ router.post("/edit/:patientID", ensureAuthenticated, async (req, res) => {
   
   try {
     const patient = await Patient.findById(id)
-    console.log(patient)
 
     if (patient) {
 
@@ -178,7 +177,7 @@ router.post("/edit/:patientID", ensureAuthenticated, async (req, res) => {
         }
       }
 
-      if(changes.size > 0){
+      if(changes.length > 0){
         changes = changes.join(", ") //converts to array then stiches into list
         changes = changes.replace( /([A-Z])/g, " $1" ) //converts "cammelCase" to "Sentence case"
         changes = changes.charAt(0).toUpperCase() + changes.slice(1) //capitalises first letter
