@@ -1,4 +1,4 @@
-let dbPassword = "mongodb+srv://olonsdale:aFzpqzQKkdrW3Mv@oprs-cluster.1i256.mongodb.net/OPRS?retryWrites=true&w=majority"
+let dbPassword = "redacted"
 
 module.exports = {
     mongoURI: dbPassword
